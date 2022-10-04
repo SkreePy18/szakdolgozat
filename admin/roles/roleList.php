@@ -51,7 +51,7 @@
         <?php if (hasPermissionTo('view-role-list')): ?>
           <?php
             $roles = getAllRoles();
-            $ncol = hasPermissionTo('assign-role-permissions') + hasPermissionTo('update-role') + hasPermissionTo('delete-role');
+            $ncol = hasPermissionTo('assign-role-permission') + hasPermissionTo('update-role') + hasPermissionTo('delete-role');
           ?>
           <h1 class="text-center">Role management</h1>
           <br />
@@ -73,7 +73,7 @@
                     <td><?php xecho($value['name']) ?></td>
 
                     <?php if ($ncol > 0): ?>
-                      <?php if (hasPermissionTo('assign-role-permissions')): ?>
+                      <?php if (hasPermissionTo('assign-role-permission')): ?>
                         <td class="text-center">
                           <a href="<?php xecho(BASE_URL) ?>admin/roles/assignPermissions.php?assign_permissions=<?php xecho($value['id']); ?>" class="btn btn-sm btn-info">
                             permissions

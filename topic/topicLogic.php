@@ -439,7 +439,7 @@
   function selectScore(){
     global $conn;
 
-    if (! hasPermissionTo('assing-topic-score')) {
+    if (! hasPermissionTo('assign-topic-score')) {
       $_SESSION['error_msg'] = "No permissions to set topic score";
       header("location: " . BASE_URL . "index.php");
       exit(0);
@@ -715,7 +715,7 @@
   function getFilterTopicsScore($user_id){
     global $conn;
 
-    if (! hasPermissionTo('view-own-score')) {
+    if (! hasPermissionTo('view-own-topic-score')) {
       $_SESSION['error_msg'] = "No permissions to view topic(s) to score";
       header("location: " . BASE_URL . "index.php");
       exit(0);
