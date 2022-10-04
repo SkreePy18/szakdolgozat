@@ -720,9 +720,8 @@
       if(is_null($cat_results)) {
         return false;
       }
-      else {
-        return false;
-      }
+
+      return true;
     } else {
       return false;
     }
