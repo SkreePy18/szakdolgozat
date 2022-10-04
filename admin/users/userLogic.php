@@ -79,7 +79,7 @@
       $role_id = filter_input(INPUT_POST, 'role_id', FILTER_SANITIZE_NUMBER_INT);
     }
 
-    if (! canCreateUser( )) {
+    if (! hasPermissionTo('create-user')) {
       $_SESSION['error_msg'] = "No permissions to create user";
       header("location: " . BASE_URL . "admin/users/userList.php");
       exit(0);
@@ -164,7 +164,7 @@
     if (count($errors) === 0) {
       if ($change_password) {
         $password = password_hash($user_data['password'], PASSWORD_DEFAULT); //encrypt the password before saving in the database
-        if (canAssignUserRole()) {
+        if (hasPermissionTo('assign-user-role')) {
           $sql = "UPDATE users SET username=?, fullname=?, neptuncode=?, role_id=?, email=?, password=? WHERE id=?";
           $result = modifyRecord($sql, 'sssissi', [$username, $fullname, $neptuncode, $role_id, $email, $password, $user_id]);
         } else {
@@ -172,7 +172,7 @@
           $result = modifyRecord($sql, 'sssssi', [$username, $fullname, $neptuncode, $email, $password, $user_id]);
         }
       } else {
-        if (canAssignUserRole()) {
+        if (hasPermissionTo('assign-user-role')) {
           $sql = "UPDATE users SET username=?, fullname=?, neptuncode=?, role_id=?, email=? WHERE id=?";
           $result = modifyRecord($sql, 'sssisi', [$username, $fullname, $neptuncode, $role_id, $email, $user_id]);
         } else {
@@ -182,7 +182,7 @@
       }
       if ($result) {
         $_SESSION['success_msg'] = "User account successfully updated";
-        if(canViewUserList()) {
+        if(hasPermissionTo('view-user-list')) {
           header("location: " . BASE_URL . "admin/users/userList.php");
         } else {
           header("location: " . BASE_URL . "index.php");

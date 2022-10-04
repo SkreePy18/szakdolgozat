@@ -47,7 +47,7 @@
     // receive all input values from the form
     $category = $category_data['category'];
 
-    if (! canCreatecategory( )) {
+    if (! hasPermissionTo('create-category')) {
       $_SESSION['error_msg'] = "No permissions to create category";
       header("location: " . BASE_URL . "admin/categories/categoryList.php");
       exit(0);
@@ -97,7 +97,7 @@
       $result = modifyRecord($sql, 'si', [$category, $category_id]);
       if ($result) {
         $_SESSION['success_msg'] = "category successfully updated";
-        if(canViewcategoryList()) {
+        if(hasPermissionTo('view-category-list')) {
           header("location: " . BASE_URL . "admin/categories/categoryList.php");
         } else {
           header("location: " . BASE_URL . "index.php");

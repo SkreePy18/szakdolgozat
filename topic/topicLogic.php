@@ -267,7 +267,7 @@
       $topic_user_id = $_SESSION['user']['id'];
     }
 
-    if (! canCreateTopic( )) {
+    if (! hasPermissionTo('create-topic')) {
       $_SESSION['error_msg'] = "No permissions to create topic";
       header("location: " . BASE_URL . "index.php");
       exit(0);
@@ -389,7 +389,7 @@
   function selectSemester() {
     global $conn, $semester_id;
 
-    if (! canViewSemesterSelector( )) {
+    if (! hasPermissionTo('view-semester-selector')) {
       $_SESSION['error_msg'] = "No permissions to view semesters";
       header("location: " . BASE_URL . "topic/topicFilter.php?filter_topic=all");
       exit(0);
@@ -403,7 +403,7 @@
 
     $topic_spec_id = filter_input(INPUT_GET, 'view_topic', FILTER_SANITIZE_NUMBER_INT);
 
-    if (! canViewTopicList( )) {
+    if (! hasPermissionTo('view-topic-list')) {
       $_SESSION['error_msg'] = "No permissions to view topic(s)";
       header("location: " . BASE_URL . "index.php");
       exit(0);
@@ -439,7 +439,7 @@
   function selectScore(){
     global $conn;
 
-    if (! canAssignTopicScore( )) {
+    if (! hasPermissionTo('assing-topic-score')) {
       $_SESSION['error_msg'] = "No permissions to set topic score";
       header("location: " . BASE_URL . "index.php");
       exit(0);
@@ -491,7 +491,7 @@
   function getFilterTopicsBySupervisor($owner_id, $semester_id){
     global $conn;
 
-    if (! canViewTopicList( )) {
+    if (! hasPermissionTo('view-topic-list')) {
       $_SESSION['error_msg'] = "No permissions to view filtered topic(s)";
       header("location: " . BASE_URL . "index.php");
       exit(0);
@@ -531,7 +531,7 @@
   function getFilterTopicsByCategory($category_id, $semester_id){
     global $conn;
 
-    if (! canViewTopicList( )) {
+    if (! hasPermissionTo('view-topic-list')) {
       $_SESSION['error_msg'] = "No permissions to view filtered topic(s)";
       header("location: " . BASE_URL . "index.php");
       exit(0);
@@ -570,7 +570,7 @@
   function getFilterTopics($filter_type, $semester_id){
     global $conn;
 
-    if (! canViewTopicList( )) {
+    if (! hasPermissionTo('view-topic-list')) {
       $_SESSION['error_msg'] = "No permissions to view filtered topic(s)";
       header("location: " . BASE_URL . "index.php");
       exit(0);
@@ -621,7 +621,7 @@
       $title="My registered topics";
     // collect topics for which students are registered
     } else if($filter_type == "registered-user") {
-      if(canViewTopicSummary()) {
+      if(hasPermissionTo('view-topic-summary')) {
         if($semester_id == -1) {
           $sql = "SELECT t.id, t.title, t.published, t.user_id, t.approved_user_id, t.semester_id, tu.user_id as student_id FROM topics t INNER JOIN topic_user tu ON t.id=tu.topic_id ORDER BY t.id";
           $topics = getMultipleRecords($sql);
@@ -648,7 +648,7 @@
       }
     // collect topics for which students are approved
     } else if($filter_type == "approved-user") {
-      if(canViewTopicSummary()) {
+      if(hasPermissionTo('view-topic-summary')) {
         if($semester_id == -1) {
           $sql = "SELECT t.id, t.title, t.published, t.user_id, t.approved_user_id, t.semester_id, u.fullname FROM topics t INNER JOIN users u ON t.user_id=u.id WHERE t.approved_user_id <> -1 ORDER BY t.id";
           $topics = getMultipleRecords($sql);
@@ -676,7 +676,7 @@
     // in all other cases list all published
     } else {
       // if we can publish topics, then really everything is visible
-      if(canPublishTopic()) {
+      if(hasPermissionTo('publish-topic')) {
         if($semester_id == -1) {
           $sql = "SELECT t.id, t.title, t.published, t.user_id, t.approved_user_id, t.semester_id, u.fullname FROM topics t INNER JOIN users u ON t.user_id=u.id ORDER BY t.id";
           $topics = getMultipleRecords($sql);
@@ -715,7 +715,7 @@
   function getFilterTopicsScore($user_id){
     global $conn;
 
-    if (! canViewOwnTopicScore( )) {
+    if (! hasPermissionTo('view-own-score')) {
       $_SESSION['error_msg'] = "No permissions to view topic(s) to score";
       header("location: " . BASE_URL . "index.php");
       exit(0);

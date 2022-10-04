@@ -97,47 +97,14 @@
     return 2;
   }
 
-  function canViewDashboard() {
-    if(in_array(['permission_name' => 'view-dashboard'], $_SESSION['userPermissions'])){
+  function hasPermissionTo($permisson_code){
+    if(in_array(['permission_name' => $permisson_code], $_SESSION['userPermissions'])) {
       return true;
     } else {
       return false;
     }
   }
 
-
-  function canViewProfile() {
-    if(in_array(['permission_name' => 'view-profile'], $_SESSION['userPermissions'])){
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-
-  function canViewUserList() {
-    if(in_array(['permission_name' => 'view-user-list'], $_SESSION['userPermissions'])){
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  function canCreateUser() {
-    if(in_array(['permission_name' => 'create-user'], $_SESSION['userPermissions'])){
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  function canUpdateUser( ) {
-    if(in_array(['permission_name' => 'update-user'], $_SESSION['userPermissions'])){
-      return true;
-    } else {
-      return false;
-    }
-  }
 
   function canUpdateUserByID( $user_id = NULL ) {
     // if current user is equal to the user, then it can modify itself
@@ -158,13 +125,6 @@
     }
   }
 
-  function canDeleteUser( ) {
-    if(in_array(['permission_name' => 'delete-user'], $_SESSION['userPermissions'])){
-      return true;
-    } else {
-      return false;
-    }
-  }
 
   function canDeleteUserByID( $user_id ) {
     if(in_array(['permission_name' => 'delete-user'], $_SESSION['userPermissions'])){
@@ -214,37 +174,7 @@
     }
   }
 
-  function canAssignUserRole() {
-    if(in_array(['permission_name' => 'assign-user-role'], $_SESSION['userPermissions'])){
-      return true;
-    } else {
-      return false;
-    }
-  }
 
-  function canViewRoleList() {
-    if(in_array(['permission_name' => 'view-role-list'], $_SESSION['userPermissions'])){
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  function canCreateRole() {
-    if(in_array(['permission_name' => 'create-role'], $_SESSION['userPermissions'])){
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  function canUpdateRole() {
-    if(in_array(['permission_name' => 'update-role'], $_SESSION['userPermissions'])){
-      return true;
-    } else {
-      return false;
-    }
-  }
 
   function canUpdateRoleByID($role_id = NULL) {
     if(in_array(['permission_name' => 'update-role'], $_SESSION['userPermissions'])){
@@ -261,13 +191,6 @@
     }
   }
 
-  function canDeleteRole() {
-    if(in_array(['permission_name' => 'delete-role'], $_SESSION['userPermissions'])){
-      return true;
-    } else {
-      return false;
-    }
-  }
 
   function canDeleteRoleByID($role_id = NULL) {
     if(in_array(['permission_name' => 'delete-role'], $_SESSION['userPermissions'])){
@@ -294,13 +217,6 @@
     }
   }
 
-  function canAssignRolePermissions() {
-    if(in_array(['permission_name' => 'assign-role-permission'], $_SESSION['userPermissions'])){
-      return true;
-    } else {
-      return false;
-    }
-  }
 
   function canAssignRolePermissionsByID($role_id = NULL) {
     if(in_array(['permission_name' => 'assign-role-permission'], $_SESSION['userPermissions'])){
@@ -318,15 +234,6 @@
   }
 
   // ---------------------------------- Topic ---------------------------------
-
-  function canViewTopicList() {
-    if(in_array(['permission_name' => 'view-topic-list'], $_SESSION['userPermissions'])){
-      return true;
-    } else {
-      return false;
-    }
-  }
-
 
   function canViewTopicByID($topic_id) {
     if(in_array(['permission_name' => 'view-topic-list'], $_SESSION['userPermissions'])){
@@ -368,22 +275,7 @@
     }
   }
 
-  function canCreateTopic() {
-    // echo "<pre>"; print_r($_SESSION['userPermissions']); echo "</pre>";
-    if(in_array(['permission_name' => 'create-topic'], $_SESSION['userPermissions'])){
-      return true;
-    } else {
-      return false;
-    }
-  }
 
-  function canUpdateTopic(){
-    if(in_array(['permission_name' => 'update-topic'], $_SESSION['userPermissions'])){
-      return true;
-    } else {
-      return false;
-    }
-  }
 
   // checks if logged in user can update topic
   function canUpdateTopicByID($topic_id = null, $semester_matter = true){
@@ -419,14 +311,6 @@
         return false;
       }
 
-    } else {
-      return false;
-    }
-  }
-
-  function canDeleteTopic(){
-    if(in_array(['permission_name' => 'update-topic'], $_SESSION['userPermissions'])){
-      return true;
     } else {
       return false;
     }
@@ -470,24 +354,7 @@
 
   }
 
-  function canPublishTopic() {
-    if(in_array(['permission_name' => 'publish-topic'], $_SESSION['userPermissions'])){
-      // echo "<pre>"; print_r($_SESSION['userPermissions']); echo "</pre>"; die();
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  // this checks whether the user can register for any topic in general 
-  function canRegisterTopic() {
-    if(in_array(['permission_name' => 'register-topic-user'], $_SESSION['userPermissions'])){
-      return true;
-    } else {
-      return false;
-    }
-  }
-
+  
   // this checks whether the user can register for a _specific_ topic
   function canRegisterTopicUserByID($topic_id = null) {
     global $conn;
@@ -525,13 +392,7 @@
     }
   }
 
-  function canOwnTopicUser() {
-    if(in_array(['permission_name' => 'own-topic-user'], $_SESSION['userPermissions'])){
-      return true;
-    } else {
-      return false;
-    }
-  }
+  
 
 
   function canApproveTopicUser($topic_id = null) {
@@ -563,43 +424,10 @@
   }
 
 
-  function canViewTopicSummary() {
-    if(in_array(['permission_name' => 'view-topic-summary'], $_SESSION['userPermissions'])){
-      return true;
-    } else {
-      return false;
-    }
-  }
-
+  
   // ---------------------------------- Semester ------------------------------
 
-  function canViewSemesterList() {
-    // echo "<pre>"; print_r($_SESSION['userPermissions']); echo "</pre>";
-    if(in_array(['permission_name' => 'view-semester-list'], $_SESSION['userPermissions'])){
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-
-  function canCreateSemester() {
-    // echo "<pre>"; print_r($_SESSION['userPermissions']); echo "</pre>";
-    if(in_array(['permission_name' => 'create-semester'], $_SESSION['userPermissions'])){
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  function canUpdateSemester(){
-    if(in_array(['permission_name' => 'update-semester'], $_SESSION['userPermissions'])){
-      return true;
-    } else {
-      return false;
-    }
-  }
-
+ 
   // checks if logged in user can update semester
   function canUpdateSemesterByID($semester_id = null){
     global $conn;
@@ -624,13 +452,6 @@
     }
   }
 
-  function canDeleteSemester(){
-    if(in_array(['permission_name' => 'update-semester'], $_SESSION['userPermissions'])){
-      return true;
-    } else {
-      return false;
-    }
-  }
 
   function canDeleteSemesterByID($semester_id = null) {
     global $conn;
@@ -666,48 +487,8 @@
 
   }
 
-  function canAssignTopicSemester(){
-    if(in_array(['permission_name' => 'assign-topic-semester'], $_SESSION['userPermissions'])){
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  function canViewSemesterSelector(){
-    if(in_array(['permission_name' => 'view-semester-selector'], $_SESSION['userPermissions'])){
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  // ---------------------------------- Categories ------------------------------
-
-  function canViewCategoryList() {
-    if(in_array(['permission_name' => 'view-category-list'], $_SESSION['userPermissions'])){
-      return true;
-    } else {
-      return false;
-    }
-  }
 
 
-  function canCreateCategory() {
-    if(in_array(['permission_name' => 'create-category'], $_SESSION['userPermissions'])){
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  function canUpdateCategory(){
-    if(in_array(['permission_name' => 'update-category'], $_SESSION['userPermissions'])){
-      return true;
-    } else {
-      return false;
-    }
-  }
 
   // checks if logged in user can update categories
   function canUpdateCategoryByID($category_id = null){
@@ -727,13 +508,6 @@
     }
   }
 
-  function canDeleteCategory(){
-    if(in_array(['permission_name' => 'delete-category'], $_SESSION['userPermissions'])){
-      return true;
-    } else {
-      return false;
-    }
-  }
 
   function canDeleteCategoryByID($category_id = null) {
     global $conn;
@@ -761,39 +535,7 @@
     }
 
   }
-
-
-  function canViewCategorySelector(){
-    if(in_array(['permission_name' => 'view-category-selector'], $_SESSION['userPermissions'])){
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   // ---------------------------------- Scores ------------------------------
 
 
-  function canViewOwnTopicScore(){
-    if(in_array(['permission_name' => 'view-own-topic-score'], $_SESSION['userPermissions'])){
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  function canViewAllTopicScore(){
-    if(in_array(['permission_name' => 'view-all-topic-score'], $_SESSION['userPermissions'])){
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  function canAssignTopicScore(){
-    if(in_array(['permission_name' => 'assign-topic-score'], $_SESSION['userPermissions'])){
-      return true;
-    } else {
-      return false;
-    }
-  }
+  

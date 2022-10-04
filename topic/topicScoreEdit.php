@@ -27,7 +27,7 @@
       <div class="row">
         <div class="col-md-8 col-md-offset-2">
 
-            <?php if ( canViewOwnTopicScore() ): ?>
+            <?php if (hasPermissionTo('view-own-topic-score')): ?>
               <a href="topicScoreOwn.php" class="btn btn-primary" style="margin-bottom: 5px;">
                 <span class="glyphicon glyphicon-chevron-left"></span>
                 Topics
@@ -36,7 +36,7 @@
 
               <h2 class="text-center">Topic information</h2>
 
-              <?php if (canAssignTopicScore( )): ?>
+              <?php if (hasPermissionTo('assign-topic-score')): ?>
                 <?php
                   $sql = "SELECT s.id, s.value FROM scores s";
                   $score_list= getMultipleRecords($sql);

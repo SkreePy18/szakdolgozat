@@ -16,18 +16,18 @@
       <div class="col-md-4 col-md-offset-4">
         <h1 class="text-center">Administration</h1>
         <br />
-        <?php if (canViewDashboard()): ?>
+        <?php if (hasPermissionTo('view-dashboard')): ?>
           <ul class="list-group">
-            <?php if (canViewUserList()): ?>
+            <?php if (hasPermissionTo('view-user-list')): ?>
               <a href="<?php xecho(BASE_URL . 'admin/users/userList.php'); ?>" class="list-group-item">Manage users</a>
             <?php endif ?>
-            <?php if (canViewRoleList()): ?>
+            <?php if (hasPermissionTo('view-role-list')): ?>
               <a href="<?php xecho(BASE_URL . 'admin/roles/roleList.php'); ?>" class="list-group-item">Manage roles and permissions</a>
             <?php endif ?>
-            <?php if (canViewSemesterList()): ?>
+            <?php if (hasPermissionTo('view-semester-list')): ?>
               <a href="<?php xecho(BASE_URL . 'admin/semesters/semesterList.php'); ?>" class="list-group-item">Manage semesters</a>
             <?php endif ?>
-            <?php if (canViewCategoryList()): ?>
+            <?php if (hasPermissionTo('view-category-list')): ?>
               <a href="<?php xecho(BASE_URL . 'admin/categories/categoryList.php'); ?>" class="list-group-item">Manage categories</a>
             <?php endif ?>
           </ul>

@@ -22,7 +22,7 @@
       <div class="row">
         <div class="col-md-6 col-md-offset-3">
 
-          <?php if (canViewSemesterList()): ?>
+          <?php if (hasPermissionTo('view-semester')): ?>
             <a href="semesterList.php" class="btn btn-primary" style="margin-bottom: 5px;">
               <span class="glyphicon glyphicon-chevron-left"></span>
               Semesters

@@ -33,14 +33,14 @@
     <div class="row">
       <div class="col-md-8 col-md-offset-2">
 
-        <?php if (canViewDashboard()): ?>
+        <?php if (hasPermissionTo('view-dashboard')): ?>
           <a href="../dashboard.php" class="btn btn-primary">
             <span class="glyphicon glyphicon-chevron-left"></span>
             Dashboard
           </a>
         <?php endif; ?>
 
-        <?php if (canCreateUser()): ?>
+        <?php if (hasPermissionTo('create-user')): ?>
           <a href="userForm.php" class="btn btn-success">
             <span class="glyphicon glyphicon-plus"></span>
             Create new user
@@ -48,10 +48,10 @@
           <hr>
         <?php endif ?>
 
-        <?php if (canViewUserList()): ?>
+        <?php if (hasPermissionTo('view-user-list')): ?>
           <?php
             $allUsers = getAllUsers();
-            $ncol = canUpdateUser() + canDeleteUser(-1);
+            $ncol = hasPermissionTo('update-user') + hasPermissionTo('delete-user');
           ?>
           <h1 class="text-center">User management</h1>
           <br />
@@ -79,7 +79,7 @@
                     <td><?php xecho($value['role']); ?></td>
 
                     <?php if ($ncol > 0): ?>
-                      <?php if (canUpdateUser()): ?>
+                      <?php if (hasPermissionTo('update-user')): ?>
                         <td class="text-center">
                           <a href="<?php xecho(BASE_URL); ?>admin/users/userForm.php?edit_user=<?php xecho($value['id']); ?>" class="btn btn-sm btn-success">
                             <span class="glyphicon glyphicon-pencil"></span>
@@ -87,7 +87,7 @@
                         </td>
                       <?php endif ?>
 
-                      <?php if (canDeleteUser( )): ?>
+                      <?php if (hasPermissionTo('delete-user')): ?>
                         <td class="text-center">
                           <a href="<?php xecho(BASE_URL); ?>admin/users/userList.php?delete_user=<?php xecho($value['id']); ?>" class="btn btn-sm btn-danger">
                             <span class="glyphicon glyphicon-trash"></span>

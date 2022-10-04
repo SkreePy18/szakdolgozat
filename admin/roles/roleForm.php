@@ -17,7 +17,7 @@
       <div class="row">
         <div class="col-md-6 col-md-offset-3">
 
-          <?php if (canViewRoleList()): ?>
+          <?php if (hasPermissionTo('view-role-list')): ?>
             <a href="roleList.php" class="btn btn-primary">
               <span class="glyphicon glyphicon-chevron-left"></span>
               Roles
@@ -25,7 +25,7 @@
             <hr>
           <?php endif; ?>
 
-          <?php if (canUpdateRoleByID($role_id) || canCreateRole() ): ?>
+          <?php if (canUpdateRoleByID($role_id) || hasPermissionTo('create-role') ): ?>
             <?php if ($isEditting === true): ?>
               <h1 class="text-center">Update Role</h1>
             <?php else: ?>

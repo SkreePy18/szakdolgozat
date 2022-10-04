@@ -132,7 +132,7 @@
                 <?php endif; ?>
               </div>
 
-              <?php if ( canPublishTopic() ): ?>
+              <?php if (hasPermissionTo('publish-topic') ): ?>
                 <?php if ($published == true): ?>
                   <label for="published">
                     Publish

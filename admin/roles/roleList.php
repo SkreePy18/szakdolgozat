@@ -33,14 +33,14 @@
     <div class="row">
       <div class="col-md-8 col-md-offset-2">
 
-        <?php if (canViewDashboard()): ?>
+        <?php if (hasPermissionTo('view-dashboard')): ?>
           <a href="../dashboard.php" class="btn btn-primary">
             <span class="glyphicon glyphicon-chevron-left"></span>
             Dashboard
           </a>
         <?php endif; ?>
 
-        <?php if (canCreateRole()): ?>
+        <?php if (hasPermissionTo('create-role')): ?>
           <a href="roleForm.php" class="btn btn-success">
             <span class="glyphicon glyphicon-plus"></span>
             Create new role
@@ -48,10 +48,10 @@
           <hr>
         <?php endif ?>
 
-        <?php if (canViewRoleList()): ?>
+        <?php if (hasPermissionTo('view-role-list')): ?>
           <?php
             $roles = getAllRoles();
-            $ncol = canAssignRolePermissions() + canUpdateRole() + canDeleteRole();
+            $ncol = hasPermissionTo('assign-role-permissions') + hasPermissionTo('update-role') + hasPermissionTo('delete-role');
           ?>
           <h1 class="text-center">Role management</h1>
           <br />
@@ -73,21 +73,21 @@
                     <td><?php xecho($value['name']) ?></td>
 
                     <?php if ($ncol > 0): ?>
-                      <?php if (canAssignRolePermissions()): ?>
+                      <?php if (hasPermissionTo('assign-role-permissions')): ?>
                         <td class="text-center">
                           <a href="<?php xecho(BASE_URL) ?>admin/roles/assignPermissions.php?assign_permissions=<?php xecho($value['id']); ?>" class="btn btn-sm btn-info">
                             permissions
                           </a>
                         </td>
                       <?php endif ?>
-                      <?php if (canUpdateRole()): ?>
+                      <?php if (hasPermissionTo('update-role')): ?>
                         <td class="text-center">
                           <a href="<?php xecho(BASE_URL); ?>admin/roles/roleForm.php?edit_role=<?php xecho($value['id']); ?>" class="btn btn-sm btn-success">
                             <span class="glyphicon glyphicon-pencil"></span>
                           </a>
                         </td>
                       <?php endif ?>
-                      <?php if (canDeleteRole()): ?>
+                      <?php if (hasPermissionTo('delete-role')): ?>
                         <td class="text-center">
                           <a href="<?php xecho(BASE_URL); ?>admin/roles/roleList.php?delete_role=<?php xecho($value['id']); ?>" class="btn btn-sm btn-danger">
                             <span class="glyphicon glyphicon-trash"></span>

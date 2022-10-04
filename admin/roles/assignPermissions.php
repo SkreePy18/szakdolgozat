@@ -16,7 +16,7 @@
   <div class="container" style="margin-bottom: 50px;">
     <div class="row">
       <div class="col-md-4 col-md-offset-4">
-        <?php if (canViewRoleList()): ?>
+        <?php if (hasPermissionTo('view-role-list')): ?>
           <a href="roleList.php" class="btn btn-primary">
             <span class="glyphicon glyphicon-chevron-left"></span>
             Roles

@@ -1,7 +1,7 @@
 <!-- closing container div can be found in the footer -->
 
 <div class="container">
-  <?php if (isset($_SESSION['user']) && canViewDashboard()): ?>
+  <?php if (isset($_SESSION['user']) && hasPermissionTo('view-dashboard')): ?>
   <nav class="navbar navbar-inverse">
   <?php else: ?>
   <nav class="navbar navbar-default">
@@ -23,26 +23,26 @@
               <?php xecho($_SESSION['user']['username'] . ' (' . $_SESSION['user']['role'] . ')'); ?> <span class="caret"></span></a>
 
               <ul class="dropdown-menu">
-                <?php if (canViewProfile()): ?>
+                <?php if (hasPermissionTo('view-profile')): ?>
                   <li><a href="<?php xecho(BASE_URL . 'admin/users/userForm.php?edit_user=' . $_SESSION['user']['id']); ?>">Profile</a></li>
                 <?php endif; ?>
-                <?php if (canViewDashboard()): ?>
+                <?php if (hasPermissionTo('view-dashobard')): ?>
                   <li><a href="<?php xecho(BASE_URL . 'admin/dashboard.php'); ?>" style="color: red;">Dashboard</a></li>
                 <?php endif; ?>
-                <?php if (canViewTopicList()): ?>
+                <?php if (hasPermissionTo('view-topic-list')): ?>
                   <li role="separator" class="divider"></li>
                   <li><a href="<?php xecho(BASE_URL . 'topic/topicFilter.php?filter_topic=all'); ?>" >All topics</a></li>
-                  <?php if (canViewTopicSummary()): ?>
+                  <?php if (hasPermissionTo('view-topic-summary')): ?>
                       <li><a href="<?php xecho(BASE_URL . 'topic/topicFilter.php?filter_topic=registered-user'); ?>" >All topics with registered user</a></li>
                       <li><a href="<?php xecho(BASE_URL . 'topic/topicFilter.php?filter_topic=approved-user'); ?>" >All topics with approved user</a></li>
                   <?php else: ?>
-                    <?php if (canCreateTopic()): ?>
+                    <?php if (hasPermissionTo('create-topic')): ?>
                       <li><a href="<?php xecho(BASE_URL . 'topic/topicFilter.php?filter_topic=owned'); ?>" >My created topics</a></li>
                       <li><a href="<?php xecho(BASE_URL . 'topic/topicFilter.php?filter_topic=registered-user'); ?>" >My topics with registered user</a></li>
                       <li><a href="<?php xecho(BASE_URL . 'topic/topicFilter.php?filter_topic=approved-user'); ?>" >My topics with approved user</a></li>
                     <?php endif; ?>
                   <?php endif; ?>
-                  <?php if (canRegisterTopic()): ?>
+                  <?php if (hasPermissionTo('register-topic')): ?>
                     <?php if ( hasUserApprovedTopic($_SESSION['user']['id']) ): ?>
                       <li><a href="<?php xecho(BASE_URL . 'topic/topicFilter.php?filter_topic=approved'); ?>" >My approved topic</a></li>
                     <?php else: ?>
@@ -50,10 +50,10 @@
                     <?php endif; ?>
                   <?php endif; ?>
 
-                  <?php if (canViewOwnTopicScore()): ?>
+                  <?php if (hasPermissionTo('view-own-topic-score')): ?>
                     <li><a href="<?php xecho(BASE_URL . 'topic/topicScoreOwn.php'); ?>" >My scores for topics</a></li>
                   <?php endif; ?>
-                  <?php if (canViewAllTopicScore()): ?>
+                  <?php if (hasPermissionTo('view-all-topic-score')): ?>
                     <li><a href="<?php xecho(BASE_URL . 'topic/topicScoreAll.php'); ?>" >All scores for all topics</a></li>
                   <?php endif; ?>
 

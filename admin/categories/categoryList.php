@@ -33,14 +33,14 @@
     <div class="row">
       <div class="col-md-8 col-md-offset-2">
 
-        <?php if (canViewDashboard()): ?>
+        <?php if (hasPermissionTo('view-dashboard')): ?>
           <a href="../dashboard.php" class="btn btn-primary">
             <span class="glyphicon glyphicon-chevron-left"></span>
             Dashboard
           </a>
         <?php endif; ?>
 
-        <?php if (canCreateCategory()): ?>
+        <?php if (hasPermissionTo('create-category')): ?>
           <a href="categoryForm.php" class="btn btn-success">
             <span class="glyphicon glyphicon-plus"></span>
             Create new category
@@ -48,7 +48,7 @@
           <hr>
         <?php endif ?>
 
-        <?php if (canViewCategoryList()): ?>
+        <?php if (hasPermissionTo('view-category-lisst')): ?>
           <?php
             $categories = getCategories();
             $ncol = canUpdateCategory() + canDeleteCategory(-1);
@@ -73,7 +73,7 @@
                     <td><?php xecho($value['name']); ?></td>
 
                     <?php if ($ncol > 0): ?>
-                      <?php if (canUpdateCategory() && ($value['id'] > 0)): ?>
+                      <?php if (hasPermissionTo('update-category') && ($value['id'] > 0)): ?>
                         <td class="text-center">
                           <a href="<?php xecho(BASE_URL); ?>admin/categories/categoryForm.php?edit_category=<?php xecho($value['id']); ?>" class="btn btn-sm btn-success">
                             <span class="glyphicon glyphicon-pencil"></span>
@@ -81,7 +81,7 @@
                         </td>
                       <?php endif ?>
 
-                      <?php if (canDeleteCategory() && ($value['id'] > 0)): ?>
+                      <?php if (hasPermissionTo('delete-category') && ($value['id'] > 0)): ?>
                         <td class="text-center">
                           <a href="<?php xecho(BASE_URL); ?>admin/categories/categoryList.php?delete_category=<?php xecho($value['id']); ?>" class="btn btn-sm btn-danger">
                             <span class="glyphicon glyphicon-trash"></span>

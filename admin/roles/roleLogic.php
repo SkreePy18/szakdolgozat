@@ -69,7 +69,7 @@
     $name = $role_data['name'];
     $description = $role_data['description'];
 
-    if (! canCreateRole( )) {
+    if (! hasPermissionTo('create-role')) {
       $_SESSION['error_msg'] = "No permissions to create role";
       header("location: " . BASE_URL . "admin/roles/roleList.php");
       exit(0);

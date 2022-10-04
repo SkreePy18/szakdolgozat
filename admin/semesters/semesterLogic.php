@@ -47,7 +47,7 @@
     // receive all input values from the form
     $semester = $semester_data['semester'];
 
-    if (! canCreateSemester( )) {
+    if (! hasPermissionTo('create-semester')) {
       $_SESSION['error_msg'] = "No permissions to create semester";
       header("location: " . BASE_URL . "admin/semesters/semesterList.php");
       exit(0);
@@ -97,7 +97,7 @@
       $result = modifyRecord($sql, 'si', [$semester, $semester_id]);
       if ($result) {
         $_SESSION['success_msg'] = "Semester successfully updated";
-        if(canViewSemesterList()) {
+        if(hasPermissionTo('view-semester-list')) {
           header("location: " . BASE_URL . "admin/semesters/semesterList.php");
         } else {
           header("location: " . BASE_URL . "index.php");

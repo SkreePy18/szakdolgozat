@@ -22,7 +22,7 @@
       <div class="row">
         <div class="col-md-6 col-md-offset-3">
 
-          <?php if (canViewcategoryList()): ?>
+          <?php if (hasPermissionTo('view-category-list')): ?>
             <a href="categoryList.php" class="btn btn-primary" style="margin-bottom: 5px;">
               <span class="glyphicon glyphicon-chevron-left"></span>
               categorys
@@ -30,7 +30,7 @@
             <hr>
           <?php endif; ?>
 
-          <?php if (canUpdatecategoryByID($category_id) || canCreatecategory() ): ?>
+          <?php if (canUpdatecategoryByID($category_id) || hasPermissionTo('create-category') ): ?>
 
             <?php if ($isEditing === true ): ?>
               <h2 class="text-center">Update category</h2>

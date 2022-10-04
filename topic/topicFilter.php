@@ -34,7 +34,7 @@
         <div class="col-md-10 col-md-offset-1">
 
           <!-- Topic creation if allowed -->
-          <?php if (canCreateTopic()): ?>
+          <?php if (hasPermissionTo('create-topic')): ?>
             <a href="topicForm.php" class="btn btn-success">
               <span class="glyphicon glyphicon-plus"></span>
               Create new topic
@@ -42,9 +42,9 @@
             <hr>
           <?php endif ?>
 
-          <?php if (canViewTopicList()): ?>
+          <?php if (hasPermissionTo('view-topic-list')): ?>
             
-            <?php if (canViewSemesterSelector() ): ?>
+            <?php if (hasPermissionTo('view-semester-selector') ): ?>
               <form class="form" action="<?php xecho(keepQueryServer()) ?>" method="post" enctype="multipart/form-data">
                 <?php
                     $sql = "SELECT id, semester FROM semesters";
@@ -67,7 +67,7 @@
             <?php endif; ?>
 
             <?php
-              $ncol = canUpdateTopic() + canDeleteTopic();
+              $ncol = hasPermissionTo('update-topic') + hasPermissionTo('delete-topic');
               $title = "";
               if (isset($_GET["filter_supervisor"])) {
                 $owner_id = filter_input(INPUT_GET, 'filter_supervisor', FILTER_SANITIZE_NUMBER_INT);

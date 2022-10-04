@@ -22,7 +22,7 @@
       <div class="row">
         <div class="col-md-6 col-md-offset-3">
 
-          <?php if (canViewUserList()): ?>
+          <?php if (hasPermissionTo('view-user-list')): ?>
             <a href="userList.php" class="btn btn-primary" style="margin-bottom: 5px;">
               <span class="glyphicon glyphicon-chevron-left"></span>
               Users
@@ -30,7 +30,7 @@
             <hr>
           <?php endif; ?>
 
-          <?php if (canUpdateUserByID($user_id) || canCreateUser() ): ?>
+          <?php if (canUpdateUserByID($user_id) || hasPermissionTo('create-user') ): ?>
 
             <?php if ($isEditing === true ): ?>
               <h2 class="text-center">Update user</h2>
@@ -110,7 +110,7 @@
                 <?php endif; ?>
               </div>
 
-              <?php if (canAssignUserRole()): ?>
+              <?php if (hasPermissionTo('assign-user-role')): ?>
                 <div class="form-group <?php xecho(isset($errors['role_id']) ? 'has-error' : ''); ?>">
                   <label class="control-label">User Role</label>
                   <select class="form-control" name="role_id">

@@ -19,7 +19,7 @@
       <div class="row">
         <div class="col-md-10 col-md-offset-1">
 
-          <?php if (canViewOwnTopicScore()): ?>
+          <?php if (hasPermissionTo('view-own-topic-score')): ?>
             <?php
               $topics = getFilterTopicsScore($_SESSION['user']['id']);
             ?>
@@ -45,7 +45,7 @@
                       <td><?php if( is_null($value['score']) ) { xecho("Not set"); } else { xecho($value['score']['value']); } ?></td>
 
                       <td class="text-center">
-                        <?php if (canAssignTopicScore()): ?>
+                        <?php if (hasPermissionTo('assign-topic-score')): ?>
                           <a href="<?php xecho(BASE_URL); ?>topic/topicScoreEdit.php?view_topic=<?php xecho($value['id']);?>" 
                               class="btn btn-primary">
                               <span class="glyphicon glyphicon-thumbs-up"></span>

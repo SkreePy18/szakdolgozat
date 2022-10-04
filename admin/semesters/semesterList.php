@@ -33,14 +33,14 @@
     <div class="row">
       <div class="col-md-8 col-md-offset-2">
 
-        <?php if (canViewDashboard()): ?>
+        <?php if (hasPermissionTo('view-dashboard')): ?>
           <a href="../dashboard.php" class="btn btn-primary">
             <span class="glyphicon glyphicon-chevron-left"></span>
             Dashboard
           </a>
         <?php endif; ?>
 
-        <?php if (canCreateSemester()): ?>
+        <?php if (hasPermissionTo('create-semester')): ?>
           <a href="semesterForm.php" class="btn btn-success">
             <span class="glyphicon glyphicon-plus"></span>
             Create new semester
@@ -48,10 +48,10 @@
           <hr>
         <?php endif ?>
 
-        <?php if (canViewSemesterList()): ?>
+        <?php if (hasPermissionTo('view-semester-list')): ?>
           <?php
             $allSemesters = getAllSemesters();
-            $ncol = canUpdateSemester() + canDeleteSemester(-1);
+            $ncol = hasPermissionTo('update-semester') + canDeleteSemester(-1);
           ?>
           <h1 class="text-center">Semester management</h1>
           <br />
@@ -73,7 +73,7 @@
                     <td><?php xecho($value['semester']); ?></td>
 
                     <?php if ($ncol > 0): ?>
-                      <?php if (canUpdateSemester() && ($value['id'] > 1)): ?>
+                      <?php if (hasPermissionTo('update-semester') && ($value['id'] > 1)): ?>
                         <td class="text-center">
                           <a href="<?php xecho(BASE_URL); ?>admin/semesters/semesterForm.php?edit_semester=<?php xecho($value['id']); ?>" class="btn btn-sm btn-success">
                             <span class="glyphicon glyphicon-pencil"></span>
@@ -81,7 +81,7 @@
                         </td>
                       <?php endif ?>
 
-                      <?php if (canDeleteSemester() && ($value['id'] > 1)): ?>
+                      <?php if (hasPermissionTo('delete-semester') && ($value['id'] > 1)): ?>
                         <td class="text-center">
                           <a href="<?php xecho(BASE_URL); ?>admin/semesters/semesterlist.php?delete_semester=<?php xecho($value['id']); ?>" class="btn btn-sm btn-danger">
                             <span class="glyphicon glyphicon-trash"></span>

@@ -19,7 +19,7 @@
       <div class="row">
         <div class="col-md-8 col-md-offset-2">
 
-          <?php if (canViewAllTopicScore()): ?>
+          <?php if (hasPermissionTo('view-all-topic-score')): ?>
             <?php
               $topics = getFilterTopicsScore($_SESSION['user']['id']);
             ?>
