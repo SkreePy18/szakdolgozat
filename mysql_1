@@ -1,0 +1,26 @@
+
+/* this file is used as an addition to the mysql data structure (2021-06-15) */
+
+USE `user-accounts`;
+
+
+INSERT INTO `permissions` (`id`, `name`, `description`) VALUES (22, 'view-semester-list',     'can view semesters');
+INSERT INTO `permissions` (`id`, `name`, `description`) VALUES (23, 'create-semester',        'can create semesters');
+INSERT INTO `permissions` (`id`, `name`, `description`) VALUES (24, 'update-semester',        'can update semesters');
+INSERT INTO `permissions` (`id`, `name`, `description`) VALUES (25, 'delete-semester',        'can delete semesters');
+INSERT INTO `permissions` (`id`, `name`, `description`) VALUES (26, 'assign-topic-semester',  'can assign topics to semester');
+INSERT INTO `permissions` (`id`, `name`, `description`) VALUES (27, 'view-semester-selector', 'can view semester selector');
+
+
+CREATE TABLE `semesters` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `semester` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB;
+
+INSERT INTO `semesters` (`id`, `semester`) VALUES (1, 'Current semester');
+
+
+ALTER TABLE topics ADD COLUMN semester_id INT NOT NULL DEFAULT 1;
+ALTER TABLE topics ADD CONSTRAINT topics_semester_fk FOREIGN KEY (semester_id) REFERENCES semesters(id) ON DELETE CASCADE ON UPDATE CASCADE;
+

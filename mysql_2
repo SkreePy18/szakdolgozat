@@ -1,0 +1,39 @@
+
+/* this file is used as an addition to the mysql data structure (2021-06-15) */
+
+USE `user-accounts`;
+
+
+INSERT INTO `permissions` (`id`, `name`, `description`) VALUES (28, 'view-own-topic-score',  'can view own topic scores');
+INSERT INTO `permissions` (`id`, `name`, `description`) VALUES (29, 'view-all-topic-score',  'can view all topic scores');
+INSERT INTO `permissions` (`id`, `name`, `description`) VALUES (30, 'assign-topic-score',    'can assign score to topic');
+
+
+CREATE TABLE `scores` (
+ `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+ `value` int(11) NOT NULL
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB;
+
+INSERT INTO `scores` (`id`, `value`) VALUES (1, 1);
+INSERT INTO `scores` (`id`, `value`) VALUES (2, 2);
+INSERT INTO `scores` (`id`, `value`) VALUES (3, 5);
+INSERT INTO `scores` (`id`, `value`) VALUES (4, 10);
+INSERT INTO `scores` (`id`, `value`) VALUES (5, 20);
+INSERT INTO `scores` (`id`, `value`) VALUES (6, 50);
+INSERT INTO `scores` (`id`, `value`) VALUES (7, 100);
+
+
+CREATE TABLE `topic_score` (
+ `score_id` int(11) NOT NULL,
+ `topic_id` int(11) NOT NULL,
+ `user_id` int(11) NOT NULL,
+ PRIMARY KEY (`topic_id`, `user_id`),
+ KEY `score_id` (`score_id`),
+ KEY `topic_id` (`topic_id`),
+ KEY `user_id`  (`user_id`),
+ CONSTRAINT `topic_score_ibfk_1` FOREIGN KEY (`score_id`) REFERENCES `scores` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ CONSTRAINT `topic_score_ibfk_2` FOREIGN KEY (`topic_id`) REFERENCES `topics` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ CONSTRAINT `topic_score_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB;
+
+
