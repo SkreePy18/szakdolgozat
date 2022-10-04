@@ -27,6 +27,9 @@
             <?php if (canViewSemesterList()): ?>
               <a href="<?php xecho(BASE_URL . 'admin/semesters/semesterList.php'); ?>" class="list-group-item">Manage semesters</a>
             <?php endif ?>
+            <?php if (canViewCategoryList()): ?>
+              <a href="<?php xecho(BASE_URL . 'admin/categories/categoryList.php'); ?>" class="list-group-item">Manage categories</a>
+            <?php endif ?>
           </ul>
         <?php else: ?>
           <h2 class="text-center">No permissions to view dashboard</h2>

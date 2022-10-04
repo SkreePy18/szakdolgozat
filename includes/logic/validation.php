@@ -174,4 +174,21 @@
     return $errors;
   }
 
+   // Accept a category object, validates category and return an array with the error messages
+
+  function validateCategory($category, $ignoreFields) {
+    global $conn;
+    $errors = [];
+
+    foreach ($category as $key => $value) {
+      if (in_array($key, $ignoreFields)) {
+          continue;
+      }
+      if (empty($category[$key])) {
+        $errors[$key] = "This field is required";
+      }
+    }
+    return $errors;
+  }
+
   

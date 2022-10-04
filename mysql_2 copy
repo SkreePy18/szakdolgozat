@@ -1,0 +1,12 @@
+
+/* this file is used as an addition to the mysql data structure (2022-10-04) */
+
+USE `user-accounts`;
+
+/* Assign category permissions */
+
+INSERT INTO `permissions` (`name`, `description`) VALUES ('view-category-list',     'can view categories');
+INSERT INTO `permissions` (`name`, `description`) VALUES ('create-category',        'can create categories');
+INSERT INTO `permissions` (`name`, `description`) VALUES ('update-category',        'can update categories');
+INSERT INTO `permissions` (`name`, `description`) VALUES ('delete-category',        'can delete categories');
+

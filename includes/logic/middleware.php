@@ -682,6 +682,96 @@
     }
   }
 
+  // ---------------------------------- Categories ------------------------------
+
+  function canViewCategoryList() {
+    if(in_array(['permission_name' => 'view-category-list'], $_SESSION['userPermissions'])){
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+
+  function canCreateCategory() {
+    if(in_array(['permission_name' => 'create-category'], $_SESSION['userPermissions'])){
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  function canUpdateCategory(){
+    if(in_array(['permission_name' => 'update-category'], $_SESSION['userPermissions'])){
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  // checks if logged in user can update categories
+  function canUpdateCategoryByID($category_id = null){
+    global $conn;
+
+    if(in_array(['permission_name' => 'update-category'], $_SESSION['userPermissions'])){
+      // check whether category exists at all
+      $sql = "SELECT id FROM categories WHERE id=?";
+      $cat_results = getSingleRecord($sql, 'i', [$category_id]);
+      if(is_null($cat_results)) {
+        return false;
+      }
+      else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+
+  function canDeleteCategory(){
+    if(in_array(['permission_name' => 'delete-category'], $_SESSION['userPermissions'])){
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  function canDeleteCategoryByID($category_id = null) {
+    global $conn;
+    if(in_array(['permission_name' => 'delete-category'], $_SESSION['userPermissions'])){
+      // check whether category exists at all
+      $sql = "SELECT id FROM `categories` WHERE id = ?";
+      $result = getSingleRecord($sql, 'i', [$category_id]);
+      if(is_null($result)) {
+        $_SESSION['error_msg'] = "Category does not exist to delete it. ID: '" . $category_id . "'";
+        return false;
+      }
+
+      // we are not allowed to delete a semester with topics
+      $sql = "SELECT id FROM topic_category WHERE category_id=?";
+      $result = getMultipleRecords($sql, 'i', [$category_id]);
+      if(count($result) > 0) {
+        $_SESSION['error_msg'] = "Cannot delete category with topics";
+        return false;
+      }
+
+      return true;
+    } else {
+      $_SESSION['error_msg'] = "No permissions to delete category";
+      return false;
+    }
+
+  }
+
+
+  function canViewCategorySelector(){
+    if(in_array(['permission_name' => 'view-category-selector'], $_SESSION['userPermissions'])){
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   // ---------------------------------- Scores ------------------------------
 
 
