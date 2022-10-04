@@ -112,7 +112,8 @@
                     <?php if ( canViewTopicByID($value['id']) || canUpdateTopicByID( $value['id'] ) || canDeleteTopicByID( $value['id'] ) ): ?>
                       <tr>
                         <td><?php xecho($key + 1); ?></td>
-                        <td><?php xecho($value['title']) ?><?php if($value['semester_id'] != 1) {echo(" <font color='ff0000'>(Archived)</font>");} ?></td>
+                        <?php $url = "topic/topicView.php?view_topic=" ?>
+                        <td><a href=<?php echo(BASE_URL . $url . $value['id'] . '>'); ?> <?php xecho($value['title']); ?><?php if($value['semester_id'] != 1) {echo(" <font color='ff0000'>(Archived)</font>");} ?></a></td>
                         <!-- if we are listing approved users -->
                         <?php if( (isset($filter_type)) && ($filter_type == 'approved-user') ): ?>
                           <td>
