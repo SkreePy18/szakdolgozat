@@ -41,7 +41,7 @@
         <li>When a topic is unpublished all registrations and the approved registration will be deleted. Again, students will not see this topic and cannot register for this topic.</li>
         </ul>
         </p>
-        <?php if (canCreateTopic()): ?>
+        <?php if (hasPermissionTo('create-topic')): ?>
           <p>For lecturers:</p>
           <ul>
             <li><button class="btn btn-sm btn-success glyphicon glyphicon-info-sign"></button> - The topic can be viewed. Students can register for the topic. The creator can approve a registration or withdraw an approval.</li>

@@ -26,7 +26,7 @@
                 <?php if (hasPermissionTo('view-profile')): ?>
                   <li><a href="<?php xecho(BASE_URL . 'admin/users/userForm.php?edit_user=' . $_SESSION['user']['id']); ?>">Profile</a></li>
                 <?php endif; ?>
-                <?php if (hasPermissionTo('view-dashobard')): ?>
+                <?php if (hasPermissionTo('view-dashboard')): ?>
                   <li><a href="<?php xecho(BASE_URL . 'admin/dashboard.php'); ?>" style="color: red;">Dashboard</a></li>
                 <?php endif; ?>
                 <?php if (hasPermissionTo('view-topic-list')): ?>
