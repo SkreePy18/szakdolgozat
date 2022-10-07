@@ -48,10 +48,10 @@
           <hr>
         <?php endif ?>
 
-        <?php if (hasPermissionTo('view-category-lisst')): ?>
+        <?php if (hasPermissionTo('view-category-list')): ?>
           <?php
             $categories = getCategories();
-            $ncol = canUpdateCategory() + canDeleteCategory(-1);
+            $ncol = hasPermissionTo('update-category') + hasPermissionTo('delete-category');
           ?>
           <h1 class="text-center">Category management</h1>
           <br />

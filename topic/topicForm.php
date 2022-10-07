@@ -19,7 +19,7 @@
       <div class="row">
         <div class="col-md-8 col-md-offset-2">
 
-          <?php if (canViewTopicList()): ?>
+          <?php if (hasPermissionTo('view-topic-list')): ?>
             <a href="topicFilter.php?filter_topic=all" class="btn btn-primary" style="margin-bottom: 5px;">
               <span class="glyphicon glyphicon-chevron-left"></span>
               Topics
@@ -27,7 +27,7 @@
             <hr>
           <?php endif; ?>
 
-          <?php if (canUpdateTopicByID( $topic_id ) || canCreateTopic() ): ?>
+          <?php if (canUpdateTopicByID( $topic_id ) || hasPermissionTo('create-topic') ): ?>
             <?php if ($isEditing === true ): ?>
               <h2 class="text-center">Update topic</h2>
             <?php else: ?>
@@ -40,7 +40,7 @@
                 <input type="hidden" name="topic_id" value="<?php xecho($topic_id); ?>">
               <?php endif; ?>
 
-              <?php if (canAssignTopicSemester() ): ?>
+              <?php if (hasPermissionTo('assign-topic-semester') ): ?>
                 <?php
                     $sql = "SELECT id, semester FROM semesters";
                     $semesterlist = getMultipleRecords($sql);
@@ -61,7 +61,7 @@
                 <?php endif; ?>
               <?php endif; ?>
 
-              <?php if ( canOwnTopicUser() ): ?>     
+              <?php if (hasPermissionTo('own-topic-user') ): ?>     
                 <!-- With this permission user can select the supervisor for the topic -->
                 <?php 
                   $sql = "SELECT id, fullname, neptuncode FROM users WHERE role_id=?";

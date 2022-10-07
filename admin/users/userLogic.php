@@ -257,7 +257,7 @@
     $sql = "DELETE FROM users WHERE id=?";
     $result1 = modifyRecord($sql, 'i', [$user_id]);
 
-    if ($result1 && $result2) {
+    if ($result1) {
       $_SESSION['success_msg'] = "User have been deleted!";
       header("location: " . BASE_URL . "admin/users/userList.php");
       exit(0);

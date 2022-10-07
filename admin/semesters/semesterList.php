@@ -51,7 +51,7 @@
         <?php if (hasPermissionTo('view-semester-list')): ?>
           <?php
             $allSemesters = getAllSemesters();
-            $ncol = hasPermissionTo('update-semester') + canDeleteSemester(-1);
+            $ncol = hasPermissionTo('update-semester') + hasPermissionTo('delete-semester');
           ?>
           <h1 class="text-center">Semester management</h1>
           <br />

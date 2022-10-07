@@ -30,7 +30,7 @@
             <hr>
           <?php endif; ?>
 
-          <?php if (canUpdateSemesterByID($semester_id) || canCreateSemester() ): ?>
+          <?php if (canUpdateSemesterByID($semester_id) || hasPermissionTo('delete-semester') ): ?>
 
             <?php if ($isEditing === true ): ?>
               <h2 class="text-center">Update Semester</h2>
