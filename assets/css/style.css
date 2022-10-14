@@ -5,3 +5,14 @@ form label { font-weight: normal; }
 .success_msg { color: '#218823'; }
 .form { border-radius: 5px; border: 1px solid #d1d1d1; padding: 0px 10px 0px 10px; margin-bottom: 50px; }
 #image_display { height: 90px; width: 80px; float: right; margin-right: 10px; }
+
+.absoluteCenter {
+    display: block;
+    text-align: center;
+    line-height: 2em;
+}
+
+.verticalCenter {
+    display: block;
+    line-height: 2em;
+}

@@ -538,3 +538,62 @@
 
 
   
+  // Opportunity related
+  
+  function canDeleteOpportunityByID($opportunity_id = null) {
+    global $conn;
+    if(in_array(['permission_name' => 'delete-category'], $_SESSION['userPermissions'])){
+      // Check if opportunity exists
+      $sql = "SELECT id FROM `opportunities` WHERE id = ?";
+      $result = getSingleRecord($sql, 'i', [$opportunity_id]);
+      if(is_null($result)) {
+        $_SESSION['error_msg'] = "Opportunity does not exist to delete it. ID: '" . $opportunity_id . "'";
+        return false;
+      }
+
+      return true;
+    } else {
+      $_SESSION['error_msg'] = "No permissions to delete the opportunity";
+      return false;
+    }
+  }
+
+
+   // checks if logged in user can update opportunity
+   function canUpdateOpportunityByID($opportunity_id = null){
+    global $conn;
+
+    if(in_array(['permission_name' => 'update-category'], $_SESSION['userPermissions'])){
+      // check whether opportunity exists at all
+      $sql = "SELECT id FROM `opportunities` WHERE id = ?";
+      $cat_results = getSingleRecord($sql, 'i', [$opportunity_id]);
+      if(is_null($cat_results)) {
+        return false;
+      }
+
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  function canViewOpportunityByID($opportunity_id) {
+    if(in_array(['permission_name' => 'view-opportunity-list'], $_SESSION['userPermissions'])){
+
+      // admin role can view everything
+      if(isAdmin($_SESSION['user']['id'])) {
+        return true;
+      }
+
+      // Check if opportunity exists
+      $sql = "SELECT * from topics WHERE id=?";
+      $opportunities = getSingleRecord($sql, 'i', [ $opportunity_id ]);
+
+      if(is_null($opportunities)) {
+        return false;
+      }
+      return true;
+    } else {
+      return false;
+    }
+  }

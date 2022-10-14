@@ -191,4 +191,19 @@
     return $errors;
   }
 
-  
+  // Validation of the opportunities
+
+  function validateOpportunity($opportunity, $ignoreFields) {
+    global $conn;
+    $errors = [];
+
+    foreach ($opportunity as $key => $value) {
+      if (in_array($key, $ignoreFields)) {
+          continue;
+      }
+      if (empty($opportunity[$key])) {
+        $errors[$key] = "This field is required";
+      }
+    }
+    return $errors;
+  }

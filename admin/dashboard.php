@@ -30,6 +30,9 @@
             <?php if (hasPermissionTo('view-category-list')): ?>
               <a href="<?php xecho(BASE_URL . 'admin/categories/categoryList.php'); ?>" class="list-group-item">Manage categories</a>
             <?php endif ?>
+            <?php if (hasPermissionTo('view-category-list')): ?>
+              <a href="<?php xecho(BASE_URL . 'admin/opportunities/opportunityList.php'); ?>" class="list-group-item">Manage opportunities</a>
+            <?php endif ?>
           </ul>
         <?php else: ?>
           <h2 class="text-center">No permissions to view dashboard</h2>

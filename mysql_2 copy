@@ -1,4 +1,3 @@
-
 /* this file is used as an addition to the mysql data structure (2022-10-04) */
 
 USE `user-accounts`;
@@ -10,3 +9,23 @@ INSERT INTO `permissions` (`name`, `description`) VALUES ('create-category',    
 INSERT INTO `permissions` (`name`, `description`) VALUES ('update-category',        'can update categories');
 INSERT INTO `permissions` (`name`, `description`) VALUES ('delete-category',        'can delete categories');
 
+/* Opportunities table */
+
+CREATE TABLE `opportunities` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `opportunity` VARCHAR(255) NOT NULL,
+    `description` VARCHAR(255) NOT NULL,
+    `points` INT(11) NOT NULL,
+    `owner_id` INT(11) NOT NULL,
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB;
+
+
+
+/* Assign opportunity permissions */
+
+INSERT INTO `permissions` (`name`, `description`) VALUES ('view-opportunity-list',     'can view opportunities');
+INSERT INTO `permissions` (`name`, `description`) VALUES ('create-opportunity',        'can create opportunities');
+INSERT INTO `permissions` (`name`, `description`) VALUES ('update-opportunity',        'can update opportunities');
+INSERT INTO `permissions` (`name`, `description`) VALUES ('delete-opportunity',        'can delete opportunities');
+INSERT INTO `permissions` (`name`, `description`) VALUES ('view-all-opportunity',        'can delete opportunities');

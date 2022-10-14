@@ -58,6 +58,12 @@
                   <?php endif; ?>
 
                 <?php endif; ?>
+
+                <!-- Opportunities -->
+                <?php if (hasPermissionTo('view-opportunity-list')): ?>
+                  <li><a href="<?php xecho(BASE_URL . 'opportunities/opportunityFilter.php'); ?>" >Opportunities</a></li>
+                <?php endif; ?>
+
                 <li><a href="<?php xecho(BASE_URL . 'logout.php'); ?>" style="color: red;">Logout</a></li>
               </ul>
           </li>
