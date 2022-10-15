@@ -121,6 +121,9 @@
                             <span class="glyphicon glyphicon-info-sign"></span>
                           </a>
                         </td>
+
+                   
+
                         <!-- Generate QR code / hexadecimal number -->
                         <?php if (canGenerateCodeByID( $value['id'] )): ?>
                           <td class="text-center">
@@ -137,6 +140,8 @@
                         <?php else: ?>
                           <td class="text-center"><span class="btn btn-sm glyphicon glyphicon-ban-circle"></span></td>
                         <?php endif ?>
+
+                
 
                         <?php if (canUpdateOpportunityByID( $value['id'] )): ?>
                           <td class="text-center">

@@ -38,6 +38,12 @@
     viewOpportunity();
   }
 
+  // ACTION: Remove student
+  if (isset($_GET['remove_student'])) {
+    deleteStudent();
+  }
+
+
   
 
 
@@ -253,6 +259,7 @@
 
   function viewOpportunity(){
     global $conn, $opportunity_id, $opportunity, $owner_id, $opportunity_description, $opportunity_points, $expiration_date, $points_type, $isEditing;
+    global $accomplised_users;
 
     $opportunity_id = filter_input(INPUT_GET, 'view_opportunity', FILTER_SANITIZE_NUMBER_INT);
 
@@ -278,4 +285,36 @@
     $opportunity_points = $opportunity_data['points'];
     $expiration_date = $opportunity_data['expiration_date'];
     $points_type = $opportunity_data['points_type'];
+
+    // Get list of users who have accomplished
+    $sql = "SELECT * FROM excellence_points WHERE opportunity_id = ?";
+    $accomplised_users = getMultipleRecords($sql, 'i', [$opportunity_id]);
+  }
+
+  function deleteStudent() {
+    global $conn, $opportunity_id, $opportunity, $isDeleting;
+
+    $removeData = filter_input_array(INPUT_GET, [
+                          'remove_student' => FILTER_SANITIZE_NUMBER_INT,
+                          'view_opportunity' => FILTER_SANITIZE_NUMBER_INT,
+                  ]);
+
+    // if (! canDeleteOpportunityByID( $opportunity_id )) {
+    //   $_SESSION['error_msg'] = "No permissions to delete semester";
+    //   header("location: " . BASE_URL . "opportunities/opportunityFilter.php");
+    //   exit(0);
+    // }
+    
+    $student_id = $removeData['remove_student'];
+    $opportunity_id = $removeData['view_opportunity'];
+
+    $sql = "DELETE FROM excellence_points WHERE user_id=? AND opportunity_id=?";
+    $delete = modifyRecord($sql, 'ii', [$student_id, $opportunity_id]);
+
+    if($delete) {
+      $_SESSION['success_msg'] = "You have successfully removed the student!";
+      header("location: " . BASE_URL . "opportunities/opportunityView.php?view_opportunity=" . $opportunity_id);
+      exit(0);
+    }
+
   }

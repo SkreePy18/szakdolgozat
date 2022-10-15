@@ -61,10 +61,66 @@
                 <label class="control-label">Expiration date</label>
                 <input type="date" class="form-control" rows=1 value="<?php xecho($expiration_date); ?>" disabled></input>
               </div>
+
+              <!-- View students who has accomplished the opportunity -->
+              <?php if (canGenerateCodeByID( $_SESSION['user']['id'] )): ?>
+                <br><h2 class="text-center">Student(s) who have accomplished the opportunity</h2><br>
+
+                <?php if(! empty($accomplised_users)): ?>
+                  <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th width="2%">#</th>
+                      <th width="10%">Student</th>
+                      <th width="15%">Date achieved</th>
+                      <th colspan="4" class="text-center" width="23%">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php foreach ($accomplised_users as $key => $user): ?>
+                        <tr>
+                          <!-- Index -->
+
+                          <td class="text-center"> <?php xecho($key + 1); ?> </td>
+
+                          <!-- Neptun code -->
+
+                          <td>
+
+                            <?php 
+                              // echo($user['user_id']);
+                                $sql = "SELECT neptuncode FROM users WHERE id=? LIMIT 1";
+                                $aid = getSingleRecord($sql, 'i', [ $user['user_id'] ]);
+                                xecho($aid['neptuncode']);
+                            ?>
+                          </td>
+
+                          <!-- Date -->
+
+                          <td class="text-center"> <?php xecho(date("F j, Y", strtotime($user['date']))); ?> </td>
+
+                          <!-- Remove -->
+
+                          <td class="text-center">
+                            <a href="<?php xecho(BASE_URL); ?>opportunities/opportunityView.php?view_opportunity=<?php xecho($opportunity_id); ?>&remove_student=<?php 
+                                xecho($user['user_id']);
+
+                              ?>" class="btn btn-sm <?php xecho("btn-danger"); ?>">
+                              <span class="glyphicon glyphicon-trash"></span>
+                            </a>
+                          </td>
+
+                        </tr>
+                    <?php endforeach; ?>
+                  </tbody>
+                 </table>
+                 <?php else: ?>
+                  <h3 class="text-center"> Noone has completed this opportunity yet </h3>
+                  <?php endif ?>
+              <?php endif; ?>
             <?php else: ?>
               <h2 class="text-center">No permissions to view opportunity</h2>
             <?php endif ?>
-
           </form>
         </div>
       </div>
