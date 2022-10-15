@@ -29,7 +29,11 @@
                 <span class="glyphicon glyphicon-chevron-left"></span>
                 Opportunities
               </a>
+              
+              <input type="submit" class='btn btn-info' value="Import list" style="margin-bottom: 5px; float: right"> </input>
+              <input type="file" name="import" class="btn" style="margin-bottom: 5px; display: inline-block;float: right"></input>
               <hr>
+
 
               <h2 class="text-center">Opportunities</h2>
             

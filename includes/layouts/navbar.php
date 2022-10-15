@@ -29,8 +29,9 @@
                 <?php if (hasPermissionTo('view-dashboard')): ?>
                   <li><a href="<?php xecho(BASE_URL . 'admin/dashboard.php'); ?>" style="color: red;">Dashboard</a></li>
                 <?php endif; ?>
+                <li role="separator" class="divider"></li>
+                <li><a href="<?php xecho(BASE_URL . 'excellence/excellenceFilter.php'); ?>" >Excellence list</a></li>
                 <?php if (hasPermissionTo('view-topic-list')): ?>
-                  <li role="separator" class="divider"></li>
                   <li><a href="<?php xecho(BASE_URL . 'topic/topicFilter.php?filter_topic=all'); ?>" >All topics</a></li>
                   <?php if (hasPermissionTo('view-topic-summary')): ?>
                       <li><a href="<?php xecho(BASE_URL . 'topic/topicFilter.php?filter_topic=registered-user'); ?>" >All topics with registered user</a></li>

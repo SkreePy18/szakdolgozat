@@ -20,7 +20,7 @@
         <div class="col-md-8 col-md-offset-2">
 
           <?php if (hasPermissionTo('view-opportunity-list')): ?>
-            <a href="opportunityFilter.php?filter_opportunity=all" class="btn btn-primary" style="margin-bottom: 5px;">
+            <a href="../opportunities/opportunityFilter.php?filter_opportunity=all" class="btn btn-primary" style="margin-bottom: 5px;">
               <span class="glyphicon glyphicon-chevron-left"></span>
               Opportunities
             </a>

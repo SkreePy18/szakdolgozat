@@ -104,7 +104,7 @@
                   "opportunity"       => FILTER_SANITIZE_STRING,
                   "points"            => FILTER_SANITIZE_NUMBER_INT,
                   "points_type"       => FILTER_SANITIZE_STRING,
-                  "date"              => FILTER_SANITIZE_STRING
+                  "date"              => FILTER_SANITIZE_STRING,
                 ]);
 
     // receive all input values from the form
@@ -123,7 +123,7 @@
       exit(0);
     }
 
-    $errors = validateOpportunity($opportunity_data, ['update_opportunity']);
+    $errors = validateOpportunity($opportunity_data, ['edit_opportunity']);
 
     if (count($errors) === 0) {
       $sql = "UPDATE opportunities SET opportunity=?, description=?, points=?, points_type=?, expiration_date=? WHERE id=?";
@@ -140,7 +140,7 @@
         $_SESSION['error_msg'] = "Could not update opportunity data";
       }
     } else {
-      $_SESSION['error_msg'] = "Could not update opportunity";
+      $_SESSION['error_msg'] = "Could not update opportunity. Validation failed!";
     }
     $isEditing = true;
   }

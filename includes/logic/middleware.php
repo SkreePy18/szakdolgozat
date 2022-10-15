@@ -553,7 +553,7 @@
 
       return true;
     } else {
-      $_SESSION['error_msg'] = "No permissions to delete the opportunity";
+      // $_SESSION['error_msg'] = "No permissions to delete the opportunity";
       return false;
     }
   }

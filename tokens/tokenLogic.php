@@ -58,7 +58,7 @@
       $result = modifyRecord($sql, 'siiis', [$token, $opportunity_id, $user_id, $generated_by, $expiration_date]);
 
       if($result){
-        $_SESSION['success_msg'] = "Opportunity has been successfully published";
+        $_SESSION['success_msg'] = "Token has been successfully created. Token? " . $token;
         header("location: " . BASE_URL . "tokens/opportunityFilter.php");
         exit(0);
       } else {
@@ -90,12 +90,28 @@
     $result = modifyRecord($sql, 'si', [$token, $user_id]);
 
     if($result) {
-      $_SESSION['success_msg'] = "You have successfully redeemed the token!";
-      header("location: " . BASE_URL . "tokens/redeemToken.php");
-      exit(0);
+      return insertPoints($user_id, $token);
     } else {
       $_SESSION['error_msg'] = "You cannot redeem this token!";
       header("location: " . BASE_URL . "tokens/redeemToken.php");
       exit(0);
+    }
+  }
+
+  function insertPoints($user_id, $token) {
+    $sql = "SELECT * FROM `tokens` WHERE token = ? AND user_id = ?";
+    $result = getSingleRecord($sql, 'si', [$token, $user_id]);
+    if($result) {
+      $sql = "INSERT INTO excellence_points (opportunity_id, user_id) VALUES (?, ?)";
+      $insert = modifyRecord($sql, "ii", [$result['opportunity_id'], $result['user_id']]);
+      if($insert) {
+        $_SESSION['success_msg'] = "You have successfully redeemed the token!";
+        header("location: " . BASE_URL . "tokens/redeemToken.php");
+        exit(0);
+      } else {
+        $_SESSION['error_msg'] = "You cannot redeem this token!";
+        header("location: " . BASE_URL . "tokens/redeemToken.php");
+        exit(0);
+      }
     }
   }
