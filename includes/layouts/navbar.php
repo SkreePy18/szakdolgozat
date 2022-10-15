@@ -64,6 +64,10 @@
                   <li><a href="<?php xecho(BASE_URL . 'opportunities/opportunityFilter.php'); ?>" >Opportunities</a></li>
                 <?php endif; ?>
 
+                <?php if (hasPermissionTo('view-opportunity-list')): ?>
+                  <li><a href="<?php xecho(BASE_URL . 'tokens/redeemToken.php'); ?>" >Redeem token</a></li>
+                <?php endif; ?>
+
                 <li><a href="<?php xecho(BASE_URL . 'logout.php'); ?>" style="color: red;">Logout</a></li>
               </ul>
           </li>

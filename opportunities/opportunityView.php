@@ -46,8 +46,16 @@
                 <textarea class="form-control" rows=10 disabled><?php xecho($opportunity_description); ?></textarea>
               </div>
               <div class="form-group" >
+                <label class="control-label">Type of points</label>
+                <input type="text" class="form-control" rows=1 value="<?php xecho($points_type); ?>" disabled></input>
+              </div>
+              <div class="form-group" >
                 <label class="control-label">Points</label>
                 <input type="number" class="form-control" rows=1 value="<?php xecho($opportunity_points); ?>" disabled></input>
+              </div>
+              <div class="form-group" >
+                <label class="control-label">Expiration date</label>
+                <input type="date" class="form-control" rows=1 value="<?php xecho($expiration_date); ?>" disabled></input>
               </div>
             <?php else: ?>
               <h2 class="text-center">No permissions to view opportunity</h2>

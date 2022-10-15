@@ -68,6 +68,24 @@
                   <span class="help-block"><?php xecho($errors['description']); ?></span>
                 <?php endif; ?>
               </div>
+              <div class="form-group <?php xecho(isset($errors['points_type']) ? 'has-error' : '') ?>">
+                <label class="control-label">Type of points</label><br>
+                <select name="points_type">
+                  <option value="" disabled selected hidden>Choose the type of points</option>
+                  <option value="social"> Social point </option>
+                  <option value="Professional"> Professional point </option>
+                </select>
+                <?php if (isset($errors['points_type'])): ?>
+                  <span class="help-block"><?php xecho($errors['points_type']); ?></span>
+                <?php endif; ?>
+              </div>
+              <div class="form-group <?php xecho(isset($errors['description']) ? 'has-error' : '') ?>">
+                <label class="control-label">Expiration date</label>
+                <input type="date" name="date" class="form-control" value="<?php xecho($expiration_date); ?>"></input>
+                <?php if (isset($errors['date'])): ?>
+                  <span class="help-block"><?php xecho($errors['date']); ?></span>
+                <?php endif; ?>
+              </div>
               <div class="form-group <?php xecho(isset($errors['points']) ? 'has-error' : '') ?>">
                 <label class="control-label">Points</label>
                 <input type="number" name="points" value="<?php xecho($opportunity_points); ?>" class="form-control">

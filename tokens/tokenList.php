@@ -1,12 +1,12 @@
 <?php include_once('../config.php'); ?>
 <?php include_once(ROOT_PATH . '/csrf.php') ?> 
-<?php include_once(ROOT_PATH . '/opportunities/opportunityLogic.php'); ?>
+<?php include_once(ROOT_PATH . '/tokens/tokenLogic.php'); ?>
 
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
-    <title><?php xecho(APP_NAME) ?> - View opportunities</title>
+    <title><?php xecho(APP_NAME) ?> - View tokens</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <!-- Custome styles -->
@@ -47,31 +47,11 @@
             <?php
               $ncol = hasPermissionTo('update-opportunity') + hasPermissionTo('delete-opportunity');
               $title = "";
-              if (isset($_GET["filter_supervisor"])) {
-                $owner_id = filter_input(INPUT_GET, 'filter_supervisor', FILTER_SANITIZE_NUMBER_INT);
-                list($opportunities, $title) = getFilterOpportunitiesBySupervisor($owner_id, $opportunity_id);
-              } else {
-                $filter_type = "all";
-                list($opportunities, $title) = getFilterOpportunities($filter_type, $opportunity_id);
-              }
+              
             ?>
 
             <h1 class="text-center"><?php xecho($title); ?></h1>
             <br />
-
-            <!-- A selector to filter the opportunities -->
-            <select name="filter_supervisor" id="filter_supervisor" >
-            <option value="all">All opportunities </option>
-            <?php
-              $sql = "SELECT * FROM `users` INNER JOIN `opportunities` ON `users`.id = `opportunities`.owner_id WHERE `users`.role_id IN (1, 5, 4)";
-              $instructors = getMultipleRecords($sql, "i");
-              foreach ($instructors as $key => $instructor) {
-                $instructor_id = $instructor["id"];
-                $onclick_string = "window.location.href=opportunities/opportunityFilter.php?filter_supervisor=$instructor_id";
-                echo "<option value=" . "'" . $instructor["id"] . "' onchange=" . $onclick_string . ">" . $instructor["fullname"] . "</option>";
-              }
-            ?>
-            </select>
 
             <?php if (! empty($opportunities)): ?>
               <table class="table table-bordered">
@@ -79,10 +59,10 @@
                   <tr>
                     <th width="2%">#</th>
                     <th>Opportunity</th>
-                    <th width="10%">Supervisor</th>
-                    <th width="15%">Type of points</th>
+                    <th width="10%">Creator</th>
+                    <th width="15%">NEPTUN</th>
                     <th width="15%">Achievable points</th>
-                    <th colspan="4" class="text-center" width="23%">Actions</th>
+                    <th colspan="3" class="text-center" width="23%">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -124,7 +104,7 @@
                         <!-- Generate QR code / hexadecimal number -->
                         <?php if (canGenerateCodeByID( $value['id'] )): ?>
                           <td class="text-center">
-                            <a href="<?php xecho(BASE_URL); ?>tokens/codeGenerationForm.php?generate_code=<?php xecho($value['id']); ?>" class="btn btn-sm btn-warning">
+                            <a href="<?php xecho(BASE_URL); ?>tokens/codeGenerationForm.php?generate_code=<?php xecho($value['id']); ?>" class="btn btn-sm btn-success">
                               <span class="glyphicon glyphicon-qrcode"></span>
                             </a>
                           </td>

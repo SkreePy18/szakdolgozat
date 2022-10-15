@@ -16,6 +16,8 @@ CREATE TABLE `opportunities` (
     `opportunity` VARCHAR(255) NOT NULL,
     `description` VARCHAR(255) NOT NULL,
     `points` INT(11) NOT NULL,
+    `point_type` VARCHAR(255) NOT NULL,
+    `expiration_date` DATE NOT NULL,
     `owner_id` INT(11) NOT NULL,
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB;
@@ -28,4 +30,24 @@ INSERT INTO `permissions` (`name`, `description`) VALUES ('view-opportunity-list
 INSERT INTO `permissions` (`name`, `description`) VALUES ('create-opportunity',        'can create opportunities');
 INSERT INTO `permissions` (`name`, `description`) VALUES ('update-opportunity',        'can update opportunities');
 INSERT INTO `permissions` (`name`, `description`) VALUES ('delete-opportunity',        'can delete opportunities');
-INSERT INTO `permissions` (`name`, `description`) VALUES ('view-all-opportunity',        'can delete opportunities');
+INSERT INTO `permissions` (`name`, `description`) VALUES ('generate-code',             'can generate QR code/hexadcimal number');
+
+
+/* Create a table for tokens */
+
+CREATE TABLE IF NOT EXISTS `tokens` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `token` VARCHAR(255) NOT NULL,
+    `opportunity_id` INT(11) NOT NULL,
+    `user_id` INT(11) NOT NULL,
+    `generated_by` INT(11) NOT NULL,
+)
+
+
+/* Create table for excellence points */
+
+CREATE TABLE IF NOT EXISTS `excellence_points` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `opportunity_id` INT(11) NOT NULL,
+    `user_id` INT(11) NOT NULL
+)

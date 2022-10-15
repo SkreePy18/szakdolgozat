@@ -586,10 +586,51 @@
       }
 
       // Check if opportunity exists
-      $sql = "SELECT * from topics WHERE id=?";
+      $sql = "SELECT * from opportunities WHERE id=?";
       $opportunities = getSingleRecord($sql, 'i', [ $opportunity_id ]);
 
       if(is_null($opportunities)) {
+        return false;
+      }
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  function canGenerateCodeByID($opportunity_id) {
+    if(in_array(['permission_name' => 'generate-code'], $_SESSION['userPermissions'])){
+
+      // admin role can view everything
+      if(isAdmin($_SESSION['user']['id'])) {
+        return true;
+      }
+
+      // Check if opportunity exists
+      $sql = "SELECT * from opportunities WHERE id=?";
+      $opportunities = getSingleRecord($sql, 'i', [ $opportunity_id ]);
+
+      if(is_null($opportunities)) {
+        return false;
+      }
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  function canUserRedeemToken($user_id, $token) {
+    if(in_array(['permission_name' => 'view-opportunity-list'], $_SESSION['userPermissions'])){
+
+      // Check if opportunity exists
+      $sql = "SELECT * from tokens WHERE token=? AND user_id = ?";
+      $tokenInsance = getSingleRecord($sql, 'si', [ $token, $user_id]);
+
+      if(is_null($tokenInsance)) {
+        return false;
+      }
+
+      if($tokenInsance["redeemed"] == 1) {
         return false;
       }
       return true;

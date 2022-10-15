@@ -6,6 +6,8 @@
   $opportunity_description = "";
   $owner_id = -1;
   $opportunity_points = "";
+  $expiration_date = "";
+  $points_type = "";
   $isEditing = false;
   $isDeleting = false;
   $errors = array();
@@ -36,6 +38,9 @@
     viewOpportunity();
   }
 
+  
+
+
 
   function getOpportunities(){
     global $conn;
@@ -50,17 +55,21 @@
 
     // validate data
     $opportunity_data = filter_input_array(INPUT_POST, [
-                       "opportunity" => FILTER_SANITIZE_STRING,
-                       "user_id" => FILTER_SANITIZE_NUMBER_INT,
-                       "description" => FILTER_SANITIZE_STRING,
-                       "points" => FILTER_SANITIZE_NUMBER_INT,
+                       "opportunity"   => FILTER_SANITIZE_STRING,
+                       "user_id"      => FILTER_SANITIZE_NUMBER_INT,
+                       "description"  => FILTER_SANITIZE_STRING,
+                       "points"       => FILTER_SANITIZE_NUMBER_INT,
+                       "points_type"  => FILTER_SANITIZE_STRING,
+                       "date"         => FILTER_SANITIZE_STRING
                      ]);
 
     // receive all input values from the form
-    $opportunity  = $opportunity_data['opportunity'];
-    $user_id      = $opportunity_data['user_id'];
-    $description  = $opportunity_data['description'];
-    $points       = $opportunity_data['points'];
+    $opportunity      = $opportunity_data['opportunity'];
+    $user_id          = $opportunity_data['user_id'];
+    $description      = $opportunity_data['description'];
+    $points           = $opportunity_data['points'];
+    $expiration_date  = $opportunity_data['date'];
+    $points_type      = $opportunity_data['points_type'];
 
     if (! hasPermissionTo('create-opportunity')) {
       $_SESSION['error_msg'] = "No permissions to create opportunity";
@@ -70,8 +79,8 @@
 
     $errors = validateOpportunity($opportunity_data, ['save_opportunity']);
     if (count($errors) === 0) {
-      $sql = "INSERT INTO opportunities (owner_id, opportunity, description, points) VALUES (?, ?, ?, ?)";
-      $result = modifyRecord($sql, 'issi', [$user_id, $opportunity, $description, $points]);
+      $sql = "INSERT INTO opportunities (owner_id, opportunity, description, points, points_type, expiration_date) VALUES (?, ?, ?, ?, ?, ?)";
+      $result = modifyRecord($sql, 'ississ', [$user_id, $opportunity, $description, $points, $points_type, $expiration_date]);
 
       if($result){
         $_SESSION['success_msg'] = "Opportunity has been successfully published";
@@ -94,6 +103,8 @@
                   "description"       => FILTER_SANITIZE_STRING,
                   "opportunity"       => FILTER_SANITIZE_STRING,
                   "points"            => FILTER_SANITIZE_NUMBER_INT,
+                  "points_type"       => FILTER_SANITIZE_STRING,
+                  "date"              => FILTER_SANITIZE_STRING
                 ]);
 
     // receive all input values from the form
@@ -101,6 +112,9 @@
     $opportunity              = $opportunity_data['opportunity'];
     $opportunity_points       = $opportunity_data['points'];
     $opportunity_description  = $opportunity_data['description'];
+    $expiration_date          = $opportunity_data['date'];
+    $points_type              = $opportunity_data['points_type'];
+
 
     // check permission to update the semester data
     if (! canUpdateOpportunityByID( $opportunity_id )) {
@@ -112,8 +126,8 @@
     $errors = validateOpportunity($opportunity_data, ['update_opportunity']);
 
     if (count($errors) === 0) {
-      $sql = "UPDATE opportunities SET opportunity=?, description=?, points=? WHERE id=?";
-      $result = modifyRecord($sql, 'ssii', [$opportunity, $opportunity_description, $opportunity_points, $opportunity_id]);
+      $sql = "UPDATE opportunities SET opportunity=?, description=?, points=?, points_type=?, expiration_date=? WHERE id=?";
+      $result = modifyRecord($sql, 'ssissi', [$opportunity, $opportunity_description, $opportunity_points, $points_type, $expiration_date, $opportunity_id]);
       if ($result) {
         $_SESSION['success_msg'] = "Opportunity successfully updated";
         if(hasPermissionTo('view-opportunity-list')) {
@@ -132,7 +146,7 @@
   }
 
   function editOpportunity(){
-    global $conn, $opportunity_id, $opportunity, $owner_id, $opportunity_description, $opportunity_points, $isEditing;
+    global $conn, $opportunity_id, $opportunity, $owner_id, $opportunity_description, $opportunity_points, $points_type, $expiration_date, $isEditing;
 
     $opportunity_id = filter_input(INPUT_GET, 'edit_opportunity', FILTER_SANITIZE_NUMBER_INT);
 
@@ -149,6 +163,8 @@
     $owner_id                 = $opportunity_data['owner_id'];
     $opportunity_description  = $opportunity_data['description'];
     $opportunity_points       = $opportunity_data['points'];
+    $points_type              = $opportunity_data['points_type'];
+    $expiration_date          = $opportunity_data['expiration_date'];
 
     $isEditing = true;
   }
@@ -236,7 +252,7 @@
   }
 
   function viewOpportunity(){
-    global $conn, $opportunity_id, $opportunity, $owner_id, $opportunity_description, $opportunity_points, $isEditing;
+    global $conn, $opportunity_id, $opportunity, $owner_id, $opportunity_description, $opportunity_points, $expiration_date, $points_type, $isEditing;
 
     $opportunity_id = filter_input(INPUT_GET, 'view_opportunity', FILTER_SANITIZE_NUMBER_INT);
 
@@ -260,4 +276,6 @@
     $opportunity = $opportunity_data['opportunity'];
     $opportunity_description = $opportunity_data['description'];
     $opportunity_points = $opportunity_data['points'];
+    $expiration_date = $opportunity_data['expiration_date'];
+    $points_type = $opportunity_data['points_type'];
   }
