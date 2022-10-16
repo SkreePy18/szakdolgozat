@@ -1,13 +1,9 @@
 <?php include_once(INCLUDE_PATH . '/logic/validation.php') ?>
+<?php include_once(INCLUDE_PATH . '/logic/qrCode.php') ?>
 <?php
   // variable declaration. These variables will be used in the semester form
   $opportunity_id = 0;
-  $opportunity = "";
-  $opportunity_description = "";
-  $owner_id = -1;
-  $opportunity_points = "";
-  $expiration_date = "";
-  $points_type = "";
+  $opportunity = -1;
   $isEditing = false;
   $isDeleting = false;
   $errors = array();
@@ -23,6 +19,18 @@
     redeemToken();
   }
 
+  if(isset($_GET['opportunity'])) {
+    getTokensOfOpportunity();
+  }
+
+  if(isset($_GET['save_token'])) {
+    saveFile();
+  }
+
+  if(isset($_GET['delete_token'])) {
+    deleteToken();
+  }
+
 
 
 
@@ -33,7 +41,13 @@
     return $tokens;
   }
 
-
+  function getTokensOfOpportunity() {
+    global $conn, $tokens, $opportunity;
+    $opportunity = filter_input(INPUT_GET, "opportunity", FILTER_SANITIZE_NUMBER_INT);
+    $sql = "SELECT * FROM tokens WHERE opportunity_id = ?";
+    $tokens = getMultipleRecords($sql, 'i', [$opportunity]);
+    return $tokens;
+  }
 
   function generateToken() {
     $token_data = filter_input_array(INPUT_POST, [
@@ -49,26 +63,43 @@
     $expiration_date  = $token_data["expiration_date"];
     $user_id          = $token_data["user_id"];
     $generated_by     = $token_data["owner_id"];
-    
-    if($token_type == "hexa") {
-      // Token generation
-      $token = bin2hex(random_bytes(10));
 
-      $sql = "INSERT INTO tokens (token, opportunity_id, user_id, generated_by, expiration_date) VALUES (?, ?, ?, ?, ?)";
-      $result = modifyRecord($sql, 'siiis', [$token, $opportunity_id, $user_id, $generated_by, $expiration_date]);
+    // Token generation - We will generate QR codes by these hexa numbers
+    $token = bin2hex(random_bytes(10));
 
-      if($result){
-        $_SESSION['success_msg'] = "Token has been successfully created. Token? " . $token;
-        header("location: " . BASE_URL . "tokens/opportunityFilter.php");
+    $sql = "INSERT INTO tokens (token, opportunity_id, user_id, generated_by, expiration_date) VALUES (?, ?, ?, ?, ?)";
+    $result = modifyRecord($sql, 'siiis', [$token, $opportunity_id, $user_id, $generated_by, $expiration_date]);
+                                    
+    if($result) {
+      $QRCode = generateQRCode($token);
+      if($QRCode){
+        $_SESSION['success_msg'] = "QR code has been successfully created";
+        $QRCode->saveToFile(__DIR__ . "/qrCodes/" . $token . ".png");
+        header("location: " . BASE_URL . "opportunities/opportunityFilter.php");
         exit(0);
       } else {
-        $_SESSION['error_msg'] = "Could not create opportunity";
+        $_SESSION['error_msg'] = "Could not create QR code";
       }
-
-    } elseif($token_type = "qr") {
-      return false;
     }
+  }
 
+  function deleteToken() {
+    global $conn, $token, $opportunity;
+    $token_data = filter_input_array(INPUT_GET, [
+      "delete_token"            => FILTER_SANITIZE_NUMBER_INT,
+      "opportunity"             => FILTER_SANITIZE_NUMBER_INT
+    ]);
+
+    $id = $token_data['delete_token'];
+    $opportunity_id = $token_data['opportunity'];
+
+    $sql = "DELETE FROM `tokens` WHERE id=? AND opportunity_id=?";
+    $result = modifyRecord($sql, 'si', [$id, $opportunity_id]);
+    if(!$result) {
+      $_SESSION['error_msg'] = "You cannot redeem this token!";
+      header("location: " . BASE_URL . "tokens/tokenList.php" . " ?opportunity=" . $opportunity_id);
+      exit(0);
+    }
   }
 
   function redeemToken() {
@@ -86,7 +117,7 @@
       exit(0);
     }
 
-    $sql = "UPDATE tokens SET redeemed=1 WHERE token=? AND user_id = ?";
+    $sql = "UPDATE tokens SET redeemed='yes' WHERE token=? AND user_id = ?";
     $result = modifyRecord($sql, 'si', [$token, $user_id]);
 
     if($result) {
@@ -114,4 +145,18 @@
         exit(0);
       }
     }
+  }
+
+  function saveFile() {
+      // Get parameters
+      // $token = filter_input(INPUT_GET, "save_token", FILTER_SANITIZE_STRING);
+      // $filename = $token . ".png";
+      // $file = BASE_URL . "tokens/qrCode/".$filename;
+      
+      // header("Content-Type: image/png");
+      // header("Content-Disposition: attachment; filename=".$filename);
+      // while (ob_get_level()) {
+          // ob_end_clean();
+      // }
+      // readfile($file);
   }

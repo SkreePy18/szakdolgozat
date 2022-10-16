@@ -2,6 +2,7 @@
 <?php include_once(ROOT_PATH . '/csrf.php') ?> 
 <?php include_once(ROOT_PATH . '/opportunities/opportunityLogic.php'); ?>
 
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -11,6 +12,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <!-- Custome styles -->
     <link rel="stylesheet" href="../assets/css/style.css">
+    <!-- Bootstrap tooltip -->
+    <script src="../assets/js/tooltip.js"></script>
   </head>
   <body>
     <?php include_once(INCLUDE_PATH . "/layouts/navbar.php") ?>
@@ -82,7 +85,7 @@
                     <th width="10%">Supervisor</th>
                     <th width="15%">Type of points</th>
                     <th width="15%">Achievable points</th>
-                    <th colspan="4" class="text-center" width="23%">Actions</th>
+                    <th colspan="5" class="text-center" width="23%">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -114,7 +117,7 @@
                         </td>
                         <!-- Action buttons -->
                         <td class="text-center">
-                          <a href="<?php xecho(BASE_URL); ?>opportunities/opportunityView.php?view_opportunity=<?php 
+                          <a data-toggle="tooltip" title="View opportunity" href="<?php xecho(BASE_URL); ?>opportunities/opportunityView.php?view_opportunity=<?php 
                               xecho($value['id']);
                             
                             ?>" class="btn btn-sm <?php xecho("btn-primary"); ?>">
@@ -122,12 +125,30 @@
                           </a>
                         </td>
 
-                   
+                         <!-- View QR codes -->
+
+                         <?php if (canGenerateCodeByID( $value['id'] )): ?>
+                          <td class="text-center">
+                            <a data-toggle="tooltip" title="View tokens" href="<?php xecho(BASE_URL); ?>tokens/tokenList.php?opportunity=<?php xecho($value['id']); ?>" class="btn btn-sm btn-info">
+                              <span class="glyphicon glyphicon-certificate"></span>
+                              <!-- <i class='fa fa-eye'> </i>q -->
+                            </a>
+                          </td>
+                        <?php elseif(canUpdateOpportunityByID( $value['id'], false )): ?>
+                          <td class="text-center">
+                            <button class="btn btn-sm btn-secondary">
+                              <span class="glyphicon glyphicon-certificate"></span>
+                            </button>
+                          </td>
+                        <?php else: ?>
+                          <td class="text-center"><span class="btn btn-sm glyphicon glyphicon-ban-circle"></span></td>
+                        <?php endif ?>
+
 
                         <!-- Generate QR code / hexadecimal number -->
                         <?php if (canGenerateCodeByID( $value['id'] )): ?>
                           <td class="text-center">
-                            <a href="<?php xecho(BASE_URL); ?>tokens/codeGenerationForm.php?generate_code=<?php xecho($value['id']); ?>" class="btn btn-sm btn-warning">
+                            <a data-toggle="tooltip" title="Generate token" href="<?php xecho(BASE_URL); ?>tokens/codeGenerationForm.php?generate_code=<?php xecho($value['id']); ?>" class="btn btn-sm btn-warning">
                               <span class="glyphicon glyphicon-qrcode"></span>
                             </a>
                           </td>
@@ -141,11 +162,11 @@
                           <td class="text-center"><span class="btn btn-sm glyphicon glyphicon-ban-circle"></span></td>
                         <?php endif ?>
 
-                
+                        <!-- Edit opportunity -->
 
                         <?php if (canUpdateOpportunityByID( $value['id'] )): ?>
                           <td class="text-center">
-                            <a href="<?php xecho(BASE_URL); ?>opportunities/opportunityForm.php?edit_opportunity=<?php xecho($value['id']); ?>" class="btn btn-sm btn-success">
+                            <a data-toggle="tooltip" title="Edit opportunity" href="<?php xecho(BASE_URL); ?>opportunities/opportunityForm.php?edit_opportunity=<?php xecho($value['id']); ?>" class="btn btn-sm btn-success">
                               <span class="glyphicon glyphicon-pencil"></span>
                             </a>
                           </td>
@@ -162,7 +183,7 @@
                         <?php if (canDeleteOpportunityByID( $value['id'] )): ?>
                           <td class="text-center">
                             <!-- <a href="<?php xecho(BASE_URL); ?>opportunities/opportunityFilter.php?delete_opportunity=<?php xecho($value['id']); ?>" class="btn btn-sm btn-danger"> -->
-                            <a href="<?php xecho(addQueryServer("delete_opportunity", $value['id'])) ?>" class="btn btn-sm btn-danger">
+                            <a data-toggle="tooltip" title="Delete opportunity" href="<?php xecho(addQueryServer("delete_opportunity", $value['id'])) ?>" class="btn btn-sm btn-danger">
                               <span class="glyphicon glyphicon-trash"></span>
                             </a>
                           </td>
@@ -191,5 +212,10 @@
     </div>
   <?php include_once(INCLUDE_PATH . "/layouts/footer.php") ?>
 
+<script>
+  
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+}); 
 
-
+</script>

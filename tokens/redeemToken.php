@@ -1,6 +1,12 @@
 <?php include_once('../config.php'); ?>
 <?php include_once(ROOT_PATH . '/csrf.php') ?>
 <?php include_once(ROOT_PATH . '/tokens/tokenLogic.php'); ?>
+<?php
+  $token = "";
+  if(isset($_GET['token'])) {
+    $token = $_GET['token'];
+  }
+?>
 
 <!DOCTYPE html>
 <html>
@@ -34,7 +40,7 @@
             <input type="hidden" id="user_id" name="user_id" value="<?php xecho($_SESSION['user']['id']); ?>">
               <div class="form-group <?php xecho(isset($errors['token']) ? 'has-error' : '') ?>">
                 <label class="control-label">Token</label>
-                <input type="text" name="token" value="<?php xecho($opportunity); ?>" class="form-control">
+                <input type="text" name="token" value="<?php xecho($token); ?>" class="form-control">
                 <?php if (isset($errors['token'])): ?>
                   <span class="help-block"><?php xecho($errors['token']); ?></span>
                 <?php endif; ?>

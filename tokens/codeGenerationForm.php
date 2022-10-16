@@ -44,7 +44,7 @@
 
               <!-- Token type -->
             
-              <div class="form-group <?php xecho(isset($errors['token_type']) ? 'has-error' : '') ?>">
+              <!-- <div class="form-group <?php xecho(isset($errors['token_type']) ? 'has-error' : '') ?>">
                 <label class="control-label">Type of points</label><br>
                 <select name="token_type">
                   <option value="" disabled selected hidden>Choose the type of token</option>
@@ -54,7 +54,7 @@
                 <?php if (isset($errors['token_type'])): ?>
                   <span class="help-block"><?php xecho($errors['token_type']); ?></span>
                 <?php endif; ?>
-              </div>
+              </div> -->
 
               <!-- Neptun code -->
 
@@ -79,7 +79,7 @@
               
               <div class="form-group <?php xecho(isset($errors['description']) ? 'has-error' : '') ?>">
                 <label class="control-label">Expiration date</label>
-                <input type="date" name="expiration_date" class="form-control" value="<?php xecho($expiration_date); ?>"></input>
+                <input type="date" name="expiration_date" class="form-control" value="<?php //xecho($expiration_date); ?>"></input>
                 <?php if (isset($errors['expiration_date'])): ?>
                   <span class="help-block"><?php xecho($errors['expiration_date']); ?></span>
                 <?php endif; ?>

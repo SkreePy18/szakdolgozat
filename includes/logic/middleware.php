@@ -630,7 +630,7 @@
         return false;
       }
 
-      if($tokenInsance["redeemed"] == 1) {
+      if($tokenInsance["redeemed"] == "yes") {
         return false;
       }
       return true;
