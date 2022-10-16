@@ -86,17 +86,26 @@
   function deleteToken() {
     global $conn, $token, $opportunity;
     $token_data = filter_input_array(INPUT_GET, [
-      "delete_token"            => FILTER_SANITIZE_NUMBER_INT,
+      "delete_token"            => FILTER_SANITIZE_STRING,
       "opportunity"             => FILTER_SANITIZE_NUMBER_INT
     ]);
 
-    $id = $token_data['delete_token'];
+    $token = $token_data['delete_token'];
     $opportunity_id = $token_data['opportunity'];
 
-    $sql = "DELETE FROM `tokens` WHERE id=? AND opportunity_id=?";
-    $result = modifyRecord($sql, 'si', [$id, $opportunity_id]);
+    $sql = "DELETE FROM `tokens` WHERE token=? AND opportunity_id=?";
+    $result = modifyRecord($sql, 'si', [$token, $opportunity_id]);
+
+    // If deleting the token, remove the QR code image too
+    $file = __DIR__ . "/qrCodes/" . $token . ".png";
+    unlink($file);
+
     if(!$result) {
-      $_SESSION['error_msg'] = "You cannot redeem this token!";
+      $_SESSION['error_msg'] = "You cannot delete this token!";
+      header("location: " . BASE_URL . "tokens/tokenList.php" . " ?opportunity=" . $opportunity_id);
+      exit(0);
+    } else {
+      $_SESSION['success_msg'] = "Token has been successfully deleted!";
       header("location: " . BASE_URL . "tokens/tokenList.php" . " ?opportunity=" . $opportunity_id);
       exit(0);
     }

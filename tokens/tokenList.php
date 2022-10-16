@@ -99,7 +99,7 @@
                   
                           <td class="text-center">
                             <!-- <a href="<?php xecho(BASE_URL); ?>opportunities/opportunityFilter.php?delete_opportunity=<?php xecho($value['id']); ?>" class="btn btn-sm btn-danger"> -->
-                            <a href="<?php xecho(addQueryServer("delete_token", $value['id'])) ?>" class="btn btn-sm btn-danger">
+                            <a href="<?php xecho(addQueryServer("delete_token", $value['token'])) ?>" class="btn btn-sm btn-danger">
                               <span class="glyphicon glyphicon-trash"></span>
                             </a>
                           </td>
@@ -115,10 +115,10 @@
                 </tbody>
               </table>
             <?php else: ?>
-              <h2 class="text-center">No opportunities</h2>
+              <h2 class="text-center">No tokens have been generated for this opportunity</h2>
             <?php endif; ?>
           <?php else: ?>
-            <h2 class="text-center">No permissions to view opportunity list</h2>
+            <h2 class="text-center">No permissions to view the list of tokens</h2>
           <?php endif; ?>
         </div>
       </div>
