@@ -63,18 +63,18 @@
             <br />
 
             <!-- A selector to filter the opportunities -->
-            <select name="filter_supervisor" id="filter_supervisor" >
-            <option value="all">All opportunities </option>
+            <!-- <select name="filter_supervisor" id="filter_supervisor" > -->
+            <!-- <option value="all">All opportunities </option> -->
             <?php
-              $sql = "SELECT * FROM `users` INNER JOIN `opportunities` ON `users`.id = `opportunities`.owner_id WHERE `users`.role_id IN (1, 5, 4)";
-              $instructors = getMultipleRecords($sql, "i");
-              foreach ($instructors as $key => $instructor) {
-                $instructor_id = $instructor["id"];
-                $onclick_string = "window.location.href=opportunities/opportunityFilter.php?filter_supervisor=$instructor_id";
-                echo "<option value=" . "'" . $instructor["id"] . "' onchange=" . $onclick_string . ">" . $instructor["fullname"] . "</option>";
-              }
+              // $sql = "SELECT * FROM `users` INNER JOIN `opportunities` ON `users`.id = `opportunities`.owner_id WHERE `users`.role_id IN (1, 5, 4)";
+              // $instructors = getMultipleRecords($sql, "i");
+              // foreach ($instructors as $key => $instructor) {
+              //   $instructor_id = $instructor["id"];
+              //   $onclick_string = "window.location.href=opportunities/opportunityFilter.php?filter_supervisor=$instructor_id";
+              //   echo "<option value=" . "'" . $instructor["id"] . "' onchange=" . $onclick_string . ">" . $instructor["fullname"] . "</option>";
+              // }
             ?>
-            </select>
+            <!-- </select> -->
 
             <?php if (! empty($opportunities)): ?>
               <table class="table table-bordered">
@@ -130,14 +130,14 @@
                          <?php if (canGenerateCodeByID( $value['id'] )): ?>
                           <td class="text-center">
                             <a data-toggle="tooltip" title="View tokens" href="<?php xecho(BASE_URL); ?>tokens/tokenList.php?opportunity=<?php xecho($value['id']); ?>" class="btn btn-sm btn-info">
-                              <span class="glyphicon glyphicon-certificate"></span>
+                              <span class="glyphicon glyphicon-eye-open"></span>
                               <!-- <i class='fa fa-eye'> </i>q -->
                             </a>
                           </td>
                         <?php elseif(canUpdateOpportunityByID( $value['id'], false )): ?>
                           <td class="text-center">
                             <button class="btn btn-sm btn-secondary">
-                              <span class="glyphicon glyphicon-certificate"></span>
+                              <span class="glyphicon glyphicon-eye-open"></span>
                             </button>
                           </td>
                         <?php else: ?>

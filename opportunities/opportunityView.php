@@ -1,5 +1,5 @@
 <?php include_once('../config.php'); ?>
-<?php include_once(ROOT_PATH . '/csrf.php') ?>
+<?php include_once(ROOT_PATH . '/csrf.php') ?> 
 <?php include_once(ROOT_PATH . '/opportunities/opportunityLogic.php'); ?>
 
 <?php
@@ -30,8 +30,12 @@
                 Opportunities
               </a>
               
-              <input type="submit" class='btn btn-info' value="Import list" style="margin-bottom: 5px; float: right"> </input>
-              <input type="file" name="import" class="btn" style="margin-bottom: 5px; display: inline-block;float: right"></input>
+              <form method="post" action="importStudents.php" enctype="multipart/form-data">
+              <?php echo(getCSRFTokenField() . "\n") ?>
+                <input type="hidden" name="opportunity_id" value="<?php xecho($opportunity_id); ?>"> </input>
+                <input type="file" name="fileToUpload" id="fileToUpload" class="btn" style="margin-bottom: 5px; display: inline-block;float: right"></input>
+                <input type="submit" class='btn btn-info' name="import" id="import" value="Import list" style="margin-bottom: 5px; float: right"> </input>
+              </form>
               <hr>
 
 
@@ -126,6 +130,4 @@
       </div>
     </div>
   <?php include_once(INCLUDE_PATH . "/layouts/footer.php") ?>
-
-
 

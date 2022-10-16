@@ -21,5 +21,3 @@ table > thead > tr > th:not(:nth-child(2)) {
     text-align: center;
     vertical-align: middle;
 }
-
-/* Change input type: file */
