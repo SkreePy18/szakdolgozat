@@ -30,7 +30,7 @@
             <hr>
           <?php endif; ?>
 
-          <?php if (canUpdatecategoryByID($category_id) || hasPermissionTo('create-category') ): ?>
+          <?php if (canUpdateObjectByID('category', $category_id) || hasPermissionTo('create-category') ): ?>
 
             <?php if ($isEditing === true ): ?>
               <h2 class="text-center">Update category</h2>

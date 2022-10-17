@@ -103,7 +103,7 @@
     $name = $role_data['name'];
     $description = $role_data['description'];
 
-    if (! canUpdateRoleByID( $role_id )) {
+    if (! canUpdateObjectByID('role', $role_id )) {
       $_SESSION['error_msg'] = "No permissions to update role";
       header("location: " . BASE_URL . "admin/roles/roleList.php");
       exit(0);
@@ -132,7 +132,7 @@
 
     $role_id = filter_input(INPUT_GET, 'edit_role', FILTER_SANITIZE_NUMBER_INT);
 
-    if (! canUpdateRoleByID( $role_id )) {
+    if (! canUpdateObjectByID('role', $role_id )) {
       $_SESSION['error_msg'] = "No permissions to edit role";
       header("location: " . BASE_URL . "admin/roles/roleList.php");
       exit(0);

@@ -123,7 +123,7 @@
 
 
     // check permission to update the semester data
-    if (! canUpdateOpportunityByID( $opportunity_id )) {
+    if (! canUpdateObjectByID('opportunity', $opportunity_id )) {
       $_SESSION['error_msg'] = "No permissions to update opportunity";
       header("location: " . BASE_URL . "opportunities/opportunityFilter.php");
       exit(0);
@@ -156,7 +156,7 @@
 
     $opportunity_id = filter_input(INPUT_GET, 'edit_opportunity', FILTER_SANITIZE_NUMBER_INT);
 
-    if (! canUpdateOpportunityByID( $opportunity_id )) {
+    if (! canUpdateObjectByID('opportunity', $opportunity_id )) {
       $_SESSION['error_msg'] = "No permissions to edit opportunity";
       header("location: " . BASE_URL . "opportunities/opportunityFilter.php");
       exit(0);

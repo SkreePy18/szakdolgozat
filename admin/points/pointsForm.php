@@ -26,7 +26,7 @@
             <hr>
           <?php endif; ?>
 
-          <?php if (canUpdatecategoryByID($type_id) || hasPermissionTo('create-category') ): ?>
+          <?php if (canUpdateObjectByID('point-type', $type_id) || hasPermissionTo('create-category') ): ?>
 
             <?php if ($isEditing === true ): ?>
               <h2 class="text-center">Update points type</h2>

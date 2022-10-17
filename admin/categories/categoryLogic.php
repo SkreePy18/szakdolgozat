@@ -84,7 +84,7 @@
     $category = $category_data['category'];
 
     // check permission to update the category data
-    if (! canUpdateCategoryByID( $category_id )) {
+    if (! canUpdateObjectByID('category', $category_id)) {
       $_SESSION['error_msg'] = "No permissions to update category";
       header("location: " . BASE_URL . "admin/categories/categoryList.php");
       exit(0);
@@ -117,7 +117,7 @@
 
     $category_id = filter_input(INPUT_GET, 'edit_category', FILTER_SANITIZE_NUMBER_INT);
     
-    if (! canUpdateCategoryByID( $category_id )) {
+    if (! canUpdateObjectByID('category', $category_id)) {
       $_SESSION['error_msg'] = "No permissions to edit category";
       header("location: " . BASE_URL . "admin/categories/categoryList.php");
       exit(0);

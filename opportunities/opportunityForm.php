@@ -27,7 +27,7 @@
             <hr>
           <?php endif; ?>
 
-          <?php if (canUpdateOpportunityByID( $opportunity_id ) || hasPermissionTo('create-opportunity') ): ?>
+          <?php if (canUpdateObjectByID('opportunity', $opportunity_id ) || hasPermissionTo('create-opportunity') ): ?>
             <?php if ($isEditing === true ): ?>
               <h2 class="text-center">Update opportunity</h2>
             <?php else: ?>

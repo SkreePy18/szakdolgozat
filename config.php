@@ -41,6 +41,20 @@
   }
 
   /////////////////////////////////////////////////////////////////////////////
+  // Table by object name - remove redundancy of functions
+  $database_by_object = array(
+    'point-type'  => "opportunity_points_type",
+    'user'        => 'users',
+    'role'        => 'roles',
+    'category'    => 'categories',
+    'semester'    => 'semesters',
+    'opportunity' => 'opportunities',
+  );
+
+
+
+  /////////////////////////////////////////////////////////////////////////////
+
 
   mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 	// connect to database

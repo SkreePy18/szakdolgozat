@@ -30,7 +30,7 @@
             <hr>
           <?php endif; ?>
 
-          <?php if (canUpdateUserByID($user_id) || hasPermissionTo('create-user') ): ?>
+          <?php if (canUpdateObjectByID('user', $user_id) || hasPermissionTo('create-user') ): ?>
 
             <?php if ($isEditing === true ): ?>
               <h2 class="text-center">Update user</h2>

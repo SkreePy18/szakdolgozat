@@ -90,7 +90,7 @@
                 </thead>
                 <tbody>
                   <?php foreach ($opportunities as $key => $value): ?>
-                    <?php if ( canViewOpportunityByID($value['id']) || canUpdateOpportunityByID( $value['id'] ) || canDeleteCategoryByID( $value['id'] ) ): ?>
+                    <?php if ( canViewOpportunityByID($value['id']) || canUpdateObjectByID('opportunity', $value['id'] ) || canDeleteCategoryByID( $value['id'] ) ): ?>
                       <tr>
                         <td><?php xecho($key + 1); ?></td>
                         <?php $url = "opportunities/opportunityView.php?view_opportunity=" ?>
@@ -134,7 +134,7 @@
                               <!-- <i class='fa fa-eye'> </i>q -->
                             </a>
                           </td>
-                        <?php elseif(canUpdateOpportunityByID( $value['id'], false )): ?>
+                        <?php elseif(canUpdateObjectByID('opportunity', $value['id'], false )): ?>
                           <td class="text-center">
                             <button class="btn btn-sm btn-secondary">
                               <span class="glyphicon glyphicon-eye-open"></span>
@@ -152,7 +152,7 @@
                               <span class="glyphicon glyphicon-qrcode"></span>
                             </a>
                           </td>
-                        <?php elseif(canUpdateOpportunityByID( $value['id'], false )): ?>
+                        <?php elseif(canUpdateObjectByID('opportunity', $value['id'], false )): ?>
                           <td class="text-center">
                             <button class="btn btn-sm btn-secondary">
                               <span class="glyphicon glyphicon-qrcode"></span>
@@ -164,13 +164,13 @@
 
                         <!-- Edit opportunity -->
 
-                        <?php if (canUpdateOpportunityByID( $value['id'] )): ?>
+                        <?php if (canUpdateObjectByID('opportunity', $value['id'] )): ?>
                           <td class="text-center">
                             <a data-toggle="tooltip" title="Edit opportunity" href="<?php xecho(BASE_URL); ?>opportunities/opportunityForm.php?edit_opportunity=<?php xecho($value['id']); ?>" class="btn btn-sm btn-success">
                               <span class="glyphicon glyphicon-pencil"></span>
                             </a>
                           </td>
-                        <?php elseif(canUpdateOpportunityByID( $value['id'], false )): ?>
+                        <?php elseif(canUpdateObjectByID('opportunity', $value['id'], false )): ?>
                           <td class="text-center">
                             <button class="btn btn-sm btn-secondary">
                               <span class="glyphicon glyphicon-pencil"></span>

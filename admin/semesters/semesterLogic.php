@@ -84,7 +84,7 @@
     $semester = $semester_data['semester'];
 
     // check permission to update the semester data
-    if (! canUpdateSemesterByID( $semester_id )) {
+    if (! canUpdateObjectByID('semester', $semester_id )) {
       $_SESSION['error_msg'] = "No permissions to update semester";
       header("location: " . BASE_URL . "admin/semesters/semesterList.php");
       exit(0);
@@ -117,7 +117,7 @@
 
     $semester_id = filter_input(INPUT_GET, 'edit_semester', FILTER_SANITIZE_NUMBER_INT);
 
-    if (! canUpdateSemesterByID( $semester_id )) {
+    if (! canUpdateObjectByID('semester', $semester_id)) {
       $_SESSION['error_msg'] = "No permissions to edit semester";
       header("location: " . BASE_URL . "admin/semesters/semesterList.php");
       exit(0);

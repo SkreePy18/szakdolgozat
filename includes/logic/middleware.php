@@ -105,26 +105,42 @@
     }
   }
 
+  
+  // Update object by ID
 
-  function canUpdateUserByID( $user_id = NULL ) {
-    // if current user is equal to the user, then it can modify itself
-    if ($user_id == $_SESSION['user']['id'] ) {
-      return true;
-    }
-    if(in_array(['permission_name' => 'update-user'], $_SESSION['userPermissions'])){
-      // check whether user exists at all
-      $sql = "SELECT * FROM users WHERE id=?";
-      $user_result = getSingleRecord($sql, 'i', [$user_id]);
-      if(is_null($user_result)) {
+  function canUpdateObjectByID($object_type, $object_id = null) {
+    global $conn, $database_by_object;
+    $permission = 'update-' . $object_type;
+    
+    // Special checks
+    if($object_type == "user") {
+      if ($object_id == $_SESSION['user']['id'] ) {
         return false;
       }
+    } elseif($object_type == "semester") {
+      if($object_id == 1) {
+        return false;
+      }
+    }
 
-      return true;
+    // Global, applies on every update
+    if(in_array(['permission_name' => $permission], $_SESSION['userPermissions']) || isAdmin($_SESSION['user']['id'])) {
+      if(array_key_exists($object_type, $database_by_object)) {
+        $table = $database_by_object[$object_type];
+        $sql = "SELECT id FROM $table WHERE id = ?";
+        $cat_results = getSingleRecord($sql, 'i', [$object_id]);
+        if(is_null($cat_results)) {
+          return false;
+        } else {
+          return true;
+        }
+      } else {
+        return false;
+      }
     } else {
       return false;
     }
   }
-
 
   function canDeleteUserByID( $user_id ) {
     if(in_array(['permission_name' => 'delete-user'], $_SESSION['userPermissions'])){
@@ -170,23 +186,6 @@
       return true;
     } else {
       $_SESSION['error_msg'] = "No permissions to delete role";
-      return false;
-    }
-  }
-
-
-
-  function canUpdateRoleByID($role_id = NULL) {
-    if(in_array(['permission_name' => 'update-role'], $_SESSION['userPermissions'])){
-      // check whether role exists at all
-      $sql = "SELECT * FROM roles WHERE id=?";
-      $role_result = getSingleRecord($sql, 'i', [$role_id]);
-      if(is_null($role_result)) {
-        return false;
-      }
-
-      return true;
-    } else {
       return false;
     }
   }
@@ -427,31 +426,6 @@
   
   // ---------------------------------- Semester ------------------------------
 
- 
-  // checks if logged in user can update semester
-  function canUpdateSemesterByID($semester_id = null){
-    global $conn;
-
-    if(in_array(['permission_name' => 'update-semester'], $_SESSION['userPermissions'])){
-      // check whether semester exists at all
-      $sql = "SELECT id FROM semesters WHERE id=?";
-      $semester_result = getSingleRecord($sql, 'i', [$semester_id]);
-      if(is_null($semester_result)) {
-        return false;
-      }
-
-      // we are not allowed to update the current semester (id == 1)
-      if($semester_id > 1) {
-        return true;
-      }
-      else {
-        return false;
-      }
-    } else {
-      return false;
-    }
-  }
-
 
   function canDeleteSemesterByID($semester_id = null) {
     global $conn;
@@ -485,27 +459,6 @@
       return false;
     }
 
-  }
-
-
-
-
-  // checks if logged in user can update categories
-  function canUpdateCategoryByID($category_id = null){
-    global $conn;
-
-    if(in_array(['permission_name' => 'update-category'], $_SESSION['userPermissions'])){
-      // check whether category exists at all
-      $sql = "SELECT id FROM categories WHERE id=?";
-      $cat_results = getSingleRecord($sql, 'i', [$category_id]);
-      if(is_null($cat_results)) {
-        return false;
-      }
-
-      return true;
-    } else {
-      return false;
-    }
   }
 
 
@@ -554,25 +507,6 @@
       return true;
     } else {
       // $_SESSION['error_msg'] = "No permissions to delete the opportunity";
-      return false;
-    }
-  }
-
-
-   // checks if logged in user can update opportunity
-   function canUpdateOpportunityByID($opportunity_id = null){
-    global $conn;
-
-    if(in_array(['permission_name' => 'update-category'], $_SESSION['userPermissions'])){
-      // check whether opportunity exists at all
-      $sql = "SELECT id FROM `opportunities` WHERE id = ?";
-      $cat_results = getSingleRecord($sql, 'i', [$opportunity_id]);
-      if(is_null($cat_results)) {
-        return false;
-      }
-
-      return true;
-    } else {
       return false;
     }
   }
@@ -637,4 +571,50 @@
     } else {
       return false;
     }
+  }
+
+  // Type of points
+  // checks if logged in user can update semester
+  function canViewTypeByID($type_id = null){
+    global $conn;
+
+    if(in_array(['permission_name' => 'update-semester'], $_SESSION['userPermissions'])){
+      // check whether semester exists at all
+      $sql = "SELECT id FROM semesters WHERE id=?";
+      $semester_result = getSingleRecord($sql, 'i', [$type_id]);
+      if(is_null($semester_result)) {
+        return false;
+      }
+
+      // we are not allowed to update the current semester (id == 1)
+      if($type_id > 1) {
+        return true;
+      }
+      else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+
+
+  function canDeleteTypeByID($semester_id = null) {
+    global $conn;
+
+    if(in_array(['permission_name' => 'delete-semester'], $_SESSION['userPermissions'])){
+      // check whether semester exists at all
+      $sql = "SELECT id FROM opportunity_points_type WHERE id=?";
+      $semester_result = getSingleRecord($sql, 'i', [$semester_id]);
+      if(is_null($semester_result)) {
+        $_SESSION['error_msg'] = "Semester does not exist to delete it";
+        return false;
+      }
+
+      return true;
+    } else {
+      $_SESSION['error_msg'] = "No permissions to delete semester";
+      return false;
+    }
+
   }

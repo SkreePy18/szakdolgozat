@@ -127,7 +127,7 @@
     }
 
     // check permission to update the user data
-    if (! canUpdateUserByID( $user_id )) {
+    if (! canUpdateObjectByID('user', $user_id )) {
       $_SESSION['error_msg'] = "No permissions to update user";
       header("location: " . BASE_URL . "admin/users/userList.php");
       exit(0);
@@ -202,7 +202,7 @@
 
     $user_id = filter_input(INPUT_GET, 'edit_user', FILTER_SANITIZE_NUMBER_INT);
 
-    if (! canUpdateUserByID( $user_id )) {
+    if (! canUpdateObjectByID('user', $user_id )) {
       $_SESSION['error_msg'] = "No permissions to edit user";
       header("location: " . BASE_URL . "admin/users/userList.php");
       exit(0);

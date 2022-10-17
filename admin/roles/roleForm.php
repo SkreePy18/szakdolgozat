@@ -25,7 +25,7 @@
             <hr>
           <?php endif; ?>
 
-          <?php if (canUpdateRoleByID($role_id) || hasPermissionTo('create-role') ): ?>
+          <?php if (canUpdateObjectByID('role', $role_id) || hasPermissionTo('create-role') ): ?>
             <?php if ($isEditting === true): ?>
               <h1 class="text-center">Update Role</h1>
             <?php else: ?>
