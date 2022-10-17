@@ -127,12 +127,12 @@
     if(in_array(['permission_name' => $permission], $_SESSION['userPermissions']) || isAdmin($_SESSION['user']['id'])) {
       if(array_key_exists($object_type, $database_by_object)) {
         $table = $database_by_object[$object_type];
-        $sql = "SELECT id FROM $table WHERE id = ?";
-        $cat_results = getSingleRecord($sql, 'i', [$object_id]);
-        if(is_null($cat_results)) {
+        if(!$table) {
           return false;
-        } else {
-          return true;
+        }
+        $bCheck = checkIfRecordExists($object_type, $object_id);
+        if(!$bCheck) {
+          return false;
         }
       } else {
         return false;
@@ -151,11 +151,8 @@
         return false;
       }
 
-      // check whether user exists at all
-      $sql = "SELECT * FROM users WHERE id=?";
-      $user_result = getSingleRecord($sql, 'i', [$user_id]);
-      if(is_null($user_result)) {
-        $_SESSION['error_msg'] = "User does not exist to delete it"; 
+      $bCheck = checkIfRecordExists("user", $user_id);
+      if(!$bCheck) {
         return false;
       }
 
@@ -194,10 +191,8 @@
   function canDeleteRoleByID($role_id = NULL) {
     if(in_array(['permission_name' => 'delete-role'], $_SESSION['userPermissions'])){
       // check whether role exists at all
-      $sql = "SELECT * FROM roles WHERE id=?";
-      $role_result = getSingleRecord($sql, 'i', [$role_id]);
-      if(is_null($role_result)) {
-        $_SESSION['error_msg'] = "Role does not exist to delete it";
+      $bCheck = checkIfRecordExists("role", $opportunity_id);
+      if(!$bCheck) {
         return false;
       }
 
@@ -220,9 +215,8 @@
   function canAssignRolePermissionsByID($role_id = NULL) {
     if(in_array(['permission_name' => 'assign-role-permission'], $_SESSION['userPermissions'])){
       // check whether role exists at all
-      $sql = "SELECT * FROM roles WHERE id=?";
-      $role_result = getSingleRecord($sql, 'i', [$role_id]);
-      if(is_null($role_result)) {
+      $bCheck = checkIfRecordExists("role", $role_id);
+      if(!$bCheck) {
         return false;
       }
 
@@ -432,10 +426,8 @@
 
     if(in_array(['permission_name' => 'delete-semester'], $_SESSION['userPermissions'])){
       // check whether semester exists at all
-      $sql = "SELECT id FROM semesters WHERE id=?";
-      $semester_result = getSingleRecord($sql, 'i', [$semester_id]);
-      if(is_null($semester_result)) {
-        $_SESSION['error_msg'] = "Semester does not exist to delete it";
+      $bCheck = checkIfRecordExists("semester", $semester_id);
+      if(!$bCheck) {
         return false;
       }
 
@@ -466,10 +458,8 @@
     global $conn;
     if(in_array(['permission_name' => 'delete-category'], $_SESSION['userPermissions'])){
       // check whether category exists at all
-      $sql = "SELECT id FROM `categories` WHERE id = ?";
-      $result = getSingleRecord($sql, 'i', [$category_id]);
-      if(is_null($result)) {
-        $_SESSION['error_msg'] = "Category does not exist to delete it. ID: '" . $category_id . "'";
+      $bCheck = checkIfRecordExists("category", $category_id);
+      if(!$bCheck) {
         return false;
       }
 
@@ -486,21 +476,17 @@
       $_SESSION['error_msg'] = "No permissions to delete category";
       return false;
     }
-
   }
 
 
-  
   // Opportunity related
   
   function canDeleteOpportunityByID($opportunity_id = null) {
     global $conn;
     if(in_array(['permission_name' => 'delete-category'], $_SESSION['userPermissions'])){
       // Check if opportunity exists
-      $sql = "SELECT id FROM `opportunities` WHERE id = ?";
-      $result = getSingleRecord($sql, 'i', [$opportunity_id]);
-      if(is_null($result)) {
-        $_SESSION['error_msg'] = "Opportunity does not exist to delete it. ID: '" . $opportunity_id . "'";
+      $bCheck = checkIfRecordExists("opportunity", $opportunity_id);
+      if(!$bCheck) {
         return false;
       }
 
@@ -520,12 +506,11 @@
       }
 
       // Check if opportunity exists
-      $sql = "SELECT * from opportunities WHERE id=?";
-      $opportunities = getSingleRecord($sql, 'i', [ $opportunity_id ]);
-
-      if(is_null($opportunities)) {
+      $bCheck = checkIfRecordExists("opportunity", $opportunity_id);
+      if(!$bCheck) {
         return false;
       }
+
       return true;
     } else {
       return false;
@@ -534,17 +519,13 @@
 
   function canGenerateCodeByID($opportunity_id) {
     if(in_array(['permission_name' => 'generate-code'], $_SESSION['userPermissions'])){
-
       // admin role can view everything
       if(isAdmin($_SESSION['user']['id'])) {
         return true;
       }
-
       // Check if opportunity exists
-      $sql = "SELECT * from opportunities WHERE id=?";
-      $opportunities = getSingleRecord($sql, 'i', [ $opportunity_id ]);
-
-      if(is_null($opportunities)) {
+      $bCheck = checkIfRecordExists("opportunity", $opportunity_id);
+      if(!$bCheck) {
         return false;
       }
       return true;
@@ -580,41 +561,52 @@
 
     if(in_array(['permission_name' => 'update-semester'], $_SESSION['userPermissions'])){
       // check whether semester exists at all
-      $sql = "SELECT id FROM semesters WHERE id=?";
-      $semester_result = getSingleRecord($sql, 'i', [$type_id]);
-      if(is_null($semester_result)) {
+      $bCheck = checkIfRecordExists("type", $type_id);
+      if(!$bCheck) {
         return false;
       }
 
       // we are not allowed to update the current semester (id == 1)
-      if($type_id > 1) {
-        return true;
-      }
-      else {
+      if($type_id < 2) {
         return false;
       }
+      return true;
     } else {
       return false;
     }
   }
 
 
-  function canDeleteTypeByID($semester_id = null) {
+  function canDeleteTypeByID($type_id = null) {
     global $conn;
 
     if(in_array(['permission_name' => 'delete-semester'], $_SESSION['userPermissions'])){
       // check whether semester exists at all
-      $sql = "SELECT id FROM opportunity_points_type WHERE id=?";
-      $semester_result = getSingleRecord($sql, 'i', [$semester_id]);
-      if(is_null($semester_result)) {
-        $_SESSION['error_msg'] = "Semester does not exist to delete it";
+      $bCheck = checkIfRecordExists("type", $type_id);
+      if(!$bCheck) {
         return false;
       }
-
+      
       return true;
     } else {
       $_SESSION['error_msg'] = "No permissions to delete semester";
       return false;
     }
+  }
 
+
+  function checkIfRecordExists($type, $id) {
+    global $conn, $database_by_object;
+    $table = $database_by_object[$type];
+    if(!$table) {
+      return false;
+    }
+    $sql = "SELECT id FROM $table WHERE id=?";
+    $result = getSingleRecord($sql, 'i', [$id]);
+    if(is_null($result)) {
+      $typeText = ucfirst($type);
+      $_SESSION['error_msg'] = $typeText . " does not exist to delete it";
+      return false;
+    }
+    return true;
   }
