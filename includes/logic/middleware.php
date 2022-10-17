@@ -115,7 +115,7 @@
     // Special checks
     if($object_type == "user") {
       if ($object_id == $_SESSION['user']['id'] ) {
-        return false;
+        return true;
       }
     } elseif($object_type == "semester") {
       if($object_id == 1) {

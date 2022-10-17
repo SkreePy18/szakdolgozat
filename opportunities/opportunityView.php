@@ -30,7 +30,7 @@
                 Opportunities
               </a>
               
-              <form method="post" action="importStudents.php" enctype="multipart/form-data">
+              <form method="post" action="importStudents.php" enctype="multipart/form-data" style="display: inline">
               <?php echo(getCSRFTokenField() . "\n") ?>
                 <input type="hidden" name="opportunity_id" value="<?php xecho($opportunity_id); ?>"> </input>
                 <input type="file" name="fileToUpload" id="fileToUpload" class="btn" style="margin-bottom: 5px; display: inline-block;float: right"></input>
