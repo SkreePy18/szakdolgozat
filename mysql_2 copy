@@ -22,6 +22,18 @@ CREATE TABLE `opportunities` (
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB;
 
+/* Create table for opportunity points type */
+
+CREATE TABLE IF NOT EXISTS `opportunity_points_type` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(255) NOT NULL,
+    PRIMARY KEY(`id`, `name`)
+);
+
+/* Create default point types - social & professional */
+
+INSERT INTO `opportunity_points_type` SET name = 'social';
+INSERT INTO `opportunity_points_type` SET name = 'professional';
 
 
 /* Assign opportunity permissions */
@@ -31,6 +43,14 @@ INSERT INTO `permissions` (`name`, `description`) VALUES ('create-opportunity', 
 INSERT INTO `permissions` (`name`, `description`) VALUES ('update-opportunity',        'can update opportunities');
 INSERT INTO `permissions` (`name`, `description`) VALUES ('delete-opportunity',        'can delete opportunities');
 INSERT INTO `permissions` (`name`, `description`) VALUES ('generate-code',             'can generate QR code/hexadcimal number');
+
+/* Assign point related permissons */
+INSERT INTO `permissions` (`name`, `description`) VALUES ('view-point-types',           'can view the types of points');
+INSERT INTO `permissions` (`name`, `description`) VALUES ('create-point-type',          'can create new point type');
+INSERT INTO `permissions` (`name`, `description`) VALUES ('edit-point-type',            'can edit point type');
+INSERT INTO `permissions` (`name`, `description`) VALUES ('delete-point-type',          'can delete point type');
+
+/* Add permissions to Admin role */
 
 
 /* Create a table for tokens */

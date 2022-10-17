@@ -72,8 +72,16 @@
                 <label class="control-label">Type of points</label><br>
                 <select name="points_type">
                   <option value="" disabled selected hidden>Choose the type of points</option>
-                  <option value="social"> Social point </option>
-                  <option value="Professional"> Professional point </option>
+                  <?php 
+                  // Get the types of points 
+                  $sql = "SELECT name FROM `opportunity_points_type`";
+                  $result = getMultipleRecords($sql);
+                  if($result){
+                    foreach($result as $key => $point_type) {
+                    echo("<option value=" . $point_type['name'] . ">". ucfirst($point_type['name']) . " point</option>");
+                    }
+                  }
+                  ?>
                 </select>
                 <?php if (isset($errors['points_type'])): ?>
                   <span class="help-block"><?php xecho($errors['points_type']); ?></span>

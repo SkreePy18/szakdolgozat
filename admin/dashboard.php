@@ -30,8 +30,11 @@
             <?php if (hasPermissionTo('view-category-list')): ?>
               <a href="<?php xecho(BASE_URL . 'admin/categories/categoryList.php'); ?>" class="list-group-item">Manage categories</a>
             <?php endif ?>
-            <?php if (hasPermissionTo('view-category-list')): ?>
-              <a href="<?php xecho(BASE_URL . 'admin/opportunities/opportunityList.php'); ?>" class="list-group-item">Manage opportunities</a>
+            <?php if (hasPermissionTo('view-point-types')): ?>
+              <a href="<?php xecho(BASE_URL . 'admin/points/pointsList.php'); ?>" class="list-group-item">Manage types of points</a>
+            <?php endif ?>
+            <?php if (hasPermissionTo('manage-excellence-list')): ?>
+              <a href="<?php xecho(BASE_URL . 'admin/excellence/excellenceList.php'); ?>" class="list-group-item">Manage excellence lists</a>
             <?php endif ?>
           </ul>
         <?php else: ?>

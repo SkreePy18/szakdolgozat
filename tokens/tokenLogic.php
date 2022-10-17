@@ -132,11 +132,11 @@
     $user_id = $token_data["user_id"];
     $token   = $token_data["token"];
 
-    if(!canUserRedeemToken($user_id, $token)) {
-      $_SESSION['error_msg'] = "You cannot redeem this token!";
-      header("location: " . BASE_URL . "tokens/redeemToken.php");
-      exit(0);
-    }
+    // if(!canUserRedeemToken($user_id, $token)) {
+    //   $_SESSION['error_msg'] = "You cannot redeem this token!";
+    //   header("location: " . BASE_URL . "tokens/redeemToken.php");
+    //   exit(0);
+    // }
 
     $sql = "UPDATE tokens SET redeemed='yes' WHERE token=? AND user_id = ?";
     $result = modifyRecord($sql, 'si', [$token, $user_id]);
