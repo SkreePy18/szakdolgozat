@@ -101,7 +101,14 @@
                             <a href="codeGenerationForm.php?edit_token=<?php xecho($value['id']); ?>" class="btn btn-sm btn-success">
                               <span class="glyphicon glyphicon-pencil"></span>
                             </a>
-                          </td>
+                        </td>
+
+                        <td class="text-center">
+                            <a href="tokenList.php?opportunity_id=<?php xecho($value['opportunity_id']); ?>&save_token=<?php xecho($value['token']); ?>" class="btn btn-sm btn-success">
+                              <span class="glyphicon glyphicon-save"></span>
+                            </a>
+                        </td>
+                        <!-- saveFile -->
                   
                           <td class="text-center">
                             <!-- <a href="<?php xecho(BASE_URL); ?>opportunities/opportunityFilter.php?delete_opportunity=<?php xecho($value['id']); ?>" class="btn btn-sm btn-danger"> -->

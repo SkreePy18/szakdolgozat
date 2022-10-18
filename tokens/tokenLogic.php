@@ -228,15 +228,21 @@
   }
 
   function saveFile() {
-      // Get parameters
-      // $token = filter_input(INPUT_GET, "save_token", FILTER_SANITIZE_STRING);
-      // $filename = $token . ".png";
-      // $file = BASE_URL . "tokens/qrCode/".$filename;
-      
-      // header("Content-Type: image/png");
-      // header("Content-Disposition: attachment; filename=".$filename);
-      // while (ob_get_level()) {
-          // ob_end_clean();
-      // }
-      // readfile($file);
+    // Get parameters
+    $token_data = filter_input_array(INPUT_GET, [
+                  "save_token" => FILTER_SANITIZE_STRING,
+                  "opportunity_id" => FILTER_SANITIZE_NUMBER_INT
+                ]);
+                
+    $token = $token_data['save_token'];
+    $opportunity_id = $token_data['opportunity_id'];
+    $file = "qrCodes/" . $token . ".png";
+    
+    header('Content-Type: image/png');
+    header("Content-Disposition: attachment; filename=" . $token . ".png");
+    // Prevent corrupt files
+    while (ob_get_level()) {
+      ob_end_clean();
+    }
+    $read = readfile($file);
   }
