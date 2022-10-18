@@ -31,6 +31,14 @@
     deleteToken();
   }
 
+  if(isset($_GET['edit_token'])) {
+    editToken();
+  }
+
+  if(isset($_POST['update_token'])) {
+    updateToken();
+  }
+
 
 
 
@@ -79,6 +87,57 @@
         exit(0);
       } else {
         $_SESSION['error_msg'] = "Could not create QR code";
+      }
+    }
+  }
+
+  function editToken() {
+    global $token_id, $token, $expiration_date, $opportunity_id, $user_id, $isEditing;
+
+    $token_id = filter_input(INPUT_GET, 'edit_token', FILTER_SANITIZE_NUMBER_INT);
+    // Get the token information to fetch to the form
+    $sql = "SELECT * FROM `tokens` WHERE id=?";
+    $result = getSingleRecord($sql, 'i', [$token_id]);
+
+    if($result) {
+      $expiration_date  = $result['expiration_date'];
+      $opportunity_id   = $result['opportunity_id'];
+      $token            = $result['token'];
+      $user_id          = $result['user_id'];
+      $isEditing = true;
+      return true;
+    }
+  }
+
+  function updateToken() {
+    $token_data = filter_input_array(INPUT_POST, [
+          'token_id'      => FILTER_SANITIZE_NUMBER_INT,
+          'opportunity_id'  => FILTER_SANITIZE_NUMBER_INT,
+          'user_id'         => FILTER_SANITIZE_NUMBER_INT,
+          'expiration_date' => FILTER_SANITIZE_STRING,
+    ]);
+
+    if($token_data) {
+      $token_id         = $token_data['token_id'];
+      $opportunity_id   = $token_data['opportunity_id'];
+      $user_id          = $token_data['user_id'];
+      $expiration_date  = $token_data['expiration_date'];
+      if(! canUpdateObjectByID('token', $token_id)) {
+        $_SESSION['error_msg'] = "You cannot update this token!";
+        header("location: " . BASE_URL . "tokens/tokenList.php" . " ?opportunity=" . $opportunity_id);
+        exit(0);
+      }
+
+      $sql = "UPDATE `tokens` SET user_id=?, expiration_date=? WHERE id = ?";
+      $result = modifyRecord($sql, 'isi', [$user_id, $expiration_date, $token_id]);
+      if($result) {
+        $_SESSION['success_msg'] = "Token has been successfully updated!";
+        header("location: " . BASE_URL . "tokens/tokenList.php" . " ?opportunity=" . $opportunity_id);
+        exit(0);
+      } else {
+        $_SESSION['error_msg'] = "You cannot update this token!";
+        header("location: " . BASE_URL . "tokens/tokenList.php" . " ?opportunity=" . $opportunity_id);
+        exit(0);
       }
     }
   }

@@ -49,6 +49,7 @@
     'category'    => 'categories',
     'semester'    => 'semesters',
     'opportunity' => 'opportunities',
+    'token'       => 'tokens',
   );
 
 

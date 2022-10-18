@@ -96,6 +96,12 @@
                             <span class="glyphicon glyphicon-save"></span>
                           </a>
                         </td> -->
+
+                        <td class="text-center">
+                            <a href="codeGenerationForm.php?edit_token=<?php xecho($value['id']); ?>" class="btn btn-sm btn-success">
+                              <span class="glyphicon glyphicon-pencil"></span>
+                            </a>
+                          </td>
                   
                           <td class="text-center">
                             <!-- <a href="<?php xecho(BASE_URL); ?>opportunities/opportunityFilter.php?delete_opportunity=<?php xecho($value['id']); ?>" class="btn btn-sm btn-danger"> -->
