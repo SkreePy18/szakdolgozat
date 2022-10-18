@@ -29,13 +29,14 @@
                 <span class="glyphicon glyphicon-chevron-left"></span>
                 Opportunities
               </a>
-              
+              <?php if (canUpdateOpportunityByID($opportunity_id)): ?>
               <form method="post" action="importStudents.php" enctype="multipart/form-data" style="display: inline">
               <?php echo(getCSRFTokenField() . "\n") ?>
                 <input type="hidden" name="opportunity_id" value="<?php xecho($opportunity_id); ?>"> </input>
                 <input type="file" name="fileToUpload" id="fileToUpload" class="btn" style="margin-bottom: 5px; display: inline-block;float: right"></input>
                 <input type="submit" class='btn btn-info' name="import" id="import" value="Import list" style="margin-bottom: 5px; float: right"> </input>
               </form>
+              <?php endif ?>
               <hr>
 
 
@@ -67,7 +68,7 @@
               </div>
 
               <!-- View students who has accomplished the opportunity -->
-              <?php if (canGenerateCodeByID( $_SESSION['user']['id'] )): ?>
+              <?php if (canUpdateOpportunityByID($opportunity_id)): ?>
                 <br><h2 class="text-center">Student(s) who have accomplished the opportunity</h2><br>
 
                 <?php if(! empty($accomplised_users)): ?>

@@ -43,7 +43,7 @@
             <form class="form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" enctype="multipart/form-data">
             <input type="hidden" id="owner_id" name="owner_id" value="<?php xecho($_SESSION['user']['id']); ?>">
             <input type="hidden" name="opportunity_id" value="<?php xecho($opportunity_id); ?>">
-            <input type="hidden" name="token_id" value="<?php xecho($token_id); ?>">
+            <input type="hidden" name="token_id" value="<?php xecho(isset($token_id)); ?>">
 
             <?php if($isEditing): ?>
               <div class="form-group <?php xecho(isset($errors['token']) ? 'has-error' : '') ?>">

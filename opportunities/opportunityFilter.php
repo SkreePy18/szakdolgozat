@@ -127,74 +127,42 @@
 
                          <!-- View QR codes -->
 
-                         <?php if (canGenerateCodeByID( $value['id'] )): ?>
+                         <?php if (canUpdateOpportunityByID($value['id']) && canGenerateCodeByID( $value['id'] )): ?>
                           <td class="text-center">
                             <a data-toggle="tooltip" title="View tokens" href="<?php xecho(BASE_URL); ?>tokens/tokenList.php?opportunity=<?php xecho($value['id']); ?>" class="btn btn-sm btn-info">
                               <span class="glyphicon glyphicon-eye-open"></span>
                               <!-- <i class='fa fa-eye'> </i>q -->
                             </a>
                           </td>
-                        <?php elseif(canUpdateObjectByID('opportunity', $value['id'], false )): ?>
-                          <td class="text-center">
-                            <button class="btn btn-sm btn-secondary">
-                              <span class="glyphicon glyphicon-eye-open"></span>
-                            </button>
-                          </td>
-                        <?php else: ?>
-                          <td class="text-center"><span class="btn btn-sm glyphicon glyphicon-ban-circle"></span></td>
                         <?php endif ?>
 
 
                         <!-- Generate QR code / hexadecimal number -->
-                        <?php if (canGenerateCodeByID( $value['id'] )): ?>
+                        <?php if (canUpdateOpportunityByID($value['id']) && canGenerateCodeByID( $value['id'] )): ?>
                           <td class="text-center">
                             <a data-toggle="tooltip" title="Generate token" href="<?php xecho(BASE_URL); ?>tokens/codeGenerationForm.php?generate_code=<?php xecho($value['id']); ?>" class="btn btn-sm btn-warning">
                               <span class="glyphicon glyphicon-qrcode"></span>
                             </a>
                           </td>
-                        <?php elseif(canUpdateObjectByID('opportunity', $value['id'], false )): ?>
-                          <td class="text-center">
-                            <button class="btn btn-sm btn-secondary">
-                              <span class="glyphicon glyphicon-qrcode"></span>
-                            </button>
-                          </td>
-                        <?php else: ?>
-                          <td class="text-center"><span class="btn btn-sm glyphicon glyphicon-ban-circle"></span></td>
                         <?php endif ?>
 
                         <!-- Edit opportunity -->
 
-                        <?php if (canUpdateObjectByID('opportunity', $value['id'] )): ?>
+                        <?php if (canUpdateOpportunityByID( $value['id'] )): ?>
                           <td class="text-center">
                             <a data-toggle="tooltip" title="Edit opportunity" href="<?php xecho(BASE_URL); ?>opportunities/opportunityForm.php?edit_opportunity=<?php xecho($value['id']); ?>" class="btn btn-sm btn-success">
                               <span class="glyphicon glyphicon-pencil"></span>
                             </a>
                           </td>
-                        <?php elseif(canUpdateObjectByID('opportunity', $value['id'], false )): ?>
-                          <td class="text-center">
-                            <button class="btn btn-sm btn-secondary">
-                              <span class="glyphicon glyphicon-pencil"></span>
-                            </button>
-                          </td>
-                        <?php else: ?>
-                          <td class="text-center"><span class="btn btn-sm glyphicon glyphicon-ban-circle"></span></td>
                         <?php endif ?>
 
-                        <?php if (canDeleteOpportunityByID( $value['id'] )): ?>
+                        <?php if (canUpdateOpportunityByID( $value['id'] )): ?>
                           <td class="text-center">
                             <!-- <a href="<?php xecho(BASE_URL); ?>opportunities/opportunityFilter.php?delete_opportunity=<?php xecho($value['id']); ?>" class="btn btn-sm btn-danger"> -->
                             <a data-toggle="tooltip" title="Delete opportunity" href="<?php xecho(addQueryServer("delete_opportunity", $value['id'])) ?>" class="btn btn-sm btn-danger">
                               <span class="glyphicon glyphicon-trash"></span>
                             </a>
                           </td>
-                        <?php elseif(canDeleteOpportunityByID( $value['id'], false )): ?>
-                          <td class="text-center">
-                            <button class="btn btn-sm btn-secondary">
-                              <span class="glyphicon glyphicon-trash"></span>
-                            </button>
-                          </td>
-                        <?php else: ?>
-                          <td class="text-center"><span class="btn btn-sm glyphicon glyphicon-ban-circle"></span></td>
                         <?php endif ?>
                       </tr>
                     <?php endif ?>

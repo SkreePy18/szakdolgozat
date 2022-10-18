@@ -517,11 +517,6 @@
   function canViewOpportunityByID($opportunity_id) {
     if(in_array(['permission_name' => 'view-opportunity-list'], $_SESSION['userPermissions'])){
 
-      // admin role can view everything
-      if(isAdmin($_SESSION['user']['id'])) {
-        return true;
-      }
-
       // Check if opportunity exists
       $sql = "SELECT * from opportunities WHERE id=?";
       $opportunities = getSingleRecord($sql, 'i', [ $opportunity_id ]);
@@ -529,6 +524,11 @@
       if(is_null($opportunities)) {
         return false;
       }
+      // admin role can view everything
+      if(isAdmin($_SESSION['user']['id'])) {
+        return true;
+      }
+
       return true;
     } else {
       return false;
@@ -618,5 +618,28 @@
     } else {
       $_SESSION['error_msg'] = "No permissions to delete semester";
       return false;
+    }
+  }
+
+  function canUpdateOpportunityByID($object_id) {
+    global $conn;
+
+    if(in_array(['permission_name' => 'update-opportunity'], $_SESSION['userPermissions'])){
+      $sql = "SELECT id, owner_id FROM `opportunities` WHERE id = ?";
+      $result = getSingleRecord($sql, 'i', [$object_id]);
+
+      if(is_null($result)) {
+        return false;
+      }
+
+      if(isAdmin($_SESSION['user']['id'])) {
+        return true;
+      }
+
+      if($_SESSION['user']['id'] != $result['owner_id']) {
+        return false;
+      }
+
+      return true;
     }
   }

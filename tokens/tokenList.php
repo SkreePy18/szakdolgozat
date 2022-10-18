@@ -15,7 +15,7 @@
   <body>
     <?php include_once(INCLUDE_PATH . "/layouts/navbar.php") ?>
 
-    <div class="container" style="margin-bottom: 50px;">
+    <div class="container table-responsive" style="margin-bottom: 50px;">
       <div class="row">
         <div class="col-md-10 col-md-offset-1">
           <?php if (hasPermissionTo('view-opportunity-list')): ?>
@@ -52,7 +52,7 @@
                 </thead>
                 <tbody>
                   <?php foreach ($tokens as $key => $value): ?>
-                    <?php if ( canViewOpportunityByID($value['id']) || canUpdateOpportunityByID( $value['id'] ) || canDeleteCategoryByID( $value['id'] ) ): ?>
+                    <?php if ( canUpdateOpportunityByID($value['opportunity_id']) || canUpdateObjectByID('token', $value['id'] ) ): ?>
                       <tr>
                         <td><?php xecho($key + 1); ?></td>
                         <?php $url = "opportunities/opportunityView.php?view_opportunity=" ?>
