@@ -72,6 +72,11 @@
     $user_id          = $token_data["user_id"];
     $generated_by     = $token_data["owner_id"];
 
+    if(!canGenerateCodeByID($opportunity_id, $user_id)) {
+      $_SESSION['error_msg'] = "Could not create QR code";
+      header("location: " . BASE_URL . "opportunities/opportunityFilter.php");
+      exit(0);
+    }
     // Token generation - We will generate QR codes by these hexa numbers
     $token = bin2hex(random_bytes(10));
 

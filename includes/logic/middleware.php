@@ -535,14 +535,8 @@
     }
   }
 
-  function canGenerateCodeByID($opportunity_id) {
+  function canGenerateCodeByID($opportunity_id, $user_id = NULL) {
     if(in_array(['permission_name' => 'generate-code'], $_SESSION['userPermissions'])){
-
-      // admin role can view everything
-      if(isAdmin($_SESSION['user']['id'])) {
-        return true;
-      }
-
       // Check if opportunity exists
       $sql = "SELECT * from opportunities WHERE id=?";
       $opportunities = getSingleRecord($sql, 'i', [ $opportunity_id ]);
@@ -550,6 +544,22 @@
       if(is_null($opportunities)) {
         return false;
       }
+
+      if($user_id != NULL) {
+        // Check whether the user has a token already generated or achieved the point
+        $sql = "SELECT id FROM tokens WHERE user_id = ? AND opportunity_id = ?";
+        $tokenResults = getSingleRecord($sql, 'ii', [$user_id, $opportunity_id]);
+        if(!is_null($tokenResults)) {
+          return false;
+        }
+
+        $sql = "SELECT id FROM excellence_points WHERE user_id = ? AND opportunity_id = ?";
+        $pointResults = getSingleRecord($sql, 'ii', [$user_id, $opportunity_id]);
+        if(!is_null($pointResults)) {
+          return false;
+        }
+      }
+
       return true;
     } else {
       return false;
