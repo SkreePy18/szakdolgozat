@@ -594,6 +594,14 @@
       if($tokenInsance["redeemed"] == "yes") {
         return false;
       }
+
+      // Check date data
+      $expiration_date = strtotime($tokenInsance['expiration_date']);
+      $date = strtotime(date('d-m-y'));
+
+      if($expiration_date < $date) {
+        return false;
+      }
       return true;
     } else {
       return false;
