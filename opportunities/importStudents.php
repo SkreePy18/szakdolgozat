@@ -7,7 +7,7 @@
         // First we upload the file, then do the SQL transaction
         $fileUpload = uploadFile($file);
         if(!$fileUpload) {
-            $_SESSION['error_msg'] = "There was an error while importing list";
+            $_SESSION['error_msg'] = "There was an error while importing list.";
             header("location: " . BASE_URL . "opportunities/opportunityView.php?view_opportunity=" . $opportunity_id);
             exit(0);
         }
@@ -43,12 +43,18 @@
         $filePath = "importedFiles/" . $file["name"];
         $f = fopen($filePath, "r");
         $i = 0;
+        $students = [];
         while (!feof($f)) {
             $content = explode(PHP_EOL, fgets($f));
             foreach($content as $key => $neptun_code){
                 $sql = "SELECT id FROM `users` WHERE neptuncode = ?";
                 $user_data = getSingleRecord($sql, 's', [$neptun_code]);
                 if($user_data) {
+                    // Check if user already exists, if so break the current loop
+                    if(! canImportPointsForOpportunityByID($opportunity_id, $user_data['id'])) {
+                        array_push($students, $neptun_code);
+                        break;
+                    }
                     $sql = "INSERT INTO `excellence_points` (opportunity_id, user_id) VALUES (?, ?)";
                     $result = modifyRecord($sql, 'ii', [$opportunity_id, $user_data['id']]);
                 }

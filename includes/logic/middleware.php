@@ -566,6 +566,20 @@
     }
   }
 
+  function canImportPointsForOpportunityByID($opportunity_id, $user_id) {
+    if(in_array(['permission_name' => 'generate-code'], $_SESSION['userPermissions'])) {
+      $sql = "SELECT id FROM `excellence_points` WHERE user_id = ? AND opportunity_id = ?";
+      $result = getSingleRecord($sql, 'ii', [$user_id, $opportunity_id]);
+      if(!is_null($result)) {
+        return false;
+      }
+
+      return true;
+    }  else {
+      return false;
+    }
+  }
+
   function canUserRedeemToken($user_id, $token) {
     if(in_array(['permission_name' => 'view-opportunity-list'], $_SESSION['userPermissions'])){
 
