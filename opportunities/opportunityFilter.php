@@ -82,8 +82,8 @@
                   <tr>
                     <th width="2%">#</th>
                     <th>Opportunity</th>
-                    <th width="10%">Supervisor</th>
-                    <th width="15%">Type of points</th>
+                    <th width="10%" class='hidden-sm hidden-xs'>Supervisor</th>
+                    <th width="15%" class='hidden-sm hidden-xs'>Type of points</th>
                     <th width="15%">Achievable points</th>
                     <th colspan="5" class="text-center" width="23%">Actions</th>
                   </tr>
@@ -94,8 +94,16 @@
                       <tr>
                         <td><?php xecho($key + 1); ?></td>
                         <?php $url = "opportunities/opportunityView.php?view_opportunity=" ?>
-                        <td><a href=<?php echo(BASE_URL . $url . $value['id']); ?> > <?php xecho($value['opportunity']); ?></a></td>
-                        <td>
+                        <td><a href=<?php echo(BASE_URL . $url . $value['id']); ?> > <?php xecho($value['opportunity']); ?></a><br>
+                        <a class='hidden-md hidden-lg' href="<?php xecho(BASE_URL . 'opportunities/opportunityFilter.php?filter_supervisor=' . $value['owner_id']); ?>" class="btn absoluteCenter">
+                        (<?php 
+                                $sql = "SELECT fullname FROM users WHERE id=? LIMIT 1";
+                                $aid = getSingleRecord($sql, 'i', [ $value['owner_id'] ]);
+                                xecho($aid['fullname']);
+                            ?>
+                          )</a>
+                        </td>
+                        <td class='hidden-sm hidden-xs'>
                           <a href="<?php xecho(BASE_URL . 'opportunities/opportunityFilter.php?filter_supervisor=' . $value['owner_id']); ?>" class="btn absoluteCenter">
                             <?php 
                                 $sql = "SELECT fullname FROM users WHERE id=? LIMIT 1";
@@ -107,16 +115,32 @@
 
                         <!-- Type of points -->
 
-                        <td>
+                        <td class='hidden-sm hidden-xs'>
                           <span class="absoluteCenter"><?php xecho($value['points_type']); ?> </span>
                         </td>
 
                         <!-- Achievable points -->
                         <td>
                           <span class="absoluteCenter"><?php xecho($value['points']); ?> </span>
+                          <span class="absoluteCenter hidden-lg hidden-md">(<?php xecho($value['points_type']); ?>)</span>
                         </td>
                         <!-- Action buttons -->
-                        <td class="text-center">
+
+                        <td class='text-center hidden-md hidden-lg'>
+                        <div class="dropdown">
+                          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Action
+                          </button>
+                          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li><a class="dropdown-item" href="#">View</a></li>
+                            <li><a class="dropdown-item" href="#">View tokens</a></li>
+                            <li><a class="dropdown-item" href="#">Generate token</a></li>
+                            <li><a class="dropdown-item" href="#">Edit</a></li>
+                            <li><a class="dropdown-item" href="#">Delelte</a></li>
+                          </div>
+                          </div>
+
+                        <td class="text-center hidden-sm hidden-xs">
                           <a data-toggle="tooltip" title="View opportunity" href="<?php xecho(BASE_URL); ?>opportunities/opportunityView.php?view_opportunity=<?php 
                               xecho($value['id']);
                             
@@ -128,7 +152,7 @@
                          <!-- View QR codes -->
 
                          <?php if (canUpdateOpportunityByID($value['id']) && canGenerateCodeByID( $value['id'] )): ?>
-                          <td class="text-center">
+                          <td class="text-center hidden-xs hidden-sm">
                             <a data-toggle="tooltip" title="View tokens" href="<?php xecho(BASE_URL); ?>tokens/tokenList.php?opportunity=<?php xecho($value['id']); ?>" class="btn btn-sm btn-info">
                               <span class="glyphicon glyphicon-eye-open"></span>
                               <!-- <i class='fa fa-eye'> </i>q -->
@@ -139,7 +163,7 @@
 
                         <!-- Generate QR code / hexadecimal number -->
                         <?php if (canUpdateOpportunityByID($value['id']) && canGenerateCodeByID( $value['id'] )): ?>
-                          <td class="text-center">
+                          <td class="text-center hidden-xs hidden-sm">
                             <a data-toggle="tooltip" title="Generate token" href="<?php xecho(BASE_URL); ?>tokens/codeGenerationForm.php?generate_code=<?php xecho($value['id']); ?>" class="btn btn-sm btn-warning">
                               <span class="glyphicon glyphicon-qrcode"></span>
                             </a>
@@ -149,7 +173,7 @@
                         <!-- Edit opportunity -->
 
                         <?php if (canUpdateOpportunityByID( $value['id'] )): ?>
-                          <td class="text-center">
+                          <td class="text-center hidden-sm hidden-xs">
                             <a data-toggle="tooltip" title="Edit opportunity" href="<?php xecho(BASE_URL); ?>opportunities/opportunityForm.php?edit_opportunity=<?php xecho($value['id']); ?>" class="btn btn-sm btn-success">
                               <span class="glyphicon glyphicon-pencil"></span>
                             </a>
@@ -157,7 +181,7 @@
                         <?php endif ?>
 
                         <?php if (canUpdateOpportunityByID( $value['id'] )): ?>
-                          <td class="text-center">
+                          <td class="text-center hidden-sm hidden-xs">
                             <!-- <a href="<?php xecho(BASE_URL); ?>opportunities/opportunityFilter.php?delete_opportunity=<?php xecho($value['id']); ?>" class="btn btn-sm btn-danger"> -->
                             <a data-toggle="tooltip" title="Delete opportunity" href="<?php xecho(addQueryServer("delete_opportunity", $value['id'])) ?>" class="btn btn-sm btn-danger">
                               <span class="glyphicon glyphicon-trash"></span>
