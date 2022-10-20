@@ -4,6 +4,7 @@
   // variable declaration. These variables will be used in the semester form
   $opportunity_id = 0;
   $opportunity = -1;
+  $token = -1;
   $isEditing = false;
   $isDeleting = false;
   $errors = array();
@@ -97,7 +98,7 @@
   }
 
   function editToken() {
-    global $token_id, $token, $expiration_date, $opportunity_id, $user_id, $isEditing;
+    global $conn, $token_id, $token, $expiration_date, $opportunity_id, $user_id, $isEditing;
 
     $token_id = filter_input(INPUT_GET, 'edit_token', FILTER_SANITIZE_NUMBER_INT);
     // Get the token information to fetch to the form
@@ -116,7 +117,7 @@
 
   function updateToken() {
     $token_data = filter_input_array(INPUT_POST, [
-          'token_id'      => FILTER_SANITIZE_NUMBER_INT,
+          'token_id'        => FILTER_SANITIZE_NUMBER_INT,
           'opportunity_id'  => FILTER_SANITIZE_NUMBER_INT,
           'user_id'         => FILTER_SANITIZE_NUMBER_INT,
           'expiration_date' => FILTER_SANITIZE_STRING,
@@ -140,7 +141,7 @@
         header("location: " . BASE_URL . "tokens/tokenList.php" . " ?opportunity=" . $opportunity_id);
         exit(0);
       } else {
-        $_SESSION['error_msg'] = "You cannot update this token!";
+        $_SESSION['error_msg'] = "Could not update token!";
         header("location: " . BASE_URL . "tokens/tokenList.php" . " ?opportunity=" . $opportunity_id);
         exit(0);
       }
@@ -196,11 +197,11 @@
     $user_id = $token_data["user_id"];
     $token   = $token_data["token"];
 
-    // if(!canUserRedeemToken($user_id, $token)) {
-    //   $_SESSION['error_msg'] = "You cannot redeem this token!";
-    //   header("location: " . BASE_URL . "tokens/redeemToken.php");
-    //   exit(0);
-    // }
+    if(!canUserRedeemToken($user_id, $token)) {
+      $_SESSION['error_msg'] = "You cannot redeem this token!";
+      header("location: " . BASE_URL . "tokens/redeemToken.php");
+      exit(0);
+    }
 
     $sql = "UPDATE tokens SET redeemed='yes' WHERE token=? AND user_id = ?";
     $result = modifyRecord($sql, 'si', [$token, $user_id]);

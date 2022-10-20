@@ -43,9 +43,9 @@
             <form class="form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" enctype="multipart/form-data">
             <input type="hidden" id="owner_id" name="owner_id" value="<?php xecho($_SESSION['user']['id']); ?>">
             <input type="hidden" name="opportunity_id" value="<?php xecho($opportunity_id); ?>">
-            <input type="hidden" name="token_id" value="<?php xecho(isset($token_id)); ?>">
 
             <?php if($isEditing): ?>
+              <input type="hidden" name="token_id" value="<?php xecho($token_id); ?>">
               <div class="form-group <?php xecho(isset($errors['token']) ? 'has-error' : '') ?>">
                 <label class="control-label">Token</label><br>
                 <input type="text" name="token" value="<?php xecho($token); ?>" class="form-control" disabled>
@@ -93,8 +93,6 @@
                   <span class="help-block"><?php xecho($errors['expiration_date']); ?></span>
                 <?php endif; ?>
               </div>
-
-
 
               <div class="form-group">
                 <?php echo(getCSRFTokenField() . "\n") ?>
