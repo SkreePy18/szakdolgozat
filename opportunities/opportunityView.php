@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <!-- Custome styles -->
     <link rel="stylesheet" href="../assets/css/style.css">
+     <!-- Bootstrap tooltip -->
+     <script src="../assets/js/tooltip.js"></script>
   </head>
   <body>
     <?php include_once(INCLUDE_PATH . "/layouts/navbar.php") ?>
@@ -107,7 +109,7 @@
                           <!-- Remove -->
 
                           <td class="text-center">
-                            <a href="<?php xecho(BASE_URL); ?>opportunities/opportunityView.php?view_opportunity=<?php xecho($opportunity_id); ?>&remove_student=<?php 
+                            <a data-toggle="tooltip" title="Remove student" href="<?php xecho(BASE_URL); ?>opportunities/opportunityView.php?view_opportunity=<?php xecho($opportunity_id); ?>&remove_student=<?php 
                                 xecho($user['user_id']);
 
                               ?>" class="btn btn-sm <?php xecho("btn-danger"); ?>">

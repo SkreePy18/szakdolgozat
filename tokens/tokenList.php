@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <!-- Custome styles -->
     <link rel="stylesheet" href="../assets/css/style.css">
+    <!-- Bootstrap tooltip -->
+    <script src="../assets/js/tooltip.js"></script>
   </head>
   <body>
     <?php include_once(INCLUDE_PATH . "/layouts/navbar.php") ?>
@@ -98,13 +100,13 @@
                         </td> -->
 
                         <td class="text-center">
-                            <a href="codeGenerationForm.php?edit_token=<?php xecho($value['id']); ?>" class="btn btn-sm btn-success">
+                            <a data-toggle="tooltip" title="Edit token" href="codeGenerationForm.php?edit_token=<?php xecho($value['id']); ?>" class="btn btn-sm btn-success">
                               <span class="glyphicon glyphicon-pencil"></span>
                             </a>
                         </td>
 
                         <td class="text-center">
-                            <a href="tokenList.php?opportunity_id=<?php xecho($value['opportunity_id']); ?>&save_token=<?php xecho($value['token']); ?>" class="btn btn-sm btn-success">
+                            <a data-toggle="tooltip" title="Download token" href="tokenList.php?opportunity_id=<?php xecho($value['opportunity_id']); ?>&save_token=<?php xecho($value['token']); ?>" class="btn btn-sm btn-info">
                               <span class="glyphicon glyphicon-save"></span>
                             </a>
                         </td>
@@ -112,7 +114,7 @@
                   
                           <td class="text-center">
                             <!-- <a href="<?php xecho(BASE_URL); ?>opportunities/opportunityFilter.php?delete_opportunity=<?php xecho($value['id']); ?>" class="btn btn-sm btn-danger"> -->
-                            <a href="<?php xecho(addQueryServer("delete_token", $value['token'])) ?>" class="btn btn-sm btn-danger">
+                            <a href="<?php xecho(addQueryServer("delete_token", $value['token'])) ?>" class="btn btn-sm btn-danger" data-toggle="tooltip" title="Delete token">
                               <span class="glyphicon glyphicon-trash"></span>
                             </a>
                           </td>
