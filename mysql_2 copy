@@ -72,3 +72,28 @@ CREATE TABLE IF NOT EXISTS `excellence_points` (
     `opportunity_id` INT(11) NOT NULL,
     `user_id` INT(11) NOT NULL
 )
+
+/* Create table for excellence list instances */
+
+CREATE TABLE IF NOT EXISTS `excellence_lists` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `name` VARCHAR(255) NOT NULL,
+    `points_type` VARCHAR(255) NOT NULL,
+    `users` LONGTEXT DEFAULT '[ [ ] ]',
+    `created_by` INT(11) NOT NULL
+);
+
+/* Add default excellence list which contains all users and point types */
+
+INSERT INTO `excellence_lists` (`id`, `name`, `points_type`, `users`, `created_by`) VALUES (1, 'Global excellence list', 'all', 'all', 1);
+
+/* Permissions for excellence list management */
+
+INSERT INTO `permissions` (`name`, `description`) VALUES ('manage-excellence-list',             'can manage excellence lists');
+INSERT INTO `permissions` (`name`, `description`) VALUES ('create-excellence-list',             'can create excellence lists');
+INSERT INTO `permissions` (`name`, `description`) VALUES ('update-excellence-list',             'can edit excellence lists');
+INSERT INTO `permissions` (`name`, `description`) VALUES ('delete-excellence-list',             'can delete excellence lists');
+
+-- Assign to admin role
+
+-- INSERT INTO `permission_role`

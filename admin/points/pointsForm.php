@@ -1,6 +1,6 @@
 <?php include_once('../../config.php'); ?>
 <?php include_once(ROOT_PATH . '/csrf.php') ?>
-<?php include_once(ROOT_PATH . '/admin/points/excellenceLogic.php'); ?>
+<?php include_once(ROOT_PATH . '/admin/points/pointsLogic.php'); ?>
 
 <!DOCTYPE html>
 <html>

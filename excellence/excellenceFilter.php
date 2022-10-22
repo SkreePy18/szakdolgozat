@@ -1,7 +1,7 @@
 <?php include_once('../config.php'); ?>
 <?php include_once(ROOT_PATH . '/csrf.php') ?> 
 <?php include_once(ROOT_PATH . '/excellence/excellenceLogic.php'); ?>
-<?php $excellence_list = getExcellenceList(); ?>
+<?php $excellence_list = getExcellenceListTypes(); ?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -18,6 +18,28 @@
     <div class="container" style="margin-bottom: 50px;">
       <div class="row">
         <div class="col-md-10 col-md-offset-1">
+        <form class="form" action="<?php xecho(keepQueryServer()) ?>" method="post" enctype="multipart/form-data">
+         <div class="form-group">
+             <label class="control-label">Excellence list</label>
+             <select class="form-control" name="excellence_id">
+                 <?php
+                     $sql = "SELECT id, name FROM excellence_lists";
+                     $semesterlist = getMultipleRecords($sql);
+                 ?>
+               <?php foreach ($semesterlist as $sem): ?>
+                 <option value="<?php xecho($sem['id']) ?>" <?php if ($sem['id'] == $semester_id) xecho("selected") ?>><?php xecho($sem['name']) ?></option>
+               <?php endforeach; ?>
+             </select>
+            </div>
+             <div class="form-group text-center">
+               <?php echo(getCSRFTokenField() . "\n") ?>
+               <button type="submit" name="select_excellence_list" class="btn btn-success">Select excellence list</button>
+             </div>
+          <?php 
+            $excellence_list = getExcellenceListOfType();
+          ?>
+          </form>
+          <h1 class='text-center'> Excellence list </h1>
             <?php if (! empty($excellence_list)): ?>
               <table class="table table-bordered">
                 <thead>

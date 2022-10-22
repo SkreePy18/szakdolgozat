@@ -33,6 +33,9 @@
             <?php if (hasPermissionTo('view-point-types')): ?>
               <a href="<?php xecho(BASE_URL . 'admin/points/pointsList.php'); ?>" class="list-group-item">Manage types of points</a>
             <?php endif ?>
+
+            <!-- Excellence list -->
+
             <?php if (hasPermissionTo('manage-excellence-list')): ?>
               <a href="<?php xecho(BASE_URL . 'admin/excellence/excellenceList.php'); ?>" class="list-group-item">Manage excellence lists</a>
             <?php endif ?>

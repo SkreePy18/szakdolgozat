@@ -1,12 +1,12 @@
 <?php include_once('../../config.php') ?>
 <?php include_once(ROOT_PATH . '/csrf.php') ?> 
-<?php include_once(ROOT_PATH . '/admin/points/pointsLogic.php'); ?>
+<?php include_once(ROOT_PATH . '/admin/excellence/excellenceLogic.php'); ?>
 
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
-  <title><?php xecho(APP_NAME); ?> - Category management</title>
+  <title><?php xecho(APP_NAME); ?> - Excellence management</title>
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
   <!-- Custome styles -->
@@ -18,7 +18,7 @@
   <?php if ($isDeleting === true): ?>
     <div class="col-md-6 col-md-offset-3">
       <form class="form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" enctype="multipart/form-data">
-        <input type="hidden" name="type_id" value="<?php xecho($type_id); ?>">
+        <input type="hidden" name="type_id">
         <p class="text-center">Do you really want to delete point type: '<?php xecho($type); ?>'?</p>
         <div class="form-group text-center">
           <?php echo(getCSRFTokenField() . "\n") ?>
@@ -41,16 +41,16 @@
         <?php endif; ?>
 
         <?php if (hasPermissionTo('create-point-type')): ?>
-          <a href="pointsForm.php" class="btn btn-success">
+          <a href="excellenceForm.php" class="btn btn-success">
             <span class="glyphicon glyphicon-plus"></span>
-            Create new point type
+            Create excellence list
           </a>
           <hr>
         <?php endif ?>
 
         <?php if (hasPermissionTo('view-point-types')): ?>
           <?php
-            $categories = getTypesOfPoints();
+            $categories = getExcellenceList();
             $ncol = hasPermissionTo('update-point-type') + hasPermissionTo('delete-point-type');
           ?>
           <h1 class="text-center">Excellence management</h1>

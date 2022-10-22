@@ -30,7 +30,7 @@
                   <li><a href="<?php xecho(BASE_URL . 'admin/dashboard.php'); ?>" style="color: red;">Dashboard</a></li>
                 <?php endif; ?>
                 <li role="separator" class="divider"></li>
-                <li><a href="<?php xecho(BASE_URL . 'excellence/excellenceFilter.php'); ?>" >Excellence list</a></li>
+                <li><a href="<?php xecho(BASE_URL . 'excellence/excellenceFilter.php?id=5'); ?>" >Excellence list</a></li>
                 <?php if (hasPermissionTo('view-topic-list')): ?>
                   <li><a href="<?php xecho(BASE_URL . 'topic/topicFilter.php?filter_topic=all'); ?>" >All topics</a></li>
                   <?php if (hasPermissionTo('view-topic-summary')): ?>
@@ -65,10 +65,13 @@
                   <li><a href="<?php xecho(BASE_URL . 'opportunities/opportunityFilter.php'); ?>" >Opportunities</a></li>
                 <?php endif; ?>
 
+                <!-- Redeem token -->
+
                 <?php if (hasPermissionTo('view-opportunity-list')): ?>
                   <li><a href="<?php xecho(BASE_URL . 'tokens/redeemToken.php'); ?>" >Redeem token</a></li>
                 <?php endif; ?>
 
+                <!-- Logout -->
                 <li><a href="<?php xecho(BASE_URL . 'logout.php'); ?>" style="color: red;">Logout</a></li>
               </ul>
           </li>
