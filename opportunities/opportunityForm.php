@@ -56,21 +56,21 @@
 
               <div class="form-group <?php xecho(isset($errors['opportunity']) ? 'has-error' : '') ?>">
                 <label class="control-label">Opportunity</label>
-                <input type="text" name="opportunity" value="<?php xecho($opportunity); ?>" class="form-control">
+                <input type="text" name="opportunity" value="<?php xecho($opportunity); ?>" class="form-control" required>
                 <?php if (isset($errors['opportunity'])): ?>
                   <span class="help-block"><?php xecho($errors['opportunity']); ?></span>
                 <?php endif; ?>
               </div>
               <div class="form-group <?php xecho(isset($errors['description']) ? 'has-error' : '') ?>">
                 <label class="control-label">Description</label>
-                <textarea type="text" name="description" cols="30" rows="10" class="form-control"><?php xecho($opportunity_description); ?></textarea>
+                <textarea required type="text" name="description" cols="30" rows="10" class="form-control"><?php xecho($opportunity_description); ?></textarea>
                 <?php if (isset($errors['description'])): ?>
                   <span class="help-block"><?php xecho($errors['description']); ?></span>
                 <?php endif; ?>
               </div>
               <div class="form-group <?php xecho(isset($errors['points_type']) ? 'has-error' : '') ?>">
                 <label class="control-label">Type of points</label><br>
-                <select name="points_type">
+                <select name="points_type" required>
                   <option value="" disabled selected hidden>Choose the type of points</option>
                   <?php 
                   // Get the types of points 
@@ -89,14 +89,14 @@
               </div>
               <div class="form-group <?php xecho(isset($errors['description']) ? 'has-error' : '') ?>">
                 <label class="control-label">Expiration date</label>
-                <input type="date" name="date" class="form-control" value="<?php xecho($expiration_date); ?>"></input>
+                <input type="date" name="date" class="form-control" value="<?php xecho($expiration_date); ?>" required></input>
                 <?php if (isset($errors['date'])): ?>
                   <span class="help-block"><?php xecho($errors['date']); ?></span>
                 <?php endif; ?>
               </div>
               <div class="form-group <?php xecho(isset($errors['points']) ? 'has-error' : '') ?>">
                 <label class="control-label">Points</label>
-                <input type="number" name="points" value="<?php xecho($opportunity_points); ?>" class="form-control">
+                <input type="number" name="points" value="<?php xecho($opportunity_points); ?>" class="form-control" required>
                 <?php if (isset($errors['points'])): ?>
                   <span class="help-block"><?php xecho($errors['points']); ?></span>
                 <?php endif; ?>

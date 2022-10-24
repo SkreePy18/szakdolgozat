@@ -144,9 +144,13 @@
         exit(0);
       } else {
         $_SESSION['error_msg'] = "Could not update opportunity data";
+        header("location: " . BASE_URL . "opportunities/opportunityFilter.php");
+        exit(0);
       }
     } else {
       $_SESSION['error_msg'] = "Could not update opportunity. Validation failed!";
+      header("location: " . BASE_URL . "opportunities/opportunityFilter.php");
+      exit(0);
     }
     $isEditing = true;
   }

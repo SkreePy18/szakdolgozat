@@ -68,7 +68,7 @@
       $users = json_encode($_POST['students']);
     }
 
-    if (! hasPermissionTo('create-point-type')) {
+    if (! hasPermissionTo('manage-excellence-list')) {
       $_SESSION['error_msg'] = "No permissions to create new point type";
       header("location: " . BASE_URL . "admin/points/pointsList.php");
       exit(0);

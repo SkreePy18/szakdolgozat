@@ -40,7 +40,7 @@
           </a>
         <?php endif; ?>
 
-        <?php if (hasPermissionTo('create-point-type')): ?>
+        <?php if (hasPermissionTo('create-excellence-list')): ?>
           <a href="excellenceForm.php" class="btn btn-success">
             <span class="glyphicon glyphicon-plus"></span>
             Create excellence list
@@ -48,10 +48,10 @@
           <hr>
         <?php endif ?>
 
-        <?php if (hasPermissionTo('view-point-types')): ?>
+        <?php if (hasPermissionTo('manage-excellence-list')): ?>
           <?php
             $categories = getExcellenceList();
-            $ncol = hasPermissionTo('update-point-type') + hasPermissionTo('delete-point-type');
+            $ncol = hasPermissionTo('update-excellence-list') + hasPermissionTo('delete-excellence-list');
           ?>
           <h1 class="text-center">Excellence management</h1>
           <br />
@@ -73,7 +73,7 @@
                     <td><?php xecho($value['name']); ?></td>
 
                     <?php if ($ncol > 0): ?>
-                      <?php if (hasPermissionTo('update-category') && ($value['id'] > 0)): ?>
+                      <?php if (hasPermissionTo('update-excellence-list') && ($value['id'] > 0)): ?>
                         <td class="text-center">
                           <a href="<?php xecho(BASE_URL); ?>admin/points/pointsForm.php?edit_type=<?php xecho($value['id']); ?>" class="btn btn-sm btn-success">
                             <span class="glyphicon glyphicon-pencil"></span>
@@ -81,7 +81,7 @@
                         </td>
                       <?php endif ?>
 
-                      <?php if (hasPermissionTo('delete-category') && ($value['id'] > 0)): ?>
+                      <?php if (hasPermissionTo('delete-excellence-list') && ($value['id'] > 0)): ?>
                         <td class="text-center">
                           <a href="<?php xecho(BASE_URL); ?>admin/points/pointsList.php?delete_type=<?php xecho($value['id']); ?>" class="btn btn-sm btn-danger">
                             <span class="glyphicon glyphicon-trash"></span>
