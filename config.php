@@ -59,7 +59,7 @@
 
   mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 	// connect to database
-	$conn = new mysqli("localhost", "root", "", "user-accounts");
+	$conn = new mysqli("localhost", "skreepy", "skreepyxd", "user-accounts");
 	// Check connection
 	if ($conn->connect_error) {
 	    die("Connection failed: " . $conn->connect_error);
@@ -71,7 +71,7 @@
   // define global constants
 	define ('ROOT_PATH', realpath(dirname(__FILE__))); // path to the root folder
 	define ('INCLUDE_PATH', realpath(dirname(__FILE__) . '/includes' )); // Path to includes folder
-	define ('BASE_URL', 'https://192.168.0.192/szakdolgozat/'); // the home url of the website
+	define ('BASE_URL', 'http://80.158.91.224/'); // the home url of the website
 	define ('APP_NAME', "Diploma topic selection web site"); // name of the application
 
 	define ('RANDOM_SECURITY', 'XXXXXXXXXXXX'); // random seed for CSRF token

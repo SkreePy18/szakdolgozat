@@ -1,50 +1,51 @@
-<?php return array(
-    'root' => array(
-        'name' => '__root__',
-        'pretty_version' => 'dev-main',
-        'version' => 'dev-main',
-        'reference' => '2c25aace0036d0b462d30cad4dcff8f771c9367e',
-        'type' => 'library',
-        'install_path' => __DIR__ . '/../../',
-        'aliases' => array(),
-        'dev' => true,
+<?php return array (
+  'root' => 
+  array (
+    'pretty_version' => 'dev-main',
+    'version' => 'dev-main',
+    'aliases' => 
+    array (
     ),
-    'versions' => array(
-        '__root__' => array(
-            'pretty_version' => 'dev-main',
-            'version' => 'dev-main',
-            'reference' => '2c25aace0036d0b462d30cad4dcff8f771c9367e',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../../',
-            'aliases' => array(),
-            'dev_requirement' => false,
-        ),
-        'bacon/bacon-qr-code' => array(
-            'pretty_version' => '2.0.7',
-            'version' => '2.0.7.0',
-            'reference' => 'd70c840f68657ce49094b8d91f9ee0cc07fbf66c',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../bacon/bacon-qr-code',
-            'aliases' => array(),
-            'dev_requirement' => false,
-        ),
-        'dasprid/enum' => array(
-            'pretty_version' => '1.0.3',
-            'version' => '1.0.3.0',
-            'reference' => '5abf82f213618696dda8e3bf6f64dd042d8542b2',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../dasprid/enum',
-            'aliases' => array(),
-            'dev_requirement' => false,
-        ),
-        'endroid/qr-code' => array(
-            'pretty_version' => '4.6.0',
-            'version' => '4.6.0.0',
-            'reference' => 'b60873b14e2ca7bf3c3746f5e032023095a7e05c',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../endroid/qr-code',
-            'aliases' => array(),
-            'dev_requirement' => false,
-        ),
+    'reference' => 'a450c28676e33298886eb870495f24143a2827a8',
+    'name' => '__root__',
+  ),
+  'versions' => 
+  array (
+    '__root__' => 
+    array (
+      'pretty_version' => 'dev-main',
+      'version' => 'dev-main',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'a450c28676e33298886eb870495f24143a2827a8',
     ),
+    'bacon/bacon-qr-code' => 
+    array (
+      'pretty_version' => '2.0.7',
+      'version' => '2.0.7.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'd70c840f68657ce49094b8d91f9ee0cc07fbf66c',
+    ),
+    'dasprid/enum' => 
+    array (
+      'pretty_version' => '1.0.3',
+      'version' => '1.0.3.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '5abf82f213618696dda8e3bf6f64dd042d8542b2',
+    ),
+    'endroid/qr-code' => 
+    array (
+      'pretty_version' => '4.6.1',
+      'version' => '4.6.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'a75c913b0e4d6ad275e49a2c1de1cacffc6c2184',
+    ),
+  ),
 );
