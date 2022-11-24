@@ -41,7 +41,7 @@
 
             <?php if (! empty($tokens)): ?>
               <table class="table table-bordered">
-                <thead>
+                <thead class="hidden-xs hidden-sm">
                   <tr>
                     <th width="2%">#</th>
                     <th>Token created for</th>
@@ -56,40 +56,67 @@
                   <?php foreach ($tokens as $key => $value): ?>
                     <?php if ( canUpdateOpportunityByID($value['opportunity_id']) || canUpdateObjectByID('token', $value['id'] ) ): ?>
                       <tr>
-                        <td><?php xecho($key + 1); ?></td>
+                        <td class="absoluteCenter"><?php xecho($key + 1); ?></td>
                         <?php $url = "opportunities/opportunityView.php?view_opportunity=" ?>
-                        <td><span class='absoluteCenter'>
+                        <td>
+                        <span class='hidden-md hidden-lg'>
+                            <b>Neptun code: </b><?php 
+                                $sql = "SELECT neptuncode FROM users WHERE id=? LIMIT 1";
+                                $aid = getSingleRecord($sql, 'i', [ $value['user_id'] ]);
+                                xecho($aid['neptuncode']);
+                            ?>
+                            <br>
+                            <b>Token:</b> <?php xecho($value['token']); ?><br>
+                            <b>QR code: </b><img height="32px" src='qrCodes/<?php xecho($value['token']); ?>.png'/><br>
+                            <b>Redeemed: </b> <?php xecho($value['redeemed']); ?><br>
+                            <b>Expiration date: </b><?php xecho($value['expiration_date']); ?><br>
+                              <a data-toggle="tooltip" title="Edit token" href="codeGenerationForm.php?edit_token=<?php xecho($value['id']); ?>" class="btn btn-sm btn-success">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                              </a>
+                            <a data-toggle="tooltip" title="Download token" href="tokenList.php?opportunity_id=<?php xecho($value['opportunity_id']); ?>&save_token=<?php xecho($value['token']); ?>" class="btn btn-sm btn-info">
+                              <span class="glyphicon glyphicon-save"></span>
+                            </a>
+                            <!-- <a href="<?php xecho(BASE_URL); ?>opportunities/opportunityFilter.php?delete_opportunity=<?php xecho($value['id']); ?>" class="btn btn-sm btn-danger"> -->
+                            <a href="<?php xecho(addQueryServer("delete_token", $value['token'])) ?>" class="btn btn-sm btn-danger" data-toggle="tooltip" title="Delete token">
+                              <span class="glyphicon glyphicon-trash"></span>
+                            </a>
+                           
+                            </span>
+                          <span class='absoluteCenter hidden-xs hidden-sm'>
                             <?php 
                                 $sql = "SELECT neptuncode FROM users WHERE id=? LIMIT 1";
                                 $aid = getSingleRecord($sql, 'i', [ $value['user_id'] ]);
                                 xecho($aid['neptuncode']);
                             ?>
-                            </span>
+                          </span>
                         </td>
 
                         <!-- Type of points -->
 
-                        <td>
+                        <td class="hidden-xs hidden-sm">
                           <span class="absoluteCenter"><?php xecho($value['token']); ?> </span>
                         </td>
 
                         <!-- Achievable points -->
-                        <td>
+                        <td class="hidden-xs hidden-sm">
                           <center><img class='absoluteCenter' height="32px" src='qrCodes/<?php xecho($value['token']); ?>.png'/></center>
                         </td>
 
                         <!-- Expiration date -->
-                        <td>
+                        <td class="hidden-xs hidden-sm">
                           <span class="absoluteCenter"><?php xecho($value['expiration_date']); ?> </span>
                         </td>
                         
                         <!-- Redeemed -->
 
-                        <td>
+                        <td class="hidden-xs hidden-sm">
                           <span class="absoluteCenter"><?php xecho($value['redeemed']); ?> </span>
                         </td>
 
                         <!-- Action buttons -->
+
+
+
                         <!-- <td class="text-center">
                           <a href="<?php xecho(BASE_URL); ?>tokens/tokenList.php?opportunity=<?php xecho($value['opportunity_id']); ?>&save_token=<?php 
                               xecho($value['token']);
@@ -99,27 +126,27 @@
                           </a>
                         </td> -->
 
-                        <td class="text-center">
+                        <td class="text-center hidden-xs hidden-sm">
                             <a data-toggle="tooltip" title="Edit token" href="codeGenerationForm.php?edit_token=<?php xecho($value['id']); ?>" class="btn btn-sm btn-success">
                               <span class="glyphicon glyphicon-pencil"></span>
                             </a>
                         </td>
 
-                        <td class="text-center">
+                        <td class="text-center hidden-xs hidden-sm">
                             <a data-toggle="tooltip" title="Download token" href="tokenList.php?opportunity_id=<?php xecho($value['opportunity_id']); ?>&save_token=<?php xecho($value['token']); ?>" class="btn btn-sm btn-info">
                               <span class="glyphicon glyphicon-save"></span>
                             </a>
                         </td>
                         <!-- saveFile -->
                   
-                          <td class="text-center">
+                          <td class="text-center hidden-xs hidden-sm">
                             <!-- <a href="<?php xecho(BASE_URL); ?>opportunities/opportunityFilter.php?delete_opportunity=<?php xecho($value['id']); ?>" class="btn btn-sm btn-danger"> -->
                             <a href="<?php xecho(addQueryServer("delete_token", $value['token'])) ?>" class="btn btn-sm btn-danger" data-toggle="tooltip" title="Delete token">
                               <span class="glyphicon glyphicon-trash"></span>
                             </a>
                           </td>
                         <?php elseif(canDeleteOpportunityByID( $value['id'], false )): ?>
-                          <td class="text-center">
+                          <td class="text-center hidden-xs hidden-sm">
                             <button class="btn btn-sm btn-secondary">
                               <span class="glyphicon glyphicon-trash"></span>
                             </button>

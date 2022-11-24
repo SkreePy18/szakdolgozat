@@ -7,7 +7,6 @@ form label { font-weight: normal; }
 #image_display { height: 90px; width: 80px; float: right; margin-right: 10px; }
 
 .absoluteCenter {
-    display: block;
     text-align: center;
     line-height: 2em;
 }
@@ -22,9 +21,13 @@ table > thead > tr > th:not(:nth-child(2)) {
     vertical-align: middle;
 }
 
-@media (max-width: 797px){
+@media (max-width: 700px){
     table > tbody > tr > td {
-        font-size: 20px !important;
+        font-size: 40px !important;
+    }
+
+    .font_responsive {
+        font-size: 30px !important;
     }
 }
 

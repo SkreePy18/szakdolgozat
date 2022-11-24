@@ -133,10 +133,12 @@
                           </button>
                           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <li><a class="dropdown-item" href="<?php xecho(BASE_URL); ?>opportunities/opportunityView.php?view_opportunity=<?php xecho($value['id']);?> ">View</a></li>
-                            <li><a class="dropdown-item" href="<?php xecho(BASE_URL); ?>tokens/tokenList.php?opportunity=<?php xecho($value['id']);?> ">View tokens</a></li>
-                            <li><a class="dropdown-item" href="<?php xecho(BASE_URL); ?>tokens/codeGenerationForm.php?generate_code=<?php xecho($value['id']); ?>">Generate token</a></li>
-                            <li><a class="dropdown-item" href="<?php xecho(BASE_URL); ?>opportunities/opportunityForm.php?edit_opportunity=<?php xecho($value['id']); ?> ">Edit</a></li>
-                            <li><a class="dropdown-item" href="<?php xecho(addQueryServer("delete_opportunity", $value['id'])) ?> ">Delete</a></li>
+                            <?php if (canUpdateOpportunityByID( $value['id'] )): ?>
+                              <li><a class="dropdown-item" href="<?php xecho(BASE_URL); ?>tokens/tokenList.php?opportunity=<?php xecho($value['id']);?> ">View tokens</a></li>
+                              <li><a class="dropdown-item" href="<?php xecho(BASE_URL); ?>tokens/codeGenerationForm.php?generate_code=<?php xecho($value['id']); ?>">Generate token</a></li>
+                              <li><a class="dropdown-item" href="<?php xecho(BASE_URL); ?>opportunities/opportunityForm.php?edit_opportunity=<?php xecho($value['id']); ?> ">Edit</a></li>
+                              <li><a class="dropdown-item" href="<?php xecho(addQueryServer("delete_opportunity", $value['id'])) ?> ">Delete</a></li>
+                            <?php endif ?>
                           </div>
                           </div>
 
