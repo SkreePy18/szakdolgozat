@@ -63,7 +63,7 @@
                         } else {
                             $students = $students . ", " . $neptun_code;
                         }
-                        break;
+                        continue;
                     }
                     $sql = "INSERT INTO `excellence_points` (opportunity_id, user_id) VALUES (?, ?)";
                     $result = modifyRecord($sql, 'ii', [$opportunity_id, $user_data['id']]);

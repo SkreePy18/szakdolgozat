@@ -1,31 +1,31 @@
 <?php include_once(INCLUDE_PATH . '/logic/validation.php') ?>
 <?php
   // variable declaration. These variables will be used in the category form
-  $type = "";
-  $type_id = -1;
+  $name = "";
+  $excellence_id = -1;
   $isEditing = false;
   $isDeleting = false;
   $errors = array();
 
   // ACTION: Save 
   if (isset($_POST['create_excellence_list'])) {  // if user clicked save button ...
-      createType();
+    createExcellence();
   }
   // ACTION: Update 
-  if (isset($_POST['update_points_type'])) { // if user clicked update button ...
-    updateType();
+  if (isset($_POST['update_excellence_list'])) { // if user clicked update button ...
+    updateExcellence();
   }
   // ACTION: Fetch for editing
-  if (isset($_GET["edit_type"])) {
-    editType();
+  if (isset($_GET["edit_excellence_list"])) {
+    editExcellence();
   }
   // ACTION: Delete with confirmation
-  if (isset($_GET['delete_type'])) {
-    deleteType();
+  if (isset($_GET['delete_excellence_list'])) {
+    deleteExcellence();
   }
   // ACTION: Force delete
-  if (isset($_POST['force_delete_type'])) {
-    forceDeleteType();
+  if (isset($_POST['force_delete_excellence_list'])) {
+    forceDeleteExcellence();
   }
 
   function getExcellenceList(){
@@ -36,8 +36,8 @@
   }
 
   // Save category to database
-  function createType(){
-    global $conn, $errors, $type, $isEditing;
+  function createExcellence(){
+    global $conn, $errors, $name, $isEditing;
 
     // validate data
     $type_data = filter_input_array(INPUT_POST, [
@@ -103,22 +103,22 @@
     // }
   }
 
-  function updateType() {
-    global $conn, $errors, $type_id, $type, $isEditing;
+  function updateExcellence() {
+    global $conn, $errors, $excellence_id, $name, $isEditing;
 
     // validate data
     $category_data = filter_input_array(INPUT_POST, [
-                  "type_id" => FILTER_SANITIZE_NUMBER_INT,
-                  "type" => FILTER_SANITIZE_STRING
+                  "excellence_id" => FILTER_SANITIZE_NUMBER_INT,
+                  "name" => FILTER_SANITIZE_STRING
                  ]);
 
     // receive all input values from the form
-    $type_id = $category_data['type_id'];
+    $excellence_id = $category_data['excellence_id'];
     $type = $category_data['type'];
 
     // check permission to update the category data
-    if (! canUpdateObjectByID('point-type', $type_id )) {
-      $_SESSION['error_msg'] = "No permissions to update point type!";
+    if (! canUpdateObjectByID('point-type', $excellence_id )) {
+      $_SESSION['error_msg'] = "No permissions to update excellence list!";
       header("location: " . BASE_URL . "admin/points/pointsList.php");
       exit(0);
     }
@@ -126,18 +126,18 @@
     // $errors = validatecategory($category_data, ['update_category']);
 
     // if (count($errors) === 0) {
-      $sql = "UPDATE opportunity_points_type SET name=? WHERE id=?";
-      $result = modifyRecord($sql, 'si', [$type, $type_id]);
+      $sql = "UPDATE excellence_lists SET name=? WHERE id=?";
+      $result = modifyRecord($sql, 'si', [$type, $excellence_id]);
       if ($result) {
-        $_SESSION['success_msg'] = "Point type has been successfully updated!";
+        $_SESSION['success_msg'] = "Excellence list has been successfully updated!";
         if(hasPermissionTo('view-category-list')) {
-          header("location: " . BASE_URL . "admin/points/pointsList.php");
+          header("location: " . BASE_URL . "admin/excellence/excellenceList.php");
         } else {
           header("location: " . BASE_URL . "index.php");
         } 
         exit(0);
       } else {
-        $_SESSION['error_msg'] = "Could not update category data";
+        $_SESSION['error_msg'] = "Could not update excellence list";
       }
     // } else {
       // $_SESSION['error_msg'] = "Could not update category";
@@ -145,61 +145,62 @@
     $isEditing = true;
   }
 
-  function editType(){
-    global $conn, $type_id, $type, $isEditing;
+  function editExcellence(){
+    global $conn, $excellence_id, $name, $isEditing;
 
-    $type_id = filter_input(INPUT_GET, 'edit_type', FILTER_SANITIZE_NUMBER_INT);
+    $excellence_id = filter_input(INPUT_GET, 'edit_excellence_list', FILTER_SANITIZE_NUMBER_INT);
     
-    if (! canUpdateObjectByID('point-type', $type_id)) {
-      $_SESSION['error_msg'] = "No permissions to edit point type!";
-      header("location: " . BASE_URL . "admin/points/pointsList.php");
+    if (! canUpdateObjectByID('update-excellence-list', $excellence_id)) {
+      $_SESSION['error_msg'] = "No permissions to edit excellence list!";
+      header("location: " . BASE_URL . "admin/excellence/excellenceList.php");
       exit(0);
     }
 
 
-    $sql = "SELECT * FROM opportunity_points_type WHERE id=?";
-    $type_data = getSingleRecord($sql, 'i', [$type_id]);
+    $sql = "SELECT * FROM excellence_lists WHERE id=?";
+    $type_data = getSingleRecord($sql, 'i', [$excellence_id]);
 
-    $type_id = $type_data['id'];
+    $excellence_id = $type_data['id'];
+    $name = $type_data['name'];
     $isEditing = true;
   }
 
 
-  function deleteType() {
-    global $conn, $type_id, $type, $isDeleting;
+  function deleteExcellence() {
+    global $conn, $excellence_id, $name, $isDeleting;
 
-    $type_id = filter_input(INPUT_GET, 'delete_type', FILTER_SANITIZE_NUMBER_INT);
+    $excellence_id = filter_input(INPUT_GET, 'delete_type', FILTER_SANITIZE_NUMBER_INT);
 
-    if (! canDeleteTypeByID( $type_id )) {
-      header("location: " . BASE_URL . "admin/points/pointsList.php");
+    if (! canDeleteTypeByID( $excellence_id )) {
+      header("location: " . BASE_URL . "admin/excellence/excellenceList.php");
       exit(0);
     }
 
-    $sql = "SELECT * FROM opportunity_points_type WHERE id=?";
-    $type_data = getSingleRecord($sql, 'i', [$type_id]);
+    $sql = "SELECT * FROM excellence_lists WHERE id=?";
+    $type_data = getSingleRecord($sql, 'i', [$excellence_id]);
 
-    $type = $type_data['name'];
+    $name = $type_data['name'];
     $isDeleting = true;
   }
 
-  function forceDeleteType() {
-    global $conn, $type_id;
+  function forceDeleteExcellence() {
+    global $conn, $excellence_id;
 
-    $type_id = filter_input(INPUT_POST, 'type_id', FILTER_SANITIZE_NUMBER_INT);
-    if (! canDeleteTypeByID( $type_id )) {
-      header("location: " . BASE_URL . "admin/points/pointsList.php");
+    $excellence_id = filter_input(INPUT_POST, 'excellence_id', FILTER_SANITIZE_NUMBER_INT);
+    if (! canDeleteTypeByID( $excellence_id )) {
+      header("location: " . BASE_URL . "admin/excellence/excellenceList.php");
       exit(0);
     }
 
-    $sql = "DELETE FROM opportunity_points_type WHERE id=?";
-    $result = modifyRecord($sql, 'i', [$type_id]);
+    $sql = "DELETE FROM excellence_lists WHERE id=?";
+    $result = modifyRecord($sql, 'i', [$excellence_id]);
 
     if ($result) {
-      $_SESSION['success_msg'] = "Category has been deleted!!";
-      header("location: " . BASE_URL . "admin/points/pointsList.php");
+      $_SESSION['success_msg'] = "Excellence list has been deleted!!";
+      header("location: " . BASE_URL . "admin/excellence/excellenceList.php");
       exit(0);
     } else {
-      $_SESSION['error_msg'] = "Could not delete this category";
+      $_SESSION['error_msg'] = "Could not delete this excellence list";
     }
   }
 

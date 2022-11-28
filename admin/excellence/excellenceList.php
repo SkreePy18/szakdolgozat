@@ -75,7 +75,7 @@
                     <?php if ($ncol > 0): ?>
                       <?php if (hasPermissionTo('update-excellence-list') && ($value['id'] > 0)): ?>
                         <td class="text-center">
-                          <a href="<?php xecho(BASE_URL); ?>admin/points/pointsForm.php?edit_type=<?php xecho($value['id']); ?>" class="btn btn-sm btn-success">
+                          <a href="<?php xecho(BASE_URL); ?>admin/excellence/excellenceForm.php?edit_excellence_list=<?php xecho($value['id']); ?>" class="btn btn-sm btn-success">
                             <span class="glyphicon glyphicon-pencil"></span>
                           </a>
                         </td>
@@ -83,7 +83,7 @@
 
                       <?php if (hasPermissionTo('delete-excellence-list') && ($value['id'] > 0)): ?>
                         <td class="text-center">
-                          <a href="<?php xecho(BASE_URL); ?>admin/points/pointsList.php?delete_type=<?php xecho($value['id']); ?>" class="btn btn-sm btn-danger">
+                          <a href="<?php xecho(BASE_URL); ?>admin/excellence/excellenceForm.php?delete_excellence_list=<?php xecho($value['id']); ?>" class="btn btn-sm btn-danger">
                             <span class="glyphicon glyphicon-trash"></span>
                           </a>
                         </td>
@@ -94,10 +94,10 @@
               </tbody>
             </table>
           <?php else: ?>
-            <h2 class="text-center">No categories in the database</h2>
+            <h2 class="text-center">No excellence in the database</h2>
           <?php endif; ?>
         <?php else: ?>
-          <h2 class="text-center">No permissions to view list of categories</h2>
+          <h2 class="text-center">No permissions to view list of excellence lists</h2>
         <?php endif; ?>
       </div>
     </div>

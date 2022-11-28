@@ -6,6 +6,7 @@
   $isEditing = false;
   $isDeleting = false;
   $errors = array();
+  $points_data = array();
 
   // ACTION: Save 
   if (isset($_POST['create_points_type'])) {  // if user clicked save button ...
@@ -71,17 +72,17 @@
   }
 
   function updateType() {
-    global $conn, $errors, $type_id, $type, $isEditing;
+    global $conn, $errors, $type_id, $type, $isEditing, $points_data;
 
     // validate data
-    $category_data = filter_input_array(INPUT_POST, [
+    $points_data = filter_input_array(INPUT_POST, [
                   "type_id" => FILTER_SANITIZE_NUMBER_INT,
                   "type" => FILTER_SANITIZE_STRING
                  ]);
 
     // receive all input values from the form
-    $type_id = $category_data['type_id'];
-    $type = $category_data['type'];
+    $type_id = $points_data['type_id'];
+    $type = $points_data['type'];
 
     // check permission to update the category data
     if (! canUpdateObjectByID('point-type', $type_id )) {
@@ -128,6 +129,7 @@
     $type_data = getSingleRecord($sql, 'i', [$type_id]);
 
     $type_id = $type_data['id'];
+    $type = $type_data['name'];
     $isEditing = true;
   }
 

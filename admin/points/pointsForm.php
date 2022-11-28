@@ -42,7 +42,11 @@
               
               <div class="form-group <?php xecho(isset($errors['type']) ? 'has-error' : ''); ?>">
                 <label class="control-label">Type of points</label>
-                <input type="text" name="type" value="<?php xecho($type); ?>" class="form-control">
+                <?php if ($isEditing === true): ?>
+                  <input type="text" name="type" value="<?php xecho($type); ?>" class="form-control">
+                <?php else: ?>
+                  <input type="text" name="type" value="<?php xecho($type); ?>" class="form-control">
+                <?php endif;?>
                 <?php if (isset($errors['type'])): ?>
                   <span class="help-block"><?php xecho($errors['type']); ?></span>
                 <?php endif; ?>
