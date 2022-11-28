@@ -50,6 +50,7 @@
     'semester'    => 'semesters',
     'opportunity' => 'opportunities',
     'token'       => 'tokens',
+    'excellence-list' => 'excellence_lists',
   );
 
 

@@ -112,7 +112,7 @@
               <div class="form-group">
                 <?php echo(getCSRFTokenField() . "\n") ?>
                 <?php if ($isEditing === true): ?>
-                  <button type="submit" name="update_points_type" class="btn btn-success btn-block btn-lg">Update type</button>
+                  <button type="submit" name="update_excellence_list" class="btn btn-success btn-block btn-lg">Update type</button>
                 <?php else: ?>
                   <button type="submit" name="create_excellence_list" class="btn btn-info btn-block btn-lg">Create type</button>
                 <?php endif; ?>

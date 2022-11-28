@@ -66,6 +66,8 @@
 
     if(isset($_POST['students'])) {
       $users = json_encode($_POST['students']);
+    } else {
+      $users = "all";
     }
 
     if (! hasPermissionTo('manage-excellence-list')) {
@@ -117,7 +119,7 @@
     $type = $category_data['type'];
 
     // check permission to update the category data
-    if (! canUpdateObjectByID('point-type', $excellence_id )) {
+    if (! canUpdateObjectByID('excellence-list', $excellence_id )) {
       $_SESSION['error_msg'] = "No permissions to update excellence list!";
       header("location: " . BASE_URL . "admin/points/pointsList.php");
       exit(0);
@@ -150,7 +152,7 @@
 
     $excellence_id = filter_input(INPUT_GET, 'edit_excellence_list', FILTER_SANITIZE_NUMBER_INT);
     
-    if (! canUpdateObjectByID('update-excellence-list', $excellence_id)) {
+    if (! canUpdateObjectByID('excellence-list', $excellence_id)) {
       $_SESSION['error_msg'] = "No permissions to edit excellence list!";
       header("location: " . BASE_URL . "admin/excellence/excellenceList.php");
       exit(0);
