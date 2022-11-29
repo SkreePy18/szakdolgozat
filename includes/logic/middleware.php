@@ -597,7 +597,7 @@
 
       // Check date data
       $expiration_date = strtotime($tokenInsance['expiration_date']);
-      $date = strtotime(date('d-m-y'));
+      $date = strtotime(date('y-m-d'));
 
       if($expiration_date < $date) {
         return false;
