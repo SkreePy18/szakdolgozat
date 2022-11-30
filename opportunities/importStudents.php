@@ -66,43 +66,25 @@
         $users = getAllUsers();
         $lines = [];
 
-
+        
         foreach (file($filePath) as $line) {
-            $lines[] = $line;
-            // $content = explode("\n", $line);
-            // foreach($content as $key => $neptun) {
-
-            //     $neptun = str_replace(" ", "", $neptun);
-            //     $index = array_search($neptun, $users);
-            //     if ($index) {
-            //         $i++;
-                    
-            //         if (!canImportPointsForOpportunityByID($opportunity_id, $index)) {
-            //             if ($students == "") {
-            //                 $students = $neptun;
-            //             } else {
-            //                 $students = $students . ", " . $neptun;
-            //             }
-            //             continue;
-            //         }
-            //         $sql = "INSERT INTO `excellence_points` (opportunity_id, user_id) VALUES (?, ?)";
-            //         $result = modifyRecord($sql, 'ii', [$opportunity_id, $index]);
-            //     }
-            // }
+            array_push($lines, $line);
         }
 
-
         foreach($lines as $line => $neptun_code) {
+            
+            // We get the neptun codes of the user
             $sql = "SELECT id FROM `users` WHERE neptuncode = ?";
-            $index = getSingleRecord($sql, 's', [$neptun_code]);
+            $index = getSingleRecord($sql, 's', [trim($neptun_code)]);
+            
             if($index) {
                 $i++;
                 if (!canImportPointsForOpportunityByID($opportunity_id, $index['id'])) {
                      if ($students == "") {
                          $students = $neptun_code;
-                     } else {
-                         $students = $students . ", " . $neptun_code;
-                     }
+                     } 
+                     $students = $students . ", " . $neptun_code;
+                     
                      continue;
                  }
                  $sql = "INSERT INTO `excellence_points` (opportunity_id, user_id) VALUES (?, ?)";
@@ -110,68 +92,6 @@
             }
         }
 
-        // while (!feof($f)) {
-        //     // $content = explode(PHP_EOL, fgets($f));
-        //     // Alter solution
-        //     $row = fgets($f);
-        //     if (!empty($row)) {
-        //         $index = array_search($row, $users);
-        //         $i++;
-        //         // if ($index) {
-        //             $neptun_code = $users[$index];
-        //             if (!canImportPointsForOpportunityByID($opportunity_id, $index)) {
-        //                 if ($students == "") {
-        //                     $students = $neptun_code;
-        //                 } else {
-        //                     $students = $students . ", " . $neptun_code;
-        //                 }
-        //                 continue;
-        //             }
-        //             $sql = "INSERT INTO `excellence_points` (opportunity_id, user_id) VALUES (?, ?)";
-        //             $result = modifyRecord($sql, 'ii', [$opportunity_id, $index]);
-        //         // }
-        //     }
-
-            // Loop through user_data and check if the Neptun codes are valid
-            // foreach ($user_data as $key => $neptun_code) {
-            //     // Actual check with sql -> we get the user ID
-            //     $sql = "SELECT `id` FROM `users` WHERE `neptuncode` = ?";
-            //     $result = getSingleRecord($sql, 's', [$neptun_code]);
-
-            //     if (!empty($result)) {
-            //         if (!canImportPointsForOpportunityByID($opportunity_id, $result['id'])) {
-            //             if ($students == "") {
-            //                 $students = $neptun_code;
-            //             } else {
-            //                 $students = $students . ", " . $neptun_code;
-            //             }
-            //             continue;
-            //         }
-            //         $insertStatement = "INSERT INTO `excellence_points` (opportunity_id, user_id) VALUES (?, ?)";
-            //         $insertResult = modifyRecord($insertStatement, 'ii', [$opportunity_id, $result['id']]);
-            //     }
-            // }
-
-
-            // foreach($content as $key => $neptun_code){
-            //     $sql = "SELECT id FROM `users` WHERE neptuncode = ?";
-            //     $user_data = getSingleRecord($sql, 's', [$neptun_code]);
-            //     if(! empty($user_data)) {
-            //         // Check if user already exists, if so break the current loop iteration
-            //         if(! canImportPointsForOpportunityByID($opportunity_id, $user_data['id'])) {
-            //             // array_push($students, $neptun_code);
-            //             if($students == "") {
-            //                 $students = $neptun_code;
-            //             } else {
-            //                 $students = $students . ", " . $neptun_code;
-            //             }
-            //             continue;
-            //         }
-            //         $sql = "INSERT INTO `excellence_points` (opportunity_id, user_id) VALUES (?, ?)";
-            //         $result = modifyRecord($sql, 'ii', [$opportunity_id, $user_data['id']]);
-            //     }
-            // }
-        // } 
         deleteFile($filePath);
         return array(true, $students, $i);
     }
