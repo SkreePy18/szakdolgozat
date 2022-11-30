@@ -86,7 +86,7 @@
     $errors = validateOpportunity($opportunity_data, ['save_opportunity']);
     if (count($errors) === 0) {
       $sql = "INSERT INTO opportunities (owner_id, opportunity, description, points, points_type, expiration_date) VALUES (?, ?, ?, ?, ?, ?)";
-      $result = modifyRecord($sql, 'ississ', [$user_id, $opportunity, $description, $points, $points_type, $expiration_date]);
+      $result = modifyRecord($sql, 'issiis', [$user_id, $opportunity, $description, $points, $points_type, $expiration_date]);
 
       if($result){
         $_SESSION['success_msg'] = "Opportunity has been successfully published";
@@ -133,7 +133,7 @@
 
     if (count($errors) === 0) {
       $sql = "UPDATE opportunities SET opportunity=?, description=?, points=?, points_type=?, expiration_date=? WHERE id=?";
-      $result = modifyRecord($sql, 'ssissi', [$opportunity, $opportunity_description, $opportunity_points, $points_type, $expiration_date, $opportunity_id]);
+      $result = modifyRecord($sql, 'ssiisi', [$opportunity, $opportunity_description, $opportunity_points, $points_type, $expiration_date, $opportunity_id]);
       if ($result) {
         $_SESSION['success_msg'] = "Opportunity successfully updated";
         if(hasPermissionTo('view-opportunity-list')) {

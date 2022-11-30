@@ -58,7 +58,11 @@
               </div>
               <div class="form-group" >
                 <label class="control-label">Type of points</label>
-                <input type="text" class="form-control" rows=1 value="<?php xecho($points_type); ?>" disabled></input>
+                <?php 
+                  $sql = "SELECT name FROM `opportunity_points_type` WHERE id = ?";
+                  $result = getSingleRecord($sql, 'i', [$points_type]);
+                ?>
+                <input type="text" class="form-control" rows=1 value="<?php xecho($result['name']); ?>" disabled></input>
               </div>
               <div class="form-group" >
                 <label class="control-label">Points</label>

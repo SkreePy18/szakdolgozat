@@ -8,7 +8,7 @@
   <?php endif; ?>
     <div class="container-fluid">
       <div class="navbar-header">
-        <a class="navbar-brand" href="<?php xecho(BASE_URL . 'index.php'); ?>"><?php xecho(APP_NAME); ?></a>        
+        <a class="navbar-brand" href="<?php xecho(BASE_URL . 'excellence/excellenceFilter.php?id=1'); ?>"><?php xecho(APP_NAME); ?></a>        
       </div>
       <ul class="nav navbar-nav navbar-right">
         <?php if (isset($_SESSION['user'])): ?>

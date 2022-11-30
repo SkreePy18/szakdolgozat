@@ -116,13 +116,26 @@
                         <!-- Type of points -->
 
                         <td class='hidden-sm hidden-xs'>
-                          <span class="absoluteCenter"><?php xecho($value['points_type']); ?> </span>
+                        
+                          <span class="absoluteCenter">
+                            <?php 
+                              $sql = "SELECT name FROM opportunity_points_type WHERE id=? LIMIT 1";
+                              $result = getSingleRecord($sql, 'i', [ $value['points_type'] ]);
+                              xecho($result['name']);
+                            ?>
+                          </span>
                         </td>
 
                         <!-- Achievable points -->
                         <td>
                           <span class="absoluteCenter"><?php xecho($value['points']); ?> </span>
-                          <span class="absoluteCenter hidden-lg hidden-md">(<?php xecho($value['points_type']); ?>)</span>
+                          <span class="absoluteCenter hidden-lg hidden-md">(
+                            <?php 
+                              $sql = "SELECT name FROM opportunity_points_type WHERE id=? LIMIT 1";
+                              $result = getSingleRecord($sql, 'i', [ $value['points_type'] ]);
+                              xecho($result['name']);
+                            ?>
+                            )</span>
                         </td>
                         <!-- Action buttons -->
 
