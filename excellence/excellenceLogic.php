@@ -7,7 +7,7 @@
   $title = "";
   $description = "";
   $requirement = "";
-  $semester_id = 1;
+  $excellence_list_id = 1;
   $approved_user_id = -1;
   $registered_user_id = -1;
   $reason = '';
@@ -91,7 +91,7 @@
   }
 
   function filterExcellenceList() {
-    echo("ASD");
+    global $excellence_list_id;
     $excellence_list_id = filter_input(INPUT_POST, 'excellence_id', FILTER_SANITIZE_NUMBER_INT);
     header("location: " . BASE_URL . "excellence/excellenceFilter.php?id=" . $excellence_list_id);
     exit(0);

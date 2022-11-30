@@ -116,7 +116,7 @@
 
     // receive all input values from the form
     $excellence_id = $category_data['excellence_id'];
-    $type = $category_data['type'];
+    $type = $category_data['name'];
 
     // check permission to update the category data
     if (! canUpdateObjectByID('excellence-list', $excellence_id )) {

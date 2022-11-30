@@ -68,11 +68,11 @@
                 <select name="point_types[]" multiple="true">
                   <?php 
                     // Get the types of points 
-                    $sql = "SELECT name FROM `opportunity_points_type`";
+                    $sql = "SELECT * FROM `opportunity_points_type`";
                     $result = getMultipleRecords($sql);
                     if($result){
                       foreach($result as $key => $point_type) {
-                      echo("<option value=" . $point_type['name'] . ">". ucfirst($point_type['name']) . "</option>");
+                      echo("<option value=" . $point_type['id'] . ">". ucfirst($point_type['name']) . "</option>");
                       }
                     }
                     ?>

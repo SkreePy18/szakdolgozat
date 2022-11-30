@@ -1,7 +1,11 @@
 <?php include_once('../config.php'); ?>
 <?php include_once(ROOT_PATH . '/csrf.php') ?> 
 <?php include_once(ROOT_PATH . '/excellence/excellenceLogic.php'); ?>
-<?php $excellence_list = getExcellenceListTypes(); ?>
+<?php $excellence_list = getExcellenceListTypes(); 
+
+$excellence_list_id = $_GET['id'];
+
+?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -24,10 +28,11 @@
              <select class="form-control" name="excellence_id">
                  <?php
                      $sql = "SELECT id, name FROM excellence_lists";
-                     $semesterlist = getMultipleRecords($sql);
+                     $excellence_selector = getMultipleRecords($sql);
                  ?>
-               <?php foreach ($semesterlist as $sem): ?>
-                 <option value="<?php xecho($sem['id']) ?>" <?php if ($sem['id'] == $semester_id) xecho("selected") ?>><?php xecho($sem['name']) ?></option>
+               <?php foreach ($excellence_selector as $excellence): ?>
+                  <?php echo($excellence_list_id); ?>
+                 <option value="<?php xecho($excellence['id']) ?>" <?php if ($excellence['id'] == $excellence_list_id) xecho("selected") ?>><?php xecho($excellence['name']) ?></option>
                <?php endforeach; ?>
              </select>
             </div>
