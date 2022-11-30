@@ -1,2 +1,2 @@
 <?php include_once('config.php'); ?>
-<?php header("location: " . BASE_URL . "excellence/excellenceList.php?id=1"); ?>
+<?php header("location: " . BASE_URL . "excellence/excellenceFilter.php?id=1"); ?>
