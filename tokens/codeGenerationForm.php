@@ -59,7 +59,7 @@
 
               <div class="form-group <?php xecho(isset($errors['user_id']) ? 'has-error' : '') ?>">
                 <label class="control-label">NEPTUN code of the user</label><br>
-                <select name="user_id">
+                <select name="user_id" required>
                 <option value="<?php //xecho(isset($user_id)) ?>" disabled selected hidden>
                   <?php
                     if(isset($user_id)) {
@@ -88,7 +88,7 @@
                 <label class="control-label">Expiration date</label>
                 <input type="date" name="expiration_date" class="form-control" value="<?php if($isEditing) {
                   xecho($expiration_date);
-                 } ?>"></input>
+                 } ?>" required></input>
                 <?php if (isset($errors['expiration_date'])): ?>
                   <span class="help-block"><?php xecho($errors['expiration_date']); ?></span>
                 <?php endif; ?>

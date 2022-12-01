@@ -64,7 +64,7 @@
         header("location: " . BASE_URL . "admin/points/pointsList.php");
         exit(0);
       } else {
-        $_SESSION['error_msg'] = "Could not create category data";
+        $_SESSION['error_msg'] = "Could not create point type";
       }
     // } else {
       // $_SESSION['error_msg'] = $errors;
@@ -105,7 +105,7 @@
         } 
         exit(0);
       } else {
-        $_SESSION['error_msg'] = "Could not update category data";
+        $_SESSION['error_msg'] = "Could not update point type";
       }
     // } else {
       // $_SESSION['error_msg'] = "Could not update category";
@@ -164,11 +164,11 @@
     $result = modifyRecord($sql, 'i', [$type_id]);
 
     if ($result) {
-      $_SESSION['success_msg'] = "Category has been deleted!!";
+      $_SESSION['success_msg'] = "Point type has been deleted";
       header("location: " . BASE_URL . "admin/points/pointsList.php");
       exit(0);
     } else {
-      $_SESSION['error_msg'] = "Could not delete this category";
+      $_SESSION['error_msg'] = "Could not delete point type";
     }
   }
 

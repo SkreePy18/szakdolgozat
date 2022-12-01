@@ -71,7 +71,7 @@
     }
 
     if (! hasPermissionTo('manage-excellence-list')) {
-      $_SESSION['error_msg'] = "No permissions to create new point type";
+      $_SESSION['error_msg'] = "No permissions to create excellence-list";
       header("location: " . BASE_URL . "admin/points/pointsList.php");
       exit(0);
     }
@@ -81,11 +81,11 @@
     $result = modifyRecord($sql, 'sssi', [$name, $users, $point_types, $created_by]);
 
      if($result){
-        $_SESSION['success_msg'] = "Point type created successfully";
+        $_SESSION['success_msg'] = "Excellence list created successfully";
         header("location: " . BASE_URL . "admin/excellence/excellenceList.php");
         exit(0);
       } else {
-        $_SESSION['error_msg'] = "Could not create category data";
+        $_SESSION['error_msg'] = "Could not create excellence list";
       }
 
 
@@ -171,9 +171,9 @@
   function deleteExcellence() {
     global $conn, $excellence_id, $name, $isDeleting;
 
-    $excellence_id = filter_input(INPUT_GET, 'delete_type', FILTER_SANITIZE_NUMBER_INT);
+    $excellence_id = filter_input(INPUT_GET, 'delete_excellence_list', FILTER_SANITIZE_NUMBER_INT);
 
-    if (! canDeleteTypeByID( $excellence_id )) {
+    if (! canDeleteExcellenceByID( $excellence_id )) {
       header("location: " . BASE_URL . "admin/excellence/excellenceList.php");
       exit(0);
     }
@@ -189,7 +189,7 @@
     global $conn, $excellence_id;
 
     $excellence_id = filter_input(INPUT_POST, 'excellence_id', FILTER_SANITIZE_NUMBER_INT);
-    if (! canDeleteTypeByID( $excellence_id )) {
+    if (! canDeleteExcellenceByID( $excellence_id )) {
       header("location: " . BASE_URL . "admin/excellence/excellenceList.php");
       exit(0);
     }

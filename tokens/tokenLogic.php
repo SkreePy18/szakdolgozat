@@ -40,6 +40,10 @@
     updateToken();
   }
 
+  if(isset($_GET['send_token'])) {
+    sendTokenToRecipent();
+  }
+
 
 
 
@@ -74,7 +78,6 @@
     $generated_by     = $token_data["owner_id"];
 
     if(!canGenerateCodeByID($opportunity_id, $user_id)) {
-      $_SESSION['error_msg'] = "Could not create QR code";
       header("location: " . BASE_URL . "opportunities/opportunityFilter.php");
       exit(0);
     }
@@ -87,12 +90,12 @@
     if($result) {
       $QRCode = generateQRCode($token);
       if($QRCode){
-        $_SESSION['success_msg'] = "QR code has been successfully created";
+        $_SESSION['success_msg'] = "Token has been successfully created";
         $QRCode->saveToFile(__DIR__ . "/qrCodes/" . $token . ".png");
         header("location: " . BASE_URL . "opportunities/opportunityFilter.php");
         exit(0);
       } else {
-        $_SESSION['error_msg'] = "Could not create QR code";
+        $_SESSION['error_msg'] = "Fatal error while generating QR code. Contact an Administrator!";
       }
     }
   }
@@ -198,7 +201,6 @@
     $token   = $token_data["token"];
 
     if(!canUserRedeemToken($user_id, $token)) {
-      $_SESSION['error_msg'] = "You cannot redeem this token!";
       header("location: " . BASE_URL . "tokens/redeemToken.php");
       exit(0);
     }

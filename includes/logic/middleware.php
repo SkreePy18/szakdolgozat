@@ -542,6 +542,7 @@
       $opportunities = getSingleRecord($sql, 'i', [ $opportunity_id ]);
 
       if(is_null($opportunities)) {
+        $_SESSION['error_msg'] = "Could not generate token. Cause: Opportunity doesn't exist.";
         return false;
       }
 
@@ -550,18 +551,21 @@
         $sql = "SELECT id FROM tokens WHERE user_id = ? AND opportunity_id = ?";
         $tokenResults = getSingleRecord($sql, 'ii', [$user_id, $opportunity_id]);
         if(!is_null($tokenResults)) {
+          $_SESSION['error_msg'] = "Could not generate token. Cause: A token already exists for this user on this opportunity.";
           return false;
         }
 
         $sql = "SELECT id FROM excellence_points WHERE user_id = ? AND opportunity_id = ?";
         $pointResults = getSingleRecord($sql, 'ii', [$user_id, $opportunity_id]);
         if(!is_null($pointResults)) {
+          $_SESSION['error_msg'] = "Could not generate token. Cause: This user has already achieved this opportunity.";
           return false;
         }
       }
 
       return true;
     } else {
+      $_SESSION['error_msg'] = "No permission to generate token.";
       return false;
     }
   }
@@ -588,10 +592,12 @@
       $tokenInsance = getSingleRecord($sql, 'si', [ $token, $user_id]);
 
       if(is_null($tokenInsance)) {
+        $_SESSION['error_msg'] = "This token doesn't exist for you!";
         return false;
       }
 
       if($tokenInsance["redeemed"] == "yes") {
+        $_SESSION['error_msg'] = "This token was already redeemed!";
         return false;
       }
 
@@ -600,8 +606,21 @@
       $date = strtotime(date('y-m-d'));
 
       if($expiration_date < $date) {
+        $_SESSION['error_msg'] = "This token is expired!";
         return false;
       }
+      
+      // Check if achieved already
+      $opportunity_id = $tokenInsance['opportunity_id'];
+      $sql = "SELECT id FROM excellence_points WHERE opportunity_id = ? AND user_id = ?";
+      $result = getSingleRecord($sql, 'ii', [$opportunity_id, $user_id]);
+
+      if(!is_null($result)) {
+        $_SESSION['error_msg'] = "You have achieved the opportunity for this token so you cannot redeem it!";
+        return false;
+      }
+
+
       return true;
     } else {
       return false;
@@ -649,6 +668,25 @@
       return true;
     } else {
       $_SESSION['error_msg'] = "No permissions to delete semester";
+      return false;
+    }
+  }
+
+  function canDeleteExcellenceByID($excellence_id = null) {
+    global $conn;
+
+    if(in_array(['permission_name' => 'delete-excellence-list'], $_SESSION['userPermissions'])){
+      // check whether semester exists at all
+      $sql = "SELECT id FROM excellence_lists WHERE id=?";
+      $excellence_result = getSingleRecord($sql, 'i', [$excellence_id]);
+      if(is_null($excellence_result)) {
+        $_SESSION['error_msg'] = "Excellence list does not exist to delete it";
+        return false;
+      }
+
+      return true;
+    } else {
+      $_SESSION['error_msg'] = "No permissions to delete excellence list";
       return false;
     }
   }

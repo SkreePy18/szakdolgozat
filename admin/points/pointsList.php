@@ -6,7 +6,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title><?php xecho(APP_NAME); ?> - Category management</title>
+  <title><?php xecho(APP_NAME); ?> - Point management</title>
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
   <!-- Custome styles -->
@@ -53,7 +53,7 @@
             $categories = getTypesOfPoints();
             $ncol = hasPermissionTo('update-point-type') + hasPermissionTo('delete-point-type');
           ?>
-          <h1 class="text-center">Excellence management</h1>
+          <h1 class="text-center">Point management</h1>
           <br />
           <?php if (!empty($categories)): ?>
             <table class="table table-bordered">

@@ -27,35 +27,35 @@
                   <li><a href="<?php xecho(BASE_URL . 'admin/users/userForm.php?edit_user=' . $_SESSION['user']['id']); ?>">Profile</a></li>
                 <?php endif; ?>
                 <?php if (hasPermissionTo('view-dashboard')): ?>
-                  <li><a href="<?php xecho(BASE_URL . 'admin/dashboard.php'); ?>" style="color: red;">Dashboard</a></li>
+                  <li><a href="<?php xecho(BASE_URL . 'admin/dashboard.php'); ?>" style="color: red;">Admin Control Panel</a></li>
                 <?php endif; ?>
                 <li role="separator" class="divider"></li>
                 <li><a href="<?php xecho(BASE_URL . 'excellence/excellenceFilter.php?id=1'); ?>" >Excellence list</a></li>
                 <?php if (hasPermissionTo('view-topic-list')): ?>
-                  <li><a href="<?php xecho(BASE_URL . 'topic/topicFilter.php?filter_topic=all'); ?>" >All topics</a></li>
+                  <!-- <li><a href="<?php // xecho(BASE_URL . 'topic/topicFilter.php?filter_topic=all'); ?>" >All topics</a></li> -->
                   <?php if (hasPermissionTo('view-topic-summary')): ?>
-                      <li><a href="<?php xecho(BASE_URL . 'topic/topicFilter.php?filter_topic=registered-user'); ?>" >All topics with registered user</a></li>
-                      <li><a href="<?php xecho(BASE_URL . 'topic/topicFilter.php?filter_topic=approved-user'); ?>" >All topics with approved user</a></li>
+                      <!-- <li><a href="<?php // xecho(BASE_URL . 'topic/topicFilter.php?filter_topic=registered-user'); ?>" >All topics with registered user</a></li> -->
+                      <!-- <li><a href="<?php // xecho(BASE_URL . 'topic/topicFilter.php?filter_topic=approved-user'); ?>" >All topics with approved user</a></li> -->
                   <?php else: ?>
                     <?php if (hasPermissionTo('create-topic')): ?>
-                      <li><a href="<?php xecho(BASE_URL . 'topic/topicFilter.php?filter_topic=owned'); ?>" >My created topics</a></li>
-                      <li><a href="<?php xecho(BASE_URL . 'topic/topicFilter.php?filter_topic=registered-user'); ?>" >My topics with registered user</a></li>
-                      <li><a href="<?php xecho(BASE_URL . 'topic/topicFilter.php?filter_topic=approved-user'); ?>" >My topics with approved user</a></li>
+                      <!-- <li><a href="<?php // xecho(BASE_URL . 'topic/topicFilter.php?filter_topic=owned'); ?>" >My created topics</a></li>
+                      <li><a href="<?php //xecho(BASE_URL . 'topic/topicFilter.php?filter_topic=registered-user'); ?>" >My topics with registered user</a></li>
+                      <li><a href="<?php //xecho(BASE_URL . 'topic/topicFilter.php?filter_topic=approved-user'); ?>" >My topics with approved user</a></li> -->
                     <?php endif; ?>
                   <?php endif; ?>
                   <?php if (hasPermissionTo('register-topic')): ?>
                     <?php if ( hasUserApprovedTopic($_SESSION['user']['id']) ): ?>
-                      <li><a href="<?php xecho(BASE_URL . 'topic/topicFilter.php?filter_topic=approved'); ?>" >My approved topic</a></li>
+                      <!-- <li><a href="<?php  //xecho(BASE_URL . 'topic/topicFilter.php?filter_topic=approved'); ?>" >My approved topic</a></li> -->
                     <?php else: ?>
-                      <li><a href="<?php xecho(BASE_URL . 'topic/topicFilter.php?filter_topic=registered'); ?>" >My registered topics</a></li>
+                      <!-- <li><a href="<?php// xecho(BASE_URL . 'topic/topicFilter.php?filter_topic=registered'); ?>" >My registered topics</a></li> -->
                     <?php endif; ?>
                   <?php endif; ?>
 
                   <?php if (hasPermissionTo('view-own-topic-score')): ?>
-                    <li><a href="<?php xecho(BASE_URL . 'topic/topicScoreOwn.php'); ?>" >My scores for topics</a></li>
+                    <!-- <li><a href="<?php //xecho(BASE_URL . 'topic/topicScoreOwn.php'); ?>" >My scores for topics</a></li> -->
                   <?php endif; ?>
                   <?php if (hasPermissionTo('view-all-topic-score')): ?>
-                    <li><a href="<?php xecho(BASE_URL . 'topic/topicScoreAll.php'); ?>" >All scores for all topics</a></li>
+                    <!-- <li><a href="<?php //xecho(BASE_URL . 'topic/topicScoreAll.php'); ?>" >All scores for all topics</a></li> -->
                   <?php endif; ?>
 
                 <?php endif; ?>

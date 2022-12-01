@@ -5,7 +5,7 @@
 
     function generateQRCode($token) {
         if($token) {
-            $qr = QrCode::create("https://localhost/szakdolgozat/tokens/redeemToken.php?token=" . $token);
+            $qr = QrCode::create(BASE_URL . "tokens/redeemToken.php?token=" . $token);
             $writer = new PngWriter();
             $result = $writer->write($qr);
     

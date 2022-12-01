@@ -18,12 +18,12 @@
   <?php if ($isDeleting === true): ?>
     <div class="col-md-6 col-md-offset-3">
       <form class="form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" enctype="multipart/form-data">
-        <input type="hidden" name="type_id">
-        <p class="text-center">Do you really want to delete point type: '<?php xecho($type); ?>'?</p>
+        <input type="hidden" name="excellence_id" value="<?php xecho($excellence_id); ?>">
+        <p class="text-center">Do you really want to delete excellence list: '<?php xecho($name); ?>'?</p>
         <div class="form-group text-center">
           <?php echo(getCSRFTokenField() . "\n") ?>
-          <button type="submit" name="force_delete_type" class="btn btn-success btn-lg">Delete</button>
-          <button type="submit" name="cancel_delete_type" class="btn btn-danger btn-lg">Cancel</button>
+          <button type="submit" name="force_delete_excellence_list" class="btn btn-success btn-lg">Delete</button>
+          <button type="submit" name="cancel_delete_excellence_list" class="btn btn-danger btn-lg">Cancel</button>
         </div>
       </form>
     </div>
@@ -83,7 +83,7 @@
 
                       <?php if (hasPermissionTo('delete-excellence-list') && ($value['id'] > 0)): ?>
                         <td class="text-center">
-                          <a href="<?php xecho(BASE_URL); ?>admin/excellence/excellenceForm.php?delete_excellence_list=<?php xecho($value['id']); ?>" class="btn btn-sm btn-danger">
+                          <a href="<?php xecho(BASE_URL); ?>admin/excellence/excellenceList.php?delete_excellence_list=<?php xecho($value['id']); ?>" class="btn btn-sm btn-danger">
                             <span class="glyphicon glyphicon-trash"></span>
                           </a>
                         </td>
